@@ -1,0 +1,139 @@
+# ────────────────────────────────────────────────────────────────
+# E2E — Playwright + @axe-core/playwright
+# Roda fluxos críticos end-to-end com checagem de acessibilidade.
+# Custo alto (browser + infra Docker), por isso é condicional.
+# ────────────────────────────────────────────────────────────────
+name: E2E
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, labeled]
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      browser:
+        description: Browser para rodar (chromium, firefox, webkit)
+        required: false
+        default: chromium
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+jobs:
+  decide:
+    name: 🤔 Should run E2E?
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    outputs:
+      should_run: ${{ steps.gate.outputs.should_run }}
+    steps:
+      - id: gate
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          LABELS_JSON: ${{ toJson(github.event.pull_request.labels) }}
+        run: |
+          set -euo pipefail
+          # Roda sempre em push para main e workflow_dispatch.
+          if [ "$EVENT_NAME" != "pull_request" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # Em PR, roda apenas com label 'e2e' ou 'wave-1'.
+          # `jq` tratamento de input como dado (não código): safe.
+          if printf '%s' "$LABELS_JSON" | jq -e '.[] | select(.name == "e2e" or .name == "wave-1")' > /dev/null; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::E2E skipped (PR sem label 'e2e' ou 'wave-1')."
+          fi
+
+  e2e:
+    name: 🧭 Playwright (${{ matrix.browser }}) + axe-core
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: decide
+    if: needs.decide.outputs.should_run == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium]
+        # Firefox e WebKit habilitam após Onda 1 estabilizar fluxo principal.
+
+    env:
+      PLAYWRIGHT_BROWSER: ${{ matrix.browser }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Playwright browser
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Start infrastructure (Postgres, Redis, NATS, MinIO, MailHog)
+        run: |
+          if [ -f infra/docker/dev/docker-compose.yml ]; then
+            docker compose -f infra/docker/dev/docker-compose.yml up -d
+            echo "Aguardando serviços ficarem saudáveis..."
+            sleep 10
+          else
+            echo "::warning::Sem docker-compose ainda (será adicionado em scaffold da Onda 1). E2E rodará sem infra real."
+          fi
+
+      - name: Run database migrations
+        run: |
+          if find apps -path '*/prisma/schema.prisma' -print -quit | grep -q .; then
+            pnpm db:migrate
+          else
+            echo "::notice::Sem prisma schemas ainda — skip de migrations."
+          fi
+
+      - name: Run E2E (Playwright + axe-core)
+        run: pnpm e2e
+
+      - name: Tear down infrastructure
+        if: always()
+        run: |
+          if [ -f infra/docker/dev/docker-compose.yml ]; then
+            docker compose -f infra/docker/dev/docker-compose.yml down -v
+          fi
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.browser }}
+          path: |
+            playwright-report/
+            **/playwright-report/
+            test-results/
+            **/test-results/
+          retention-days: 14
+          if-no-files-found: ignore

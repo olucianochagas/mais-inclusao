@@ -1,0 +1,41 @@
+# Diretórios gerados ou de dependências
+node_modules/
+.pnpm-store/
+dist/
+build/
+out/
+.next/
+.rspack/
+.turbo/
+coverage/
+
+# Lockfiles — geridos por suas ferramentas
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Artefatos de teste
+playwright-report/
+test-results/
+e2e-results/
+.nyc_output/
+
+# Prisma generated
+**/.prisma/
+**/prisma/migrations/**/*.sql
+
+# Brainstorming companion (efêmero)
+.superpowers/
+
+# Conteúdo de dados de teste (não formatar — pode quebrar fixtures)
+**/fixtures/**/*.json
+**/*.snap
+
+# Documentação que controla seu próprio formato (CHANGELOG gerado por Changesets)
+CHANGELOG.md
+.changeset/*.md
+
+# Outros
+.env
+.env.*
+*.log

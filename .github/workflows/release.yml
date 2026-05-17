@@ -1,0 +1,82 @@
+# ────────────────────────────────────────────────────────────────
+# Release — versionamento e publicação via Changesets
+# Quando há changesets no main, abre um PR "Version Packages".
+# Ao mergear esse PR, publica pacotes e cria tags.
+# ────────────────────────────────────────────────────────────────
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: release-${{ github.workflow }}-${{ github.ref }}
+  # Releases nunca são canceladas pelo meio.
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write   # para futura publicação no npm com provenance
+
+jobs:
+  release:
+    name: 🚀 Release (Changesets)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Apenas no repositório upstream; evita execução em forks.
+    if: github.repository == 'olucianochagas/mais-inclusao'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # fetch-depth 0 — Changesets precisa do histórico para detectar mudanças.
+          fetch-depth: 0
+          # Permite que o PR criado pelo bot triggere outros workflows.
+          persist-credentials: false
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          # Quando publicar pacotes no npm, registry vem aqui.
+          # registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build (necessário antes de publicar)
+        run: pnpm build
+
+      - name: Create Release PR or publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          version: pnpm changeset:version
+          publish: pnpm changeset:publish
+          commit: 'chore(release): version packages'
+          title: 'chore(release): version packages'
+          createGithubReleases: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}   # habilitar quando publicar no npm
+
+      - name: Notify result
+        if: always()
+        env:
+          PUBLISHED: ${{ steps.changesets.outputs.published }}
+          PR_NUM: ${{ steps.changesets.outputs.pullRequestNumber }}
+        run: |
+          if [ "$PUBLISHED" = "true" ]; then
+            echo "::notice::📦 Pacotes publicados nesta execução."
+          elif [ -n "${PR_NUM:-}" ]; then
+            echo "::notice::📝 PR de versionamento aberto/atualizado: #$PR_NUM"
+          else
+            echo "::notice::Nada a publicar (sem changesets pendentes)."
+          fi

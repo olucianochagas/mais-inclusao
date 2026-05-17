@@ -82,6 +82,7 @@ catalog:
 
   # Tooling cross-workspace
   eslint: ^9.16.0
+  "typescript-eslint": ^8.16.0
   "@typescript-eslint/parser": ^8.16.0
   "@typescript-eslint/eslint-plugin": ^8.16.0
   "eslint-plugin-react": ^7.37.2

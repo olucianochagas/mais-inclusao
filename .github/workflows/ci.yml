@@ -1,0 +1,200 @@
+# ────────────────────────────────────────────────────────────────
+# CI — workflow principal: lint, typecheck, test, build
+# Executa em todo PR + push em main, sobre os workspaces afetados.
+# ────────────────────────────────────────────────────────────────
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Cancela execuções em paralelo do mesmo PR/branch — economiza minutos.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# Princípio do menor privilégio: declarar exatamente o necessário.
+permissions:
+  contents: read
+  pull-requests: read
+  checks: write
+  statuses: write
+
+env:
+  TURBO_TELEMETRY_DISABLED: 1
+  NODE_OPTIONS: --max-old-space-size=4096
+  FORCE_COLOR: '1'
+
+jobs:
+  # ─────────────────────────────────────────────────────────────
+  # 1. Pré-checagens rápidas (lint, format, typecheck) em paralelo
+  # ─────────────────────────────────────────────────────────────
+  preflight:
+    name: 🚦 Preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # fetch-depth: 2 habilita `turbo run --affected` via comparação com HEAD~1
+          fetch-depth: 2
+
+      - name: Enable corepack (pnpm via packageManager field)
+        run: corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Format check (Prettier)
+        run: pnpm format:check
+
+      - name: Lint (ESLint via Turbo)
+        run: pnpm lint
+
+      - name: Typecheck (tsc --noEmit)
+        run: pnpm typecheck
+
+  # ─────────────────────────────────────────────────────────────
+  # 2. Testes unitários — paralelizados via Turbo
+  # ─────────────────────────────────────────────────────────────
+  test-unit:
+    name: 🧪 Unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: preflight
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run unit tests
+        run: pnpm test
+
+      - name: Upload coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-unit
+          path: '**/coverage/**'
+          retention-days: 7
+          if-no-files-found: ignore
+
+  # ─────────────────────────────────────────────────────────────
+  # 3. Testes de integração com Testcontainers (PG, Redis, NATS)
+  # ─────────────────────────────────────────────────────────────
+  test-integration:
+    name: 🔌 Integration tests (Testcontainers)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    needs: preflight
+    # Roda em push para main ou em PRs com label apropriado
+    if: |
+      github.event_name == 'push' ||
+      contains(github.event.pull_request.labels.*.name, 'test:integration') ||
+      contains(github.event.pull_request.labels.*.name, 'wave-1')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run integration tests
+        env:
+          TESTCONTAINERS_RYUK_DISABLED: 'true'
+        run: pnpm test:integration
+
+      - name: Upload coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-integration
+          path: '**/coverage-integration/**'
+          retention-days: 7
+          if-no-files-found: ignore
+
+  # ─────────────────────────────────────────────────────────────
+  # 4. Build (afetados) — verifica se tudo compila
+  # ─────────────────────────────────────────────────────────────
+  build:
+    name: 📦 Build affected
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: preflight
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+  # ─────────────────────────────────────────────────────────────
+  # 5. Gate final — agrega resultado
+  # ─────────────────────────────────────────────────────────────
+  ci-success:
+    name: ✅ CI success
+    runs-on: ubuntu-latest
+    needs: [preflight, test-unit, build]
+    if: always()
+    steps:
+      - name: Verify required jobs passed
+        env:
+          PREFLIGHT_RESULT: ${{ needs.preflight.result }}
+          UNIT_RESULT: ${{ needs.test-unit.result }}
+          BUILD_RESULT: ${{ needs.build.result }}
+        run: |
+          if [ "$PREFLIGHT_RESULT" != "success" ] || \
+             [ "$UNIT_RESULT" != "success" ] || \
+             [ "$BUILD_RESULT" != "success" ]; then
+            echo "::error::CI failed in one or more required jobs"
+            exit 1
+          fi
+          echo "All required CI checks passed."

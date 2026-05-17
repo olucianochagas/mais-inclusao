@@ -1,0 +1,27 @@
+# ────────────────────────────────────────────────────────────────
+# PR Labeler — atribui labels automaticamente conforme paths tocados
+# Reduz fricção de triagem: PR de docs ganha label 'docs',
+# PR em apps/auth-service ganha 'area:auth', etc.
+# Config: .github/labeler.yml
+# ────────────────────────────────────────────────────────────────
+name: PR Labeler
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  label:
+    name: 🏷  Auto-label by changed paths
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/labeler@v5
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          configuration-path: .github/labeler.yml
+          sync-labels: true

@@ -1,0 +1,95 @@
+# Dependabot — gerência automatizada de atualizações de dependências
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+#
+# Suporta pnpm desde 2024 — detecta pnpm-lock.yaml automaticamente.
+
+version: 2
+
+updates:
+  # ─────────────────────────────────────────────────────────────
+  # 1. Dependências npm/pnpm — raiz do monorepo
+  # ─────────────────────────────────────────────────────────────
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "07:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "olucianochagas"
+    assignees:
+      - "olucianochagas"
+    labels:
+      - "dependencies"
+      - "needs-triage"
+    commit-message:
+      prefix: "chore"
+      prefix-development: "chore"
+      include: "scope"
+    versioning-strategy: "increase"
+    # Agrupa minor/patch num único PR para reduzir ruído
+    groups:
+      production-dependencies:
+        applies-to: version-updates
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+      development-dependencies:
+        applies-to: version-updates
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+      # Agrupa correções de segurança em PRs prioritários separados
+      security-patches:
+        applies-to: security-updates
+        patterns:
+          - "*"
+    # Ignora major bumps automáticos — exigem revisão humana
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
+
+  # ─────────────────────────────────────────────────────────────
+  # 2. GitHub Actions — versões de actions usadas nos workflows
+  # ─────────────────────────────────────────────────────────────
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "07:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "olucianochagas"
+    labels:
+      - "dependencies"
+      - "ci"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    groups:
+      actions:
+        patterns:
+          - "*"
+
+  # ─────────────────────────────────────────────────────────────
+  # 3. Docker — base images dos serviços (será habilitado na Onda 1
+  #    assim que Dockerfiles existirem; manter aqui como referência)
+  # ─────────────────────────────────────────────────────────────
+  # - package-ecosystem: "docker"
+  #   directory: "/infra/docker/images/auth-service"
+  #   schedule:
+  #     interval: "weekly"
+  #   open-pull-requests-limit: 3
+  #   labels:
+  #     - "dependencies"
+  #     - "docker"
+  #     - "security"
+  #   commit-message:
+  #     prefix: "chore(docker)"

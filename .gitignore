@@ -63,3 +63,6 @@ yarn.lock
 
 # Local-only docker volumes
 infra/docker/dev/.volumes/
+
+# TypeScript incremental build info (regenerado em todo build)
+**/*.tsbuildinfo

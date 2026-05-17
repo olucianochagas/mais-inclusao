@@ -1,0 +1,162 @@
+# ────────────────────────────────────────────────────────────────
+# Configuração do actions/labeler — atribuição de labels por path.
+# Sintaxe v5: cada label tem `changed-files` que aceita patterns.
+# Docs: https://github.com/actions/labeler
+# ────────────────────────────────────────────────────────────────
+
+# ─── Apps backend ──────────────────────────────────────────────
+area:auth:
+  - changed-files:
+      - any-glob-to-any-file: 'apps/auth-service/**'
+
+area:programs:
+  - changed-files:
+      - any-glob-to-any-file: 'apps/programs-service/**'
+
+area:citizens:
+  - changed-files:
+      - any-glob-to-any-file: 'apps/citizens-service/**'
+
+area:applications:
+  - changed-files:
+      - any-glob-to-any-file: 'apps/applications-service/**'
+
+area:bff-gestor:
+  - changed-files:
+      - any-glob-to-any-file: 'apps/bff-gestor/**'
+
+area:bff-cidadao:
+  - changed-files:
+      - any-glob-to-any-file: 'apps/bff-cidadao/**'
+
+# ─── Apps frontend ─────────────────────────────────────────────
+area:shell:
+  - changed-files:
+      - any-glob-to-any-file: 'apps/shell/**'
+
+area:gestor-mf:
+  - changed-files:
+      - any-glob-to-any-file: 'apps/gestor-mf/**'
+
+area:cidadao-mf:
+  - changed-files:
+      - any-glob-to-any-file: 'apps/cidadao-mf/**'
+
+# ─── Packages compartilhados ───────────────────────────────────
+area:ui:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/ui/**'
+
+area:contracts:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/contracts/**'
+
+area:persistence:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/persistence/**'
+
+area:messaging:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/messaging/**'
+
+area:audit:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/audit/**'
+
+area:observability:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/observability/**'
+
+# ─── Infra & ferramentas ──────────────────────────────────────
+infra:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'infra/**'
+          - 'docker-compose*.yml'
+          - 'Dockerfile*'
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/workflows/**'
+          - '.github/actions/**'
+          - 'commitlint.config.cjs'
+
+tools:
+  - changed-files:
+      - any-glob-to-any-file: 'tools/**'
+
+# ─── Documentação ────────────────────────────────────────────
+docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'docs/**'
+          - '**/README.md'
+          - 'CONTRIBUTING.md'
+          - 'CODE-OF-CONDUCT.md'
+          - 'GOVERNANCE.md'
+          - 'SUPPORT.md'
+          - 'MAINTAINERS.md'
+          - 'SECURITY.md'
+          - 'CHANGELOG.md'
+
+adr:
+  - changed-files:
+      - any-glob-to-any-file: 'docs/adr/**'
+
+# ─── Cross-cutting concerns ────────────────────────────────────
+lgpd:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'docs/legal/**'
+          - 'packages/persistence/**'
+          - 'packages/audit/**'
+          - 'apps/citizens-service/**'
+
+security:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'SECURITY.md'
+          - 'docs/security/**'
+          - 'packages/auth-react/**'
+          - 'apps/auth-service/**'
+          - '.github/workflows/codeql.yml'
+          - '.github/dependabot.yml'
+
+a11y:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'packages/ui/**'
+          - 'apps/cidadao-mf/**'
+          - 'apps/shell/**'
+          - '**/*.a11y.test.ts'
+          - '**/*.axe.test.ts'
+
+# ─── Tooling / configurações raiz ──────────────────────────────
+tooling:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'package.json'
+          - 'pnpm-workspace.yaml'
+          - 'pnpm-lock.yaml'
+          - 'turbo.json'
+          - 'tsconfig*.json'
+          - '.prettierrc'
+          - '.prettierignore'
+          - '.editorconfig'
+          - '.nvmrc'
+          - 'commitlint.config.cjs'
+
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'package.json'
+          - 'pnpm-lock.yaml'
+          - '**/package.json'
+
+changeset:
+  - changed-files:
+      - any-glob-to-any-file: '.changeset/**'
+
+# ─── Tamanho do PR (apenas indicativo, ajustável) ──────────────
+# (Outras actions calculam tamanho; aqui só labels manuais.)

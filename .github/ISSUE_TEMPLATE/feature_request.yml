@@ -1,0 +1,113 @@
+name: 💡 Propor uma feature
+description: Propor uma nova funcionalidade, melhoria ou mudança de comportamento.
+title: "[feat]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por propor uma feature. **Antes de prosseguir:**
+        - Descreva o **problema do usuário** antes da solução técnica. Quem é a persona? Que dor sente? Por que isso importa?
+        - Veja se a feature está coberta pela [spec de decomposição](https://github.com/olucianochagas/mais-inclusao/blob/main/docs/superpowers/specs/2026-05-16-programa-mais-inclusao-decomposicao.md) (ondas 2, 3, 4+) — pode já estar planejada.
+        - Para discussões mais amplas (antes de virar proposta formal), use [Discussions](https://github.com/olucianochagas/mais-inclusao/discussions).
+
+  - type: checkboxes
+    id: prereqs
+    attributes:
+      label: Pré-checagens
+      options:
+        - label: Procurei nas issues existentes e nas discussions, e não encontrei proposta similar.
+          required: true
+        - label: Li o [Código de Conduta](https://github.com/olucianochagas/mais-inclusao/blob/main/CODE-OF-CONDUCT.md).
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema do usuário
+      description: Qual dor concreta de usuário esta feature resolve? Quem sofre essa dor?
+      placeholder: |
+        Como **gestor de programa**, hoje preciso reaproveitar critérios de elegibilidade de um programa em outro, e a única forma é recriar manualmente. Isso é repetitivo e me leva a copiar e errar.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Solução proposta
+      description: Como você imagina que isso seria resolvido? UI, API, comportamento.
+      placeholder: |
+        Adicionar botão "Duplicar regras de elegibilidade" no detalhe de program, permitindo selecionar programa-origem e copiar todas as regras como rascunho editável.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas consideradas
+      description: Outras formas de resolver o problema, e por que você prefere a proposta acima.
+      placeholder: |
+        - Templates de regra reusáveis (mais flexível mas adiciona modelo novo).
+        - Import/export de JSON (poder máximo mas pior UX).
+    validations:
+      required: false
+
+  - type: dropdown
+    id: persona
+    attributes:
+      label: Persona principal afetada
+      multiple: true
+      options:
+        - "Cidadão (titular dos dados)"
+        - "Gestor / Servidor público"
+        - "Operador SaaS"
+        - "Contribuidor / Desenvolvedor"
+        - "DPO / Compliance"
+        - "Outro"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: onda
+    attributes:
+      label: A qual onda do roadmap pertence (sua avaliação)
+      description: Conforme [spec de decomposição](https://github.com/olucianochagas/mais-inclusao/blob/main/docs/superpowers/specs/2026-05-16-programa-mais-inclusao-decomposicao.md#seção-6--ondas-seguintes-e-gatilhos-de-extração).
+      options:
+        - "Onda 1 — MVP"
+        - "Onda 2 — Operação real + privacidade"
+        - "Onda 3 — Governança + escala"
+        - "Onda 4+ — Visão de longo prazo"
+        - "Não sei / preciso de ajuda para classificar"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: impacts
+    attributes:
+      label: Áreas potencialmente impactadas
+      options:
+        - label: Backend (serviços NestJS)
+        - label: Frontend (shell, gestor-mf, cidadao-mf, packages/ui)
+        - label: Contratos (`packages/contracts`) — DTOs ou eventos
+        - label: Infra / DevOps
+        - label: Segurança & LGPD
+        - label: Acessibilidade
+        - label: Documentação
+        - label: Não sei dizer
+
+  - type: textarea
+    id: success
+    attributes:
+      label: Como saberíamos que a feature deu certo
+      description: Métrica, observação, comportamento esperado. Não é obrigatório, mas ajuda.
+      placeholder: "Gestores conseguem reusar regras em 80%+ dos programas novos, conforme telemetria."
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Contexto adicional
+      placeholder: "Screenshots de mockup, links para discussions, referências de outras ferramentas que fazem algo parecido."
+    validations:
+      required: false

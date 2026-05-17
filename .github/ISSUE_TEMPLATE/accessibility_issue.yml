@@ -1,0 +1,138 @@
+name: ♿ Reportar barreira de acessibilidade
+description: Reportar uma barreira de acessibilidade em qualquer superfície do +Inclusão.
+title: "[a11y]: "
+labels: ["a11y", "accessibility", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Acessibilidade é prioridade no +Inclusão. Issues com este template têm **SLA agressivo**: P0 = 24h, P1 = 1 semana.
+
+        Obrigado por nos ajudar a tornar a plataforma utilizável por todas as pessoas.
+
+  - type: checkboxes
+    id: prereqs
+    attributes:
+      label: Pré-checagens
+      options:
+        - label: Procurei nas issues existentes e não encontrei duplicata.
+          required: true
+        - label: Li o [Código de Conduta](https://github.com/olucianochagas/mais-inclusao/blob/main/CODE-OF-CONDUCT.md).
+          required: true
+
+  - type: textarea
+    id: barrier
+    attributes:
+      label: Qual é a barreira?
+      description: Descreva o que **não funciona** — não o que poderia ser melhor.
+      placeholder: |
+        Ao usar leitor de tela NVDA na tela de inscrição em programa, o foco "pula" o campo de CPF e vai direto para o campo de telefone. O CPF fica inacessível por teclado.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: wcag
+    attributes:
+      label: Diretriz WCAG potencialmente violada (se souber)
+      description: Não obrigatório — atribuímos no triage se você não souber.
+      multiple: true
+      options:
+        - "1.1.1 Conteúdo não textual (alt em imagens, etc.)"
+        - "1.3.1 Informação e relações (estrutura semântica)"
+        - "1.4.3 Contraste mínimo (AA)"
+        - "1.4.4 Redimensionar texto"
+        - "1.4.11 Contraste de não-texto (AA)"
+        - "2.1.1 Teclado"
+        - "2.4.3 Ordem de foco"
+        - "2.4.7 Foco visível"
+        - "2.5.5 Tamanho do alvo (AA)"
+        - "3.2.2 Em entrada de dados"
+        - "3.3.1 Identificação de erro"
+        - "3.3.2 Rótulos ou instruções"
+        - "4.1.2 Nome, função, valor"
+        - "4.1.3 Mensagens de status"
+        - "Outra / não sei classificar"
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Onde ocorreu
+      options:
+        - "Portal Cidadão (apps/cidadao-mf)"
+        - "Painel Gestor (apps/gestor-mf)"
+        - "Shell host (apps/shell)"
+        - "Componente em packages/ui"
+        - "Documentação (README, CONTRIBUTING, etc.)"
+        - "Outro"
+    validations:
+      required: true
+
+  - type: textarea
+    id: assistive_tech
+    attributes:
+      label: Tecnologia assistiva usada
+      description: Leitor de tela, lupa, alto contraste, navegação por teclado, voz, etc.
+      placeholder: |
+        - Leitor de tela: NVDA 2024.4 em Windows 11, Firefox 130
+        - OU: Navegação só por teclado em Chrome 142
+        - OU: Zoom 200% em Safari 17 / macOS 14
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Passos para reproduzir
+      description: Sequência exata.
+      placeholder: |
+        1. Abrir cidadao-mf em /inscricao/programa-alimentacao
+        2. Ativar NVDA
+        3. Pressionar Tab repetidamente para navegar pelos campos
+        4. Observar: o foco pula do campo "Nome completo" direto para "Telefone", sem passar pelo campo "CPF"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportamento esperado
+      placeholder: "O campo CPF deveria receber foco e ser anunciado pelo leitor de tela na ordem natural."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Comportamento observado
+      placeholder: "O campo CPF não é anunciado nem recebe foco. Usuário não consegue preencher por teclado."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severidade percebida
+      options:
+        - "🔴 P0 — Bloqueia fluxo crítico para usuário com deficiência (SLA 24h)"
+        - "🟠 P1 — Causa dificuldade significativa mas há workaround (SLA 1 semana)"
+        - "🟡 P2 — Inconveniente mas não impede uso"
+        - "🟢 P3 — Cosmético ou tecnicamente menor"
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impacto humano
+      description: Quem é afetado e como? Sem precisar de números — descrição qualitativa serve.
+      placeholder: "Cidadão com deficiência visual não consegue se inscrever sozinho em programa de auxílio. Precisa de assistência presencial — exatamente o que o portal deveria evitar."
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Contexto adicional
+      placeholder: "Vídeo de tela com leitor de tela, screenshots da árvore de acessibilidade, output do axe-core, etc."
+    validations:
+      required: false

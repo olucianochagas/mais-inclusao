@@ -1,0 +1,134 @@
+name: 🐛 Reportar um bug
+description: Reportar um comportamento inesperado, defeito ou regressão no +Inclusão.
+title: "[bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por reportar um bug. Por favor preencha os campos abaixo com o máximo de detalhe que puder.
+
+        **Antes de abrir:**
+        - Verifique se já não há issue com o mesmo problema.
+        - Se for vulnerabilidade de segurança, **NÃO use este template** — use [SECURITY.md](https://github.com/olucianochagas/mais-inclusao/blob/main/SECURITY.md).
+        - Se for barreira de acessibilidade, use o template [Accessibility Issue](https://github.com/olucianochagas/mais-inclusao/issues/new?template=accessibility_issue.yml).
+        - Se sua dúvida não é bug, leve para [Discussions](https://github.com/olucianochagas/mais-inclusao/discussions).
+
+  - type: checkboxes
+    id: prereqs
+    attributes:
+      label: Pré-checagens
+      description: Por favor confirme antes de prosseguir.
+      options:
+        - label: Procurei nas issues existentes e não encontrei duplicata.
+          required: true
+        - label: Não estou reportando vulnerabilidade de segurança (essas vão por SECURITY.md).
+          required: true
+        - label: Li e aceito o [Código de Conduta](https://github.com/olucianochagas/mais-inclusao/blob/main/CODE-OF-CONDUCT.md).
+          required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Resumo do bug
+      description: Uma frase ou duas descrevendo o problema.
+      placeholder: "Quando o gestor tenta publicar um programa com mais de 100 regras de elegibilidade, a UI congela e nenhum erro é exibido."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Passos para reproduzir
+      description: Sequência exata, numerada, que reproduz o bug.
+      placeholder: |
+        1. Logar como gestor do tenant `demo-secretaria`.
+        2. Acessar `/gestor/programs`.
+        3. Clicar em "Novo programa".
+        4. Adicionar 101 regras de elegibilidade.
+        5. Clicar em "Publicar".
+        6. Observar: UI fica branca, sem mensagem de erro.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportamento esperado
+      description: O que você esperava que acontecesse.
+      placeholder: "Esperava que o programa fosse publicado, ou que aparecesse mensagem clara de erro/limite."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Comportamento observado
+      description: O que de fato aconteceu.
+      placeholder: "Tela em branco; console mostra `Maximum call stack size exceeded`; rede mostra timeout em POST /programs."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severidade percebida
+      description: Sua avaliação (refinaremos no triage).
+      options:
+        - "🔴 Crítico — bloqueia fluxo essencial sem workaround"
+        - "🟠 Alto — bloqueia fluxo importante, há workaround custoso"
+        - "🟡 Médio — afeta UX mas há workaround"
+        - "🟢 Baixo — cosmético ou pouco frequente"
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Versão / commit
+      description: Versão do +Inclusão ou SHA do commit em que reproduziu.
+      placeholder: "main @ abc1234 (ou v0.x.y)"
+    validations:
+      required: false
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Ambiente
+      description: SO, navegador, Node, pnpm, Docker — o que for relevante.
+      placeholder: |
+        - SO: Ubuntu 24.04 / macOS 14.5 / Windows 11
+        - Navegador: Chrome 142, Firefox 130
+        - Node: 24.15.0
+        - pnpm: 11.1.2
+        - Docker: 26.1.4
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / mensagens de erro
+      description: Cole logs relevantes em bloco de código. **NÃO inclua PII ou dados reais de cidadãos.**
+      render: text
+      placeholder: |
+        [2026-05-16T14:23:11Z ERROR programs-service] EligibilityRule.evaluate: stack overflow at depth 101
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Contexto adicional
+      description: Screenshots, vídeos, links relacionados. Qualquer coisa que ajude.
+      placeholder: "Screenshot anexado em comentário."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacidade
+      options:
+        - label: Confirmo que não incluí dados pessoais (CPF, nome, e-mail, etc.) reais neste reporte.
+          required: true

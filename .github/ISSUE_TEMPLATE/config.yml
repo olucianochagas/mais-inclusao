@@ -1,0 +1,21 @@
+# Configuração da página "New issue"
+# https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository
+
+blank_issues_enabled: false
+
+contact_links:
+  - name: 💬 Perguntas, dúvidas e ideias
+    url: https://github.com/olucianochagas/mais-inclusao/discussions
+    about: Use o GitHub Discussions para perguntas abertas, brainstorm de features, dúvidas sobre uso e ideias que ainda não viraram propostas formais.
+
+  - name: 🔐 Reportar vulnerabilidade de segurança
+    url: https://github.com/olucianochagas/mais-inclusao/security/advisories/new
+    about: NÃO abra issue pública para vulnerabilidades. Use o GitHub Security Advisories (privado). Leia também SECURITY.md.
+
+  - name: ⚖️ Reportar violação do Código de Conduta
+    url: https://github.com/olucianochagas/mais-inclusao/blob/main/CODE-OF-CONDUCT.md#como-reportar
+    about: Reporte violações de forma confidencial via canal descrito no Código de Conduta.
+
+  - name: 📖 Ler documentação primeiro
+    url: https://github.com/olucianochagas/mais-inclusao#readme
+    about: README, CONTRIBUTING, GOVERNANCE, SUPPORT, SECURITY — provavelmente sua dúvida já está documentada.

@@ -1,0 +1,122 @@
+# CODEOWNERS — atribuição automática de revisão
+#
+# Sintaxe: <pattern>  <owner1> <owner2> ...
+# A última regra que casa um arquivo vence.
+# Owners precisam ter pelo menos permissão de leitura no repo.
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# ─────────────────────────────────────────────────────────────────
+# Padrão: todo arquivo cai aqui
+# ─────────────────────────────────────────────────────────────────
+*                                       @olucianochagas
+
+# ─────────────────────────────────────────────────────────────────
+# Documentação geral
+# ─────────────────────────────────────────────────────────────────
+README.md                               @olucianochagas
+CONTRIBUTING.md                         @olucianochagas
+CODE-OF-CONDUCT.md                      @olucianochagas
+SECURITY.md                             @olucianochagas
+GOVERNANCE.md                           @olucianochagas
+MAINTAINERS.md                          @olucianochagas
+SUPPORT.md                              @olucianochagas
+CHANGELOG.md                            @olucianochagas
+LICENSE                                 @olucianochagas
+
+/docs/                                  @olucianochagas
+/docs/adr/                              @olucianochagas
+/docs/architecture/                     @olucianochagas
+/docs/superpowers/specs/                @olucianochagas
+
+# ─────────────────────────────────────────────────────────────────
+# Áreas sensíveis: LGPD, segurança
+# (Estado-alvo: revisão dupla — mantenedor + especialista da área)
+# ─────────────────────────────────────────────────────────────────
+/docs/legal/                            @olucianochagas
+/docs/security/                         @olucianochagas
+/SECURITY.md                            @olucianochagas
+.github/dependabot.yml                  @olucianochagas
+.github/workflows/codeql.yml            @olucianochagas
+
+# ─────────────────────────────────────────────────────────────────
+# Contratos públicos — ponto crítico (Seção 4 da spec)
+# Toda mudança aqui é breaking-change-candidate
+# ─────────────────────────────────────────────────────────────────
+/packages/contracts/                    @olucianochagas
+
+# ─────────────────────────────────────────────────────────────────
+# Plataforma compartilhada
+# ─────────────────────────────────────────────────────────────────
+/packages/persistence/                  @olucianochagas
+/packages/messaging/                    @olucianochagas
+/packages/audit/                        @olucianochagas
+/packages/observability/                @olucianochagas
+/packages/testing/                      @olucianochagas
+/packages/eslint-config/                @olucianochagas
+/packages/tsconfig/                     @olucianochagas
+
+# ─────────────────────────────────────────────────────────────────
+# Design system / a11y — área crítica
+# ─────────────────────────────────────────────────────────────────
+/packages/ui/                           @olucianochagas
+/packages/auth-react/                   @olucianochagas
+/packages/tailwind-config/              @olucianochagas
+
+# ─────────────────────────────────────────────────────────────────
+# Backend — serviços de domínio
+# ─────────────────────────────────────────────────────────────────
+/apps/auth-service/                     @olucianochagas
+/apps/programs-service/                 @olucianochagas
+/apps/citizens-service/                 @olucianochagas
+/apps/applications-service/             @olucianochagas
+
+# ─────────────────────────────────────────────────────────────────
+# Backend — BFFs
+# ─────────────────────────────────────────────────────────────────
+/apps/bff-gestor/                       @olucianochagas
+/apps/bff-cidadao/                      @olucianochagas
+
+# ─────────────────────────────────────────────────────────────────
+# Frontend — apps Module Federation
+# ─────────────────────────────────────────────────────────────────
+/apps/shell/                            @olucianochagas
+/apps/gestor-mf/                        @olucianochagas
+/apps/cidadao-mf/                       @olucianochagas
+
+# ─────────────────────────────────────────────────────────────────
+# Tools — CLIs internas e codegen
+# ─────────────────────────────────────────────────────────────────
+/tools/cli/                             @olucianochagas
+/tools/codegen/                         @olucianochagas
+
+# ─────────────────────────────────────────────────────────────────
+# Infraestrutura
+# ─────────────────────────────────────────────────────────────────
+/infra/                                 @olucianochagas
+/infra/docker/                          @olucianochagas
+/infra/k8s/                             @olucianochagas
+/infra/terraform/                       @olucianochagas
+
+# ─────────────────────────────────────────────────────────────────
+# CI / governança do repo
+# ─────────────────────────────────────────────────────────────────
+/.github/                               @olucianochagas
+/.github/workflows/                     @olucianochagas
+/.github/ISSUE_TEMPLATE/                @olucianochagas
+/.github/PULL_REQUEST_TEMPLATE.md       @olucianochagas
+/.github/CODEOWNERS                     @olucianochagas
+/.changeset/                            @olucianochagas
+
+# ─────────────────────────────────────────────────────────────────
+# Raiz / tooling
+# ─────────────────────────────────────────────────────────────────
+/package.json                           @olucianochagas
+/pnpm-workspace.yaml                    @olucianochagas
+/pnpm-lock.yaml                         @olucianochagas
+/turbo.json                             @olucianochagas
+/tsconfig*.json                         @olucianochagas
+/.editorconfig                          @olucianochagas
+/.nvmrc                                 @olucianochagas
+/.prettierrc                            @olucianochagas
+/.prettierignore                        @olucianochagas
+/.gitignore                             @olucianochagas

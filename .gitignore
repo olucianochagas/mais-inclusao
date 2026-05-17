@@ -1,0 +1,65 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+.next/
+.rspack/
+out/
+coverage/
+
+# Turbo
+.turbo/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Env files
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE / Editor
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.shared.json
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+.nyc_output/
+playwright-report/
+test-results/
+e2e-results/
+
+# Prisma
+**/prisma/migrations/dev/
+
+# Superpowers brainstorming artifacts (visual companion mockups, ephemeral state)
+.superpowers/
+
+# OS
+*~
+
+# Lockfiles
+package-lock.json
+yarn.lock
+
+# Generated typings
+**/.prisma/
+
+# Local-only docker volumes
+infra/docker/dev/.volumes/

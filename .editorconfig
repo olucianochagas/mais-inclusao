@@ -1,0 +1,54 @@
+# EditorConfig — pacto mínimo entre editores e CI
+# https://editorconfig.org/
+
+root = true
+
+# ─────────────────────────────────────────────────────────────
+# Padrão global: utf-8, LF, 2 espaços, trim, newline no fim
+# ─────────────────────────────────────────────────────────────
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+max_line_length = 100
+
+# ─────────────────────────────────────────────────────────────
+# Arquivos onde whitespace é significativo
+# ─────────────────────────────────────────────────────────────
+[*.md]
+trim_trailing_whitespace = false   # two-space line break em Markdown
+
+[Makefile]
+indent_style = tab                 # GNU Make exige tabs em recipes
+
+# ─────────────────────────────────────────────────────────────
+# Convenções específicas por linguagem
+# ─────────────────────────────────────────────────────────────
+[*.{json,yml,yaml,toml}]
+indent_size = 2
+
+[*.{ts,tsx,js,jsx,mjs,cjs}]
+indent_size = 2
+
+[*.{css,scss}]
+indent_size = 2
+
+[*.{py}]
+indent_size = 4
+
+[*.{go}]
+indent_style = tab
+indent_size = 4
+
+[*.{prisma}]
+indent_size = 2
+
+# ─────────────────────────────────────────────────────────────
+# Arquivos shell
+# ─────────────────────────────────────────────────────────────
+[*.{sh,bash,zsh}]
+indent_size = 2
+end_of_line = lf

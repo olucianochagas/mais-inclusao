@@ -1,0 +1,82 @@
+# ────────────────────────────────────────────────────────────────
+# Commitlint — valida Conventional Commits
+# Verifica: (1) título do PR (que vira mensagem do squash merge)
+#           (2) cada commit individualmente
+# Ver: commitlint.config.cjs
+# ────────────────────────────────────────────────────────────────
+name: Conventional Commits
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  validate-pr-title:
+    name: 📛 PR title (squash merge message)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate PR title against commitlint.config.cjs
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          set -euo pipefail
+          # PR_TITLE vem da API GitHub. Tratado como dado (não código): pipe seguro.
+          echo "Validando título do PR: \"$PR_TITLE\""
+          printf '%s\n' "$PR_TITLE" | pnpm exec commitlint --config commitlint.config.cjs
+
+  validate-commits:
+    name: 📜 Each commit message
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate commit messages in PR range
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          echo "Validando commits de $BASE_SHA até $HEAD_SHA"
+          pnpm exec commitlint \
+            --from "$BASE_SHA" \
+            --to "$HEAD_SHA" \
+            --verbose \
+            --config commitlint.config.cjs

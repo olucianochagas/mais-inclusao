@@ -1,0 +1,81 @@
+# ────────────────────────────────────────────────────────────────
+# DCO — Developer Certificate of Origin check
+# Valida que todo commit do PR está assinado com `Signed-off-by:`
+# Ver: https://developercertificate.org/
+#      CONTRIBUTING.md — seção "Padrões de commit"
+# ────────────────────────────────────────────────────────────────
+name: DCO
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  check:
+    name: ✍️  DCO sign-off check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Verify Signed-off-by lines in PR commits
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+
+          echo "::group::Listing commits from $BASE_SHA..$HEAD_SHA"
+          mapfile -t COMMITS < <(git rev-list "$BASE_SHA..$HEAD_SHA")
+          echo "${#COMMITS[@]} commits to verify"
+          echo "::endgroup::"
+
+          FAILED=()
+
+          for sha in "${COMMITS[@]}"; do
+            short_sha=$(git rev-parse --short "$sha")
+            author_name=$(git log -1 --pretty='%an' "$sha")
+            author_email=$(git log -1 --pretty='%ae' "$sha")
+            body=$(git log -1 --pretty='%B' "$sha")
+            expected="Signed-off-by: ${author_name} <${author_email}>"
+
+            # `grep -F` (fixed string) + `-x` (line full match) trata o body como dados,
+            # não como padrão regex. Safe contra commits maliciosos.
+            if grep -Fqx "$expected" <<< "$body"; then
+              echo "✅ $short_sha — ${author_name} <${author_email}>"
+            else
+              if grep -Eq '^Signed-off-by: .+ <.+@.+>$' <<< "$body"; then
+                echo "⚠️  $short_sha — Signed-off-by presente mas com identidade distinta do autor"
+              else
+                echo "❌ $short_sha — sem 'Signed-off-by:' válido"
+                FAILED+=("$short_sha")
+              fi
+            fi
+          done
+
+          if [ ${#FAILED[@]} -gt 0 ]; then
+            echo
+            echo "::error title=DCO sign-off missing::Os seguintes commits não têm 'Signed-off-by:' válido:"
+            printf '   - %s\n' "${FAILED[@]}"
+            echo
+            echo "Para corrigir, faça rebase interativo adicionando --signoff:"
+            echo "  git rebase -i $BASE_SHA --signoff"
+            echo "Ou para o último commit:"
+            echo "  git commit --amend --signoff"
+            echo
+            echo "Detalhes em CONTRIBUTING.md — seção 'Padrões de commit (Conventional Commits + DCO)'"
+            exit 1
+          fi
+
+          echo
+          echo "✅ Todos os commits do PR têm DCO sign-off válido."

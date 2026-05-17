@@ -1,0 +1,172 @@
+{
+  "$schema": "./node_modules/turbo/schema.json",
+
+  "ui": "tui",
+
+  "globalDependencies": [
+    "tsconfig.base.json",
+    ".prettierrc",
+    ".editorconfig",
+    ".nvmrc",
+    "pnpm-workspace.yaml",
+    ".env",
+    ".env.*",
+    "!.env.local",
+    "!.env.*.local"
+  ],
+
+  "globalEnv": ["NODE_ENV", "CI"],
+
+  "globalPassThroughEnv": [
+    "DATABASE_URL",
+    "REDIS_URL",
+    "NATS_URL",
+    "JWT_SECRET",
+    "JWT_PUBLIC_KEY",
+    "JWT_PRIVATE_KEY",
+    "ENCRYPTION_KEK_PROVIDER",
+    "ENCRYPTION_KEK_KEY_ID",
+    "OTEL_EXPORTER_OTLP_ENDPOINT",
+    "OTEL_SERVICE_NAME",
+    "TENANT_ID",
+    "LOG_LEVEL"
+  ],
+
+  "remoteCache": {
+    "enabled": false,
+    "signature": false
+  },
+
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/*.test.ts",
+        "!**/*.test.tsx",
+        "!**/*.spec.ts",
+        "!**/__tests__/**",
+        "!**/test/**"
+      ],
+      "outputs": [
+        "dist/**",
+        "build/**",
+        ".rspack/**",
+        ".next/**",
+        "out/**",
+        "!node_modules/**"
+      ]
+    },
+
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": ["^build"]
+    },
+
+    "lint": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "src/**/*.{ts,tsx,js,jsx,mjs,cjs}",
+        "test/**/*.{ts,tsx,js,jsx}",
+        "*.{ts,tsx,js,jsx,mjs,cjs}",
+        "eslint.config.{js,mjs,cjs}",
+        ".eslintrc*",
+        "package.json"
+      ],
+      "outputs": []
+    },
+
+    "lint:fix": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+
+    "typecheck": {
+      "dependsOn": ["^build", "^typecheck"],
+      "inputs": [
+        "src/**/*.{ts,tsx}",
+        "test/**/*.{ts,tsx}",
+        "*.{ts,tsx}",
+        "tsconfig.json",
+        "tsconfig.*.json"
+      ],
+      "outputs": ["**/*.tsbuildinfo"]
+    },
+
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "vitest.config.*", "vitest.setup.*"],
+      "outputs": ["coverage/**"],
+      "env": ["VITEST", "VITEST_POOL_ID"]
+    },
+
+    "test:integration": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "src/**",
+        "test/**",
+        "prisma/**",
+        "vitest.integration.config.*"
+      ],
+      "outputs": ["coverage-integration/**"],
+      "env": [
+        "TESTCONTAINERS_RYUK_DISABLED",
+        "TESTCONTAINERS_HOST_OVERRIDE",
+        "DOCKER_HOST"
+      ]
+    },
+
+    "e2e": {
+      "cache": false,
+      "dependsOn": ["^build", "build"],
+      "inputs": ["src/**", "e2e/**", "playwright.config.*"],
+      "outputs": [
+        "playwright-report/**",
+        "test-results/**",
+        "e2e-results/**"
+      ],
+      "env": ["PLAYWRIGHT_BASE_URL", "PLAYWRIGHT_BROWSER", "PLAYWRIGHT_HEADED"]
+    },
+
+    "db:migrate": {
+      "cache": false,
+      "inputs": ["prisma/schema.prisma", "prisma/migrations/**"]
+    },
+
+    "db:generate": {
+      "inputs": ["prisma/schema.prisma"],
+      "outputs": [
+        "node_modules/.prisma/**",
+        "node_modules/@prisma/client/**",
+        "src/generated/**"
+      ]
+    },
+
+    "contracts:codegen": {
+      "inputs": ["src/**/*.{ts,tsx}", "contracts.config.*"],
+      "outputs": ["src/generated/**"]
+    },
+
+    "format": {
+      "cache": false
+    },
+
+    "format:check": {
+      "inputs": [
+        "**/*.{ts,tsx,js,jsx,mjs,cjs,json,md,yml,yaml,css,scss}",
+        ".prettierrc",
+        ".prettierignore"
+      ],
+      "outputs": []
+    },
+
+    "seed": {
+      "cache": false
+    },
+
+    "clean": {
+      "cache": false
+    }
+  }
+}

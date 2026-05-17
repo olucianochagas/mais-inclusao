@@ -1,0 +1,29 @@
+# Apoio financeiro ao projeto +Inclusão
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository
+#
+# Este arquivo controla o botão "Sponsor" no topo do repositório.
+#
+# STATUS: o projeto está em pre-alpha e ainda não aceita apoio financeiro
+# diretamente. Quando aceitar, será via canais transparentes (ex: GitHub
+# Sponsors, OpenCollective) com prestação de contas pública.
+#
+# Para apoiar o projeto agora, considere:
+# - Contribuir tempo: ver CONTRIBUTING.md
+# - Reportar bugs e barreiras de acessibilidade
+# - Divulgar o projeto em órgãos públicos e ONGs que podem se beneficiar
+# - Mentorar contribuidores iniciantes
+
+# github: [olucianochagas]                # a habilitar via GitHub Sponsors
+# patreon: # nome-no-patreon
+# open_collective: # nome-no-open-collective
+# ko_fi: # nome-no-ko-fi
+# tidelift: # npm/nome-do-pacote
+# community_bridge: # nome-no-community-bridge
+# liberapay: # nome-na-liberapay
+# issuehunt: # nome-no-issuehunt
+# otechie: # nome-no-otechie
+# lfx_crowdfunding: # nome-no-lfx-crowdfunding
+# polar: # nome-no-polar
+# buy_me_a_coffee: # nome-no-buy-me-a-coffee
+# thanks_dev: # nome-no-thanks.dev
+# custom: # ['https://exemplo.com/apoiar']

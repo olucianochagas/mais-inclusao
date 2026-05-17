@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@mais-inclusao/tsconfig",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Configurações TypeScript compartilhadas do monorepo +Inclusão.",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org",
+    "provenance": true
+  },
+  "type": "commonjs",
+  "exports": {
+    "./base.json": "./base.json",
+    "./nest.json": "./nest.json",
+    "./react.json": "./react.json",
+    "./lib.json": "./lib.json",
+    "./test.json": "./test.json"
+  },
+  "files": ["*.json", "README.md"],
+  "keywords": ["typescript", "tsconfig", "mais-inclusao", "monorepo"]
+}

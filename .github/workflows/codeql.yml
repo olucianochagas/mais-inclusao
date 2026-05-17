@@ -1,0 +1,68 @@
+# ────────────────────────────────────────────────────────────────
+# CodeQL — análise estática de segurança (SAST)
+# Executa em PRs, push em main e semanalmente como segurança contínua.
+# ────────────────────────────────────────────────────────────────
+name: CodeQL
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Toda segunda-feira às 06:00 UTC (= 03:00 America/Sao_Paulo)
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+  packages: read
+
+jobs:
+  analyze:
+    name: 🔬 CodeQL — ${{ matrix.language }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: javascript-typescript
+            build-mode: none
+          # Quando houver workflows escritos em outras linguagens, adicionar aqui.
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          # Queries: security-extended captura mais padrões que o default.
+          queries: security-extended,security-and-quality
+          config: |
+            paths-ignore:
+              - 'node_modules/**'
+              - '**/dist/**'
+              - '**/build/**'
+              - '**/.next/**'
+              - '**/.rspack/**'
+              - '**/coverage/**'
+              - '**/playwright-report/**'
+              - '**/test-results/**'
+              - '.changeset/**'
+              - 'docs/**'
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: /language:${{ matrix.language }}
+          upload: always

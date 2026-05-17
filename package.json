@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "author": {
+    "email": "olucianochagas@gmail.com",
+    "name": "Luciano Douglas Machado Chagas",
+    "url": "https://github.com/olucianochagas"
+  },
+  "bugs": {
+    "email": "olucianochagas@gmail.com",
+    "url": "https://github.com/olucianochagas/mais-inclusao/issues"
+  },
+  "description": "Promovendo inclusão, garantindo direitos e consolidando uma governança pública orientada por evidências, equidade e transformação social.",
+  "devDependencies": {
+    "@changesets/cli": "^2.27.10",
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.8.3",
+    "prettier-plugin-tailwindcss": "^0.8.0",
+    "rimraf": "^6.0.1",
+    "syncpack": "^13.0.0",
+    "turbo": "^2.9.14",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": "^24.15.0"
+  },
+  "homepage": "https://github.com/olucianochagas/mais-inclusao#readme",
+  "keywords": [
+    "saas",
+    "multi-tenant",
+    "inclusao-social",
+    "governanca-publica",
+    "lgpd",
+    "acessibilidade",
+    "wcag-22-aa",
+    "nestjs",
+    "module-federation",
+    "monorepo",
+    "turborepo",
+    "ddd",
+    "microservices",
+    "event-driven"
+  ],
+  "license": "ISC",
+  "lint-staged": {
+    "*.{json,md,yml,yaml,css,scss}": [
+      "prettier --write"
+    ],
+    "*.{ts,tsx,js,jsx,mjs,cjs}": [
+      "prettier --write"
+    ]
+  },
+  "name": "mais-inclusao",
+  "packageManager": "pnpm@11.1.2",
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "react": "19",
+        "react-dom": "19"
+      }
+    }
+  },
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/olucianochagas/mais-inclusao.git"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "changeset": "changeset",
+    "changeset:publish": "changeset publish",
+    "changeset:version": "changeset version",
+    "clean": "turbo run clean && rimraf node_modules .turbo dist coverage",
+    "commitlint": "commitlint --edit",
+    "contracts:codegen": "turbo run contracts:codegen",
+    "db:generate": "turbo run db:generate",
+    "db:migrate": "turbo run db:migrate",
+    "dev": "turbo run dev",
+    "e2e": "turbo run e2e",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,mjs,cjs,json,md,yml,yaml,css,scss}\" --ignore-path .prettierignore",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mjs,cjs,json,md,yml,yaml,css,scss}\" --ignore-path .prettierignore",
+    "infra:down": "docker compose -f infra/docker/dev/docker-compose.yml down",
+    "infra:logs": "docker compose -f infra/docker/dev/docker-compose.yml logs -f",
+    "infra:reset": "docker compose -f infra/docker/dev/docker-compose.yml down -v && pnpm infra:up",
+    "infra:up": "docker compose -f infra/docker/dev/docker-compose.yml up -d",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "prepare": "husky",
+    "seed": "turbo run seed",
+    "test": "turbo run test",
+    "test:integration": "turbo run test:integration",
+    "typecheck": "turbo run typecheck"
+  },
+  "type": "commonjs",
+  "version": "0.0.0"
+}

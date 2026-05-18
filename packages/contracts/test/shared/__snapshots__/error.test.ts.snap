@@ -1,0 +1,66 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ProblemDetails JSON Schema snapshot > ProblemDetailsSchema 1`] = `
+{
+  "$ref": "#/definitions/ProblemDetails",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ProblemDetails": {
+      "additionalProperties": false,
+      "properties": {
+        "correlation_id": {
+          "format": "uuid",
+          "type": "string",
+        },
+        "detail": {
+          "type": "string",
+        },
+        "errors": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "type": "string",
+              },
+              "message": {
+                "type": "string",
+              },
+              "path": {
+                "type": "string",
+              },
+            },
+            "required": [
+              "path",
+              "code",
+              "message",
+            ],
+            "type": "object",
+          },
+          "type": "array",
+        },
+        "instance": {
+          "type": "string",
+        },
+        "status": {
+          "maximum": 599,
+          "minimum": 100,
+          "type": "integer",
+        },
+        "title": {
+          "type": "string",
+        },
+        "type": {
+          "default": "about:blank",
+          "format": "uri",
+          "type": "string",
+        },
+      },
+      "required": [
+        "title",
+        "status",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;

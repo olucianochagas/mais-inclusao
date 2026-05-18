@@ -1,10 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
+import { zodToJsonSchema } from 'zod-to-json-schema';
 
-import {
-  PaginatedResultSchema,
-  PaginationQuerySchema,
-} from '../../src/shared/pagination.js';
+import { PaginatedResultSchema, PaginationQuerySchema } from '../../src/shared/pagination.js';
 
 describe('PaginationQuerySchema', () => {
   it('aceita query vazia (usa defaults)', () => {
@@ -39,9 +37,7 @@ describe('PaginationQuerySchema', () => {
   });
 
   it('aceita cursor opaco', () => {
-    expect(PaginationQuerySchema.parse({ cursor: 'abc123==' }).cursor).toBe(
-      'abc123==',
-    );
+    expect(PaginationQuerySchema.parse({ cursor: 'abc123==' }).cursor).toBe('abc123==');
   });
 });
 
@@ -61,9 +57,7 @@ describe('PaginatedResultSchema', () => {
   });
 
   it('aceita result vazio com next_cursor null', () => {
-    expect(() =>
-      ResultSchema.parse({ items: [], next_cursor: null }),
-    ).not.toThrow();
+    expect(() => ResultSchema.parse({ items: [], next_cursor: null })).not.toThrow();
   });
 
   it('aceita total_estimate opcional', () => {
@@ -93,5 +87,17 @@ describe('PaginatedResultSchema', () => {
         next_cursor: null,
       }),
     ).toThrow();
+  });
+});
+
+describe('Pagination schemas JSON Schema snapshots', () => {
+  it('PaginationQuerySchema', () => {
+    expect(zodToJsonSchema(PaginationQuerySchema, { name: 'PaginationQuery' })).toMatchSnapshot();
+  });
+
+  it('PaginatedResultSchema', () => {
+    const ItemSchema = z.object({ id: z.string(), name: z.string() });
+    const ResultSchema = PaginatedResultSchema(ItemSchema);
+    expect(zodToJsonSchema(ResultSchema, { name: 'PaginatedResult' })).toMatchSnapshot();
   });
 });

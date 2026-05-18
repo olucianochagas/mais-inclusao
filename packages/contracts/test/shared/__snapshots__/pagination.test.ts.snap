@@ -1,0 +1,73 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Pagination schemas JSON Schema snapshots > PaginatedResultSchema 1`] = `
+{
+  "$ref": "#/definitions/PaginatedResult",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "PaginatedResult": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+              },
+              "name": {
+                "type": "string",
+              },
+            },
+            "required": [
+              "id",
+              "name",
+            ],
+            "type": "object",
+          },
+          "type": "array",
+        },
+        "next_cursor": {
+          "type": [
+            "string",
+            "null",
+          ],
+        },
+        "total_estimate": {
+          "minimum": 0,
+          "type": "integer",
+        },
+      },
+      "required": [
+        "items",
+        "next_cursor",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;
+
+exports[`Pagination schemas JSON Schema snapshots > PaginationQuerySchema 1`] = `
+{
+  "$ref": "#/definitions/PaginationQuery",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "PaginationQuery": {
+      "additionalProperties": false,
+      "properties": {
+        "cursor": {
+          "type": "string",
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 100,
+          "minimum": 1,
+          "type": "integer",
+        },
+      },
+      "type": "object",
+    },
+  },
+}
+`;

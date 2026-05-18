@@ -1,9 +1,7 @@
 import { describe, expect, expectTypeOf, it } from 'vitest';
+import { zodToJsonSchema } from 'zod-to-json-schema';
 
-import {
-  type ProblemDetails,
-  ProblemDetailsSchema,
-} from '../../src/shared/error.js';
+import { type ProblemDetails, ProblemDetailsSchema } from '../../src/shared/error.js';
 
 describe('ProblemDetailsSchema', () => {
   const minimal = { title: 'Bad Request', status: 400 };
@@ -21,27 +19,19 @@ describe('ProblemDetailsSchema', () => {
   });
 
   it('rejeita type não-URL', () => {
-    expect(() =>
-      ProblemDetailsSchema.parse({ ...minimal, type: 'not-a-url' }),
-    ).toThrow();
+    expect(() => ProblemDetailsSchema.parse({ ...minimal, type: 'not-a-url' })).toThrow();
   });
 
   it('rejeita status < 100', () => {
-    expect(() =>
-      ProblemDetailsSchema.parse({ ...minimal, status: 99 }),
-    ).toThrow();
+    expect(() => ProblemDetailsSchema.parse({ ...minimal, status: 99 })).toThrow();
   });
 
   it('rejeita status > 599', () => {
-    expect(() =>
-      ProblemDetailsSchema.parse({ ...minimal, status: 600 }),
-    ).toThrow();
+    expect(() => ProblemDetailsSchema.parse({ ...minimal, status: 600 })).toThrow();
   });
 
   it('rejeita status não-inteiro', () => {
-    expect(() =>
-      ProblemDetailsSchema.parse({ ...minimal, status: 400.5 }),
-    ).toThrow();
+    expect(() => ProblemDetailsSchema.parse({ ...minimal, status: 400.5 })).toThrow();
   });
 
   it('aceita correlation_id UUID', () => {
@@ -54,9 +44,7 @@ describe('ProblemDetailsSchema', () => {
   });
 
   it('rejeita correlation_id não-UUID', () => {
-    expect(() =>
-      ProblemDetailsSchema.parse({ ...minimal, correlation_id: 'not-uuid' }),
-    ).toThrow();
+    expect(() => ProblemDetailsSchema.parse({ ...minimal, correlation_id: 'not-uuid' })).toThrow();
   });
 
   it('aceita extension errors[]', () => {
@@ -92,6 +80,12 @@ describe('ProblemDetailsSchema', () => {
 
   it('infere ProblemDetails corretamente', () => {
     const parsed = ProblemDetailsSchema.parse(minimal);
-    expectTypeOf(parsed).toMatchTypeOf<ProblemDetails>();
+    expectTypeOf(parsed).toExtend<ProblemDetails>();
+  });
+});
+
+describe('ProblemDetails JSON Schema snapshot', () => {
+  it('ProblemDetailsSchema', () => {
+    expect(zodToJsonSchema(ProblemDetailsSchema, { name: 'ProblemDetails' })).toMatchSnapshot();
   });
 });

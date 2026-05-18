@@ -1,5 +1,6 @@
 import { describe, expect, expectTypeOf, it } from 'vitest';
 import { z } from 'zod';
+import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import {
   type EventEnvelope,
@@ -26,9 +27,7 @@ describe('EventHeadersSchema', () => {
 
   describe('event_id', () => {
     it('rejeita não-UUID', () => {
-      expect(() =>
-        EventHeadersSchema.parse({ ...validHeaders, event_id: 'not-uuid' }),
-      ).toThrow();
+      expect(() => EventHeadersSchema.parse({ ...validHeaders, event_id: 'not-uuid' })).toThrow();
     });
   });
 
@@ -36,9 +35,7 @@ describe('EventHeadersSchema', () => {
     it('aceita pattern <context>.<entity>.<event>', () => {
       const valid = ['auth.tenant.created', 'programs.program.published'];
       for (const t of valid) {
-        expect(() =>
-          EventHeadersSchema.parse({ ...validHeaders, event_type: t }),
-        ).not.toThrow();
+        expect(() => EventHeadersSchema.parse({ ...validHeaders, event_type: t })).not.toThrow();
       }
     });
 
@@ -74,16 +71,12 @@ describe('EventHeadersSchema', () => {
     it('aceita SemVer válido', () => {
       const valid = ['0.1.0', '1.0.0', '10.20.30'];
       for (const v of valid) {
-        expect(() =>
-          EventHeadersSchema.parse({ ...validHeaders, event_version: v }),
-        ).not.toThrow();
+        expect(() => EventHeadersSchema.parse({ ...validHeaders, event_version: v })).not.toThrow();
       }
     });
 
     it('rejeita SemVer parcial', () => {
-      expect(() =>
-        EventHeadersSchema.parse({ ...validHeaders, event_version: '1.0' }),
-      ).toThrow();
+      expect(() => EventHeadersSchema.parse({ ...validHeaders, event_version: '1.0' })).toThrow();
     });
 
     it('rejeita prerelease', () => {
@@ -98,14 +91,20 @@ describe('EventHeadersSchema', () => {
 
   describe('tenant_id (INVARIANTE)', () => {
     it('rejeita ausência (defesa cross-tenant)', () => {
-      const { tenant_id: _tenant_id, ...withoutTenant } = validHeaders;
+      const withoutTenant = {
+        causation_id: validHeaders.causation_id,
+        correlation_id: validHeaders.correlation_id,
+        event_id: validHeaders.event_id,
+        event_type: validHeaders.event_type,
+        event_version: validHeaders.event_version,
+        occurred_at: validHeaders.occurred_at,
+        producer: validHeaders.producer,
+      };
       expect(() => EventHeadersSchema.parse(withoutTenant)).toThrow();
     });
 
     it('rejeita string vazia', () => {
-      expect(() =>
-        EventHeadersSchema.parse({ ...validHeaders, tenant_id: '' }),
-      ).toThrow();
+      expect(() => EventHeadersSchema.parse({ ...validHeaders, tenant_id: '' })).toThrow();
     });
   });
 
@@ -140,13 +139,19 @@ describe('EventHeadersSchema', () => {
 
   describe('causation_id', () => {
     it('aceita null (eventos raiz)', () => {
-      expect(() =>
-        EventHeadersSchema.parse({ ...validHeaders, causation_id: null }),
-      ).not.toThrow();
+      expect(() => EventHeadersSchema.parse({ ...validHeaders, causation_id: null })).not.toThrow();
     });
 
     it('aceita ausência (default null)', () => {
-      const { causation_id: _causation_id, ...withoutCausation } = validHeaders;
+      const withoutCausation = {
+        correlation_id: validHeaders.correlation_id,
+        event_id: validHeaders.event_id,
+        event_type: validHeaders.event_type,
+        event_version: validHeaders.event_version,
+        occurred_at: validHeaders.occurred_at,
+        producer: validHeaders.producer,
+        tenant_id: validHeaders.tenant_id,
+      };
       const parsed = EventHeadersSchema.parse(withoutCausation);
       expect(parsed.causation_id).toBeNull();
     });
@@ -163,15 +168,13 @@ describe('EventHeadersSchema', () => {
 
   describe('producer', () => {
     it('rejeita string vazia', () => {
-      expect(() =>
-        EventHeadersSchema.parse({ ...validHeaders, producer: '' }),
-      ).toThrow();
+      expect(() => EventHeadersSchema.parse({ ...validHeaders, producer: '' })).toThrow();
     });
   });
 
   it('infere EventHeaders corretamente', () => {
     const parsed = EventHeadersSchema.parse(validHeaders);
-    expectTypeOf(parsed).toMatchTypeOf<EventHeaders>();
+    expectTypeOf(parsed).toExtend<EventHeaders>();
   });
 });
 
@@ -200,7 +203,18 @@ describe('EventEnvelopeSchema', () => {
 
   it('tipo EventEnvelope<T> reflete payload', () => {
     type X = EventEnvelope<{ foo: string }>;
-    expectTypeOf<X['headers']>().toMatchTypeOf<EventHeaders>();
+    expectTypeOf<X['headers']>().toExtend<EventHeaders>();
     expectTypeOf<X['payload']>().toEqualTypeOf<{ foo: string }>();
+  });
+});
+
+describe('Event schemas JSON Schema snapshots', () => {
+  it('EventHeadersSchema', () => {
+    expect(zodToJsonSchema(EventHeadersSchema, { name: 'EventHeaders' })).toMatchSnapshot();
+  });
+
+  it('EventEnvelopeSchema', () => {
+    const EnvelopeSchema = EventEnvelopeSchema(z.object({ foo: z.string(), bar: z.number() }));
+    expect(zodToJsonSchema(EnvelopeSchema, { name: 'EventEnvelope' })).toMatchSnapshot();
   });
 });

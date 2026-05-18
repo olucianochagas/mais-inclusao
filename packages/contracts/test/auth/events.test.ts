@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import {
   TenantCreatedEventSchema,
@@ -21,8 +22,7 @@ const headers = {
 
 describe('TenantCreatedEventSchema', () => {
   const validPayload: TenantCreatedPayload = {
-    tenant_id:
-      '6ba7b810-9dad-11d1-80b4-00c04fd430c8' as TenantCreatedPayload['tenant_id'],
+    tenant_id: '6ba7b810-9dad-11d1-80b4-00c04fd430c8' as TenantCreatedPayload['tenant_id'],
     slug: 'sec-assistencia-sp',
     name: 'Secretaria de Assistência Social de São Paulo',
     plan: 'starter',
@@ -31,9 +31,7 @@ describe('TenantCreatedEventSchema', () => {
   };
 
   it('aceita evento válido completo', () => {
-    expect(() =>
-      TenantCreatedEventSchema.parse({ headers, payload: validPayload }),
-    ).not.toThrow();
+    expect(() => TenantCreatedEventSchema.parse({ headers, payload: validPayload })).not.toThrow();
   });
 
   it('rejeita slug muito longo (> 64)', () => {
@@ -108,12 +106,7 @@ describe('TenantDeactivatedEventSchema', () => {
   });
 
   it('aceita todos os reasons válidos', () => {
-    const reasons = [
-      'contract_ended',
-      'data_breach',
-      'unpaid',
-      'manual',
-    ] as const;
+    const reasons = ['contract_ended', 'data_breach', 'unpaid', 'manual'] as const;
     for (const reason of reasons) {
       expect(() =>
         TenantDeactivatedEventSchema.parse({
@@ -143,9 +136,7 @@ describe('UserCreatedEventSchema', () => {
   };
 
   it('aceita evento válido', () => {
-    expect(() =>
-      UserCreatedEventSchema.parse({ headers, payload: validPayload }),
-    ).not.toThrow();
+    expect(() => UserCreatedEventSchema.parse({ headers, payload: validPayload })).not.toThrow();
   });
 
   it('rejeita roles vazias', () => {
@@ -190,12 +181,7 @@ describe('UserDeactivatedEventSchema', () => {
   });
 
   it('aceita todos os reasons', () => {
-    const reasons = [
-      'voluntary',
-      'role_revoked',
-      'security_incident',
-      'data_breach',
-    ] as const;
+    const reasons = ['voluntary', 'role_revoked', 'security_incident', 'data_breach'] as const;
     for (const reason of reasons) {
       expect(() =>
         UserDeactivatedEventSchema.parse({
@@ -204,5 +190,29 @@ describe('UserDeactivatedEventSchema', () => {
         }),
       ).not.toThrow();
     }
+  });
+});
+
+describe('Auth event JSON Schema snapshots', () => {
+  it('TenantCreatedEventSchema', () => {
+    expect(
+      zodToJsonSchema(TenantCreatedEventSchema, { name: 'TenantCreatedEvent' }),
+    ).toMatchSnapshot();
+  });
+
+  it('TenantDeactivatedEventSchema', () => {
+    expect(
+      zodToJsonSchema(TenantDeactivatedEventSchema, { name: 'TenantDeactivatedEvent' }),
+    ).toMatchSnapshot();
+  });
+
+  it('UserCreatedEventSchema', () => {
+    expect(zodToJsonSchema(UserCreatedEventSchema, { name: 'UserCreatedEvent' })).toMatchSnapshot();
+  });
+
+  it('UserDeactivatedEventSchema', () => {
+    expect(
+      zodToJsonSchema(UserDeactivatedEventSchema, { name: 'UserDeactivatedEvent' }),
+    ).toMatchSnapshot();
   });
 });

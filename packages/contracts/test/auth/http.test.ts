@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import {
   LoginRequestSchema,
@@ -20,46 +21,32 @@ describe('LoginRequestSchema', () => {
   });
 
   it('rejeita email malformado', () => {
-    expect(() =>
-      LoginRequestSchema.parse({ ...valid, email: 'not-email' }),
-    ).toThrow();
+    expect(() => LoginRequestSchema.parse({ ...valid, email: 'not-email' })).toThrow();
   });
 
   it('rejeita email > 254 chars (RFC 5321)', () => {
     const longEmail = 'a'.repeat(250) + '@b.c';
-    expect(() =>
-      LoginRequestSchema.parse({ ...valid, email: longEmail }),
-    ).toThrow();
+    expect(() => LoginRequestSchema.parse({ ...valid, email: longEmail })).toThrow();
   });
 
   it('rejeita password < 12 chars', () => {
-    expect(() =>
-      LoginRequestSchema.parse({ ...valid, password: 'short' }),
-    ).toThrow();
+    expect(() => LoginRequestSchema.parse({ ...valid, password: 'short' })).toThrow();
   });
 
   it('rejeita password > 256 chars (defesa DoS)', () => {
-    expect(() =>
-      LoginRequestSchema.parse({ ...valid, password: 'a'.repeat(257) }),
-    ).toThrow();
+    expect(() => LoginRequestSchema.parse({ ...valid, password: 'a'.repeat(257) })).toThrow();
   });
 
   it('aceita password com 12 chars exatos', () => {
-    expect(() =>
-      LoginRequestSchema.parse({ ...valid, password: 'aaaaaaaaaaaa' }),
-    ).not.toThrow();
+    expect(() => LoginRequestSchema.parse({ ...valid, password: 'aaaaaaaaaaaa' })).not.toThrow();
   });
 
   it('rejeita tenant_slug vazio', () => {
-    expect(() =>
-      LoginRequestSchema.parse({ ...valid, tenant_slug: '' }),
-    ).toThrow();
+    expect(() => LoginRequestSchema.parse({ ...valid, tenant_slug: '' })).toThrow();
   });
 
   it('rejeita tenant_slug > 64 chars', () => {
-    expect(() =>
-      LoginRequestSchema.parse({ ...valid, tenant_slug: 'x'.repeat(65) }),
-    ).toThrow();
+    expect(() => LoginRequestSchema.parse({ ...valid, tenant_slug: 'x'.repeat(65) })).toThrow();
   });
 });
 
@@ -76,29 +63,21 @@ describe('LoginResponseSchema', () => {
   });
 
   it('rejeita token_type diferente de Bearer', () => {
-    expect(() =>
-      LoginResponseSchema.parse({ ...valid, token_type: 'Basic' as never }),
-    ).toThrow();
+    expect(() => LoginResponseSchema.parse({ ...valid, token_type: 'Basic' as never })).toThrow();
   });
 
   it('rejeita expires_in negativo', () => {
-    expect(() =>
-      LoginResponseSchema.parse({ ...valid, expires_in: -1 }),
-    ).toThrow();
+    expect(() => LoginResponseSchema.parse({ ...valid, expires_in: -1 })).toThrow();
   });
 
   it('rejeita expires_in não-inteiro', () => {
-    expect(() =>
-      LoginResponseSchema.parse({ ...valid, expires_in: 100.5 }),
-    ).toThrow();
+    expect(() => LoginResponseSchema.parse({ ...valid, expires_in: 100.5 })).toThrow();
   });
 });
 
 describe('RefreshRequestSchema', () => {
   it('aceita refresh válido', () => {
-    expect(() =>
-      RefreshRequestSchema.parse({ refresh_token: 'token' }),
-    ).not.toThrow();
+    expect(() => RefreshRequestSchema.parse({ refresh_token: 'token' })).not.toThrow();
   });
 
   it('rejeita sem refresh_token', () => {
@@ -138,16 +117,15 @@ describe('MeResponseSchema', () => {
   });
 
   it('email é OBRIGATÓRIO em MeResponse (LGPD Art. 18 II)', () => {
-    const { email: _email, ...userWithoutEmail } = valid.user;
-    expect(() =>
-      MeResponseSchema.parse({ ...valid, user: userWithoutEmail }),
-    ).toThrow();
+    const userWithoutEmail = {
+      name: valid.user.name,
+      user_id: valid.user.user_id,
+    };
+    expect(() => MeResponseSchema.parse({ ...valid, user: userWithoutEmail })).toThrow();
   });
 
   it('aceita roles vazio (usuário sem permissão ainda)', () => {
-    expect(() =>
-      MeResponseSchema.parse({ ...valid, roles: [] }),
-    ).not.toThrow();
+    expect(() => MeResponseSchema.parse({ ...valid, roles: [] })).not.toThrow();
   });
 
   it('rejeita email malformado', () => {
@@ -157,5 +135,27 @@ describe('MeResponseSchema', () => {
         user: { ...valid.user, email: 'not-email' },
       }),
     ).toThrow();
+  });
+});
+
+describe('Auth HTTP JSON Schema snapshots', () => {
+  it('LoginRequestSchema', () => {
+    expect(zodToJsonSchema(LoginRequestSchema, { name: 'LoginRequest' })).toMatchSnapshot();
+  });
+
+  it('LoginResponseSchema', () => {
+    expect(zodToJsonSchema(LoginResponseSchema, { name: 'LoginResponse' })).toMatchSnapshot();
+  });
+
+  it('RefreshRequestSchema', () => {
+    expect(zodToJsonSchema(RefreshRequestSchema, { name: 'RefreshRequest' })).toMatchSnapshot();
+  });
+
+  it('RefreshResponseSchema', () => {
+    expect(zodToJsonSchema(RefreshResponseSchema, { name: 'RefreshResponse' })).toMatchSnapshot();
+  });
+
+  it('MeResponseSchema', () => {
+    expect(zodToJsonSchema(MeResponseSchema, { name: 'MeResponse' })).toMatchSnapshot();
   });
 });

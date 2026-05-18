@@ -1,0 +1,155 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Event schemas JSON Schema snapshots > EventEnvelopeSchema 1`] = `
+{
+  "$ref": "#/definitions/EventEnvelope",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "EventEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "headers": {
+          "additionalProperties": false,
+          "properties": {
+            "causation_id": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string",
+                },
+                {
+                  "type": "null",
+                },
+              ],
+              "default": null,
+            },
+            "correlation_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+            "event_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+            "event_type": {
+              "pattern": "^[a-z_]+\\.[a-z_]+\\.[a-z_]+$",
+              "type": "string",
+            },
+            "event_version": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "type": "string",
+            },
+            "occurred_at": {
+              "format": "date-time",
+              "type": "string",
+            },
+            "producer": {
+              "minLength": 1,
+              "type": "string",
+            },
+            "tenant_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+          },
+          "required": [
+            "event_id",
+            "event_type",
+            "event_version",
+            "occurred_at",
+            "tenant_id",
+            "correlation_id",
+            "producer",
+          ],
+          "type": "object",
+        },
+        "payload": {
+          "additionalProperties": false,
+          "properties": {
+            "bar": {
+              "type": "number",
+            },
+            "foo": {
+              "type": "string",
+            },
+          },
+          "required": [
+            "foo",
+            "bar",
+          ],
+          "type": "object",
+        },
+      },
+      "required": [
+        "headers",
+        "payload",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;
+
+exports[`Event schemas JSON Schema snapshots > EventHeadersSchema 1`] = `
+{
+  "$ref": "#/definitions/EventHeaders",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "EventHeaders": {
+      "additionalProperties": false,
+      "properties": {
+        "causation_id": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "type": "string",
+            },
+            {
+              "type": "null",
+            },
+          ],
+          "default": null,
+        },
+        "correlation_id": {
+          "format": "uuid",
+          "type": "string",
+        },
+        "event_id": {
+          "format": "uuid",
+          "type": "string",
+        },
+        "event_type": {
+          "pattern": "^[a-z_]+\\.[a-z_]+\\.[a-z_]+$",
+          "type": "string",
+        },
+        "event_version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "type": "string",
+        },
+        "occurred_at": {
+          "format": "date-time",
+          "type": "string",
+        },
+        "producer": {
+          "minLength": 1,
+          "type": "string",
+        },
+        "tenant_id": {
+          "format": "uuid",
+          "type": "string",
+        },
+      },
+      "required": [
+        "event_id",
+        "event_type",
+        "event_version",
+        "occurred_at",
+        "tenant_id",
+        "correlation_id",
+        "producer",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;

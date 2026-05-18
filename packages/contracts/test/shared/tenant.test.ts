@@ -1,4 +1,5 @@
 import { describe, expect, expectTypeOf, it } from 'vitest';
+import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import {
   type TenantClaim,
@@ -26,7 +27,7 @@ describe('TenantIdSchema', () => {
   });
 
   it('preserva o brand TenantId no tipo inferido', () => {
-    expectTypeOf<TenantId>().toMatchTypeOf<string>();
+    expectTypeOf<TenantId>().toExtend<string>();
     const id = TenantIdSchema.parse('550e8400-e29b-41d4-a716-446655440000');
     expectTypeOf(id).toEqualTypeOf<TenantId>();
   });
@@ -44,29 +45,41 @@ describe('TenantClaimSchema', () => {
   });
 
   it('rejeita claim sem tenant_id', () => {
-    const { tenant_id: _tenant_id, ...withoutTenant } = validClaim;
+    const withoutTenant = {
+      roles: validClaim.roles,
+      user_id: validClaim.user_id,
+    };
     expect(() => TenantClaimSchema.parse(withoutTenant)).toThrow();
   });
 
   it('rejeita claim sem user_id', () => {
-    const { user_id: _user_id, ...withoutUser } = validClaim;
+    const withoutUser = {
+      roles: validClaim.roles,
+      tenant_id: validClaim.tenant_id,
+    };
     expect(() => TenantClaimSchema.parse(withoutUser)).toThrow();
   });
 
   it('rejeita roles não-array', () => {
-    expect(() =>
-      TenantClaimSchema.parse({ ...validClaim, roles: 'admin' }),
-    ).toThrow();
+    expect(() => TenantClaimSchema.parse({ ...validClaim, roles: 'admin' })).toThrow();
   });
 
   it('aceita roles vazio (sem permissão)', () => {
-    expect(() =>
-      TenantClaimSchema.parse({ ...validClaim, roles: [] }),
-    ).not.toThrow();
+    expect(() => TenantClaimSchema.parse({ ...validClaim, roles: [] })).not.toThrow();
   });
 
   it('infere TenantClaim corretamente', () => {
     const parsed = TenantClaimSchema.parse(validClaim);
-    expectTypeOf(parsed).toMatchTypeOf<TenantClaim>();
+    expectTypeOf(parsed).toExtend<TenantClaim>();
+  });
+});
+
+describe('Tenant schemas JSON Schema snapshots', () => {
+  it('TenantIdSchema', () => {
+    expect(zodToJsonSchema(TenantIdSchema, { name: 'TenantId' })).toMatchSnapshot();
+  });
+
+  it('TenantClaimSchema', () => {
+    expect(zodToJsonSchema(TenantClaimSchema, { name: 'TenantClaim' })).toMatchSnapshot();
   });
 });

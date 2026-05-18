@@ -1,0 +1,434 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Auth event JSON Schema snapshots > TenantCreatedEventSchema 1`] = `
+{
+  "$ref": "#/definitions/TenantCreatedEvent",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "TenantCreatedEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "headers": {
+          "additionalProperties": false,
+          "properties": {
+            "causation_id": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string",
+                },
+                {
+                  "type": "null",
+                },
+              ],
+              "default": null,
+            },
+            "correlation_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+            "event_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+            "event_type": {
+              "pattern": "^[a-z_]+\\.[a-z_]+\\.[a-z_]+$",
+              "type": "string",
+            },
+            "event_version": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "type": "string",
+            },
+            "occurred_at": {
+              "format": "date-time",
+              "type": "string",
+            },
+            "producer": {
+              "minLength": 1,
+              "type": "string",
+            },
+            "tenant_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+          },
+          "required": [
+            "event_id",
+            "event_type",
+            "event_version",
+            "occurred_at",
+            "tenant_id",
+            "correlation_id",
+            "producer",
+          ],
+          "type": "object",
+        },
+        "payload": {
+          "additionalProperties": false,
+          "properties": {
+            "created_at": {
+              "format": "date-time",
+              "type": "string",
+            },
+            "created_by": {
+              "minLength": 1,
+              "type": "string",
+            },
+            "name": {
+              "maxLength": 200,
+              "minLength": 1,
+              "type": "string",
+            },
+            "plan": {
+              "enum": [
+                "free",
+                "starter",
+                "pro",
+                "enterprise",
+              ],
+              "type": "string",
+            },
+            "slug": {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string",
+            },
+            "tenant_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+          },
+          "required": [
+            "tenant_id",
+            "slug",
+            "name",
+            "plan",
+            "created_at",
+            "created_by",
+          ],
+          "type": "object",
+        },
+      },
+      "required": [
+        "headers",
+        "payload",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;
+
+exports[`Auth event JSON Schema snapshots > TenantDeactivatedEventSchema 1`] = `
+{
+  "$ref": "#/definitions/TenantDeactivatedEvent",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "TenantDeactivatedEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "headers": {
+          "additionalProperties": false,
+          "properties": {
+            "causation_id": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string",
+                },
+                {
+                  "type": "null",
+                },
+              ],
+              "default": null,
+            },
+            "correlation_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+            "event_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+            "event_type": {
+              "pattern": "^[a-z_]+\\.[a-z_]+\\.[a-z_]+$",
+              "type": "string",
+            },
+            "event_version": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "type": "string",
+            },
+            "occurred_at": {
+              "format": "date-time",
+              "type": "string",
+            },
+            "producer": {
+              "minLength": 1,
+              "type": "string",
+            },
+            "tenant_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+          },
+          "required": [
+            "event_id",
+            "event_type",
+            "event_version",
+            "occurred_at",
+            "tenant_id",
+            "correlation_id",
+            "producer",
+          ],
+          "type": "object",
+        },
+        "payload": {
+          "additionalProperties": false,
+          "properties": {
+            "deactivated_at": {
+              "format": "date-time",
+              "type": "string",
+            },
+            "reason": {
+              "enum": [
+                "contract_ended",
+                "data_breach",
+                "unpaid",
+                "manual",
+              ],
+              "type": "string",
+            },
+            "tenant_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+          },
+          "required": [
+            "tenant_id",
+            "deactivated_at",
+            "reason",
+          ],
+          "type": "object",
+        },
+      },
+      "required": [
+        "headers",
+        "payload",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;
+
+exports[`Auth event JSON Schema snapshots > UserCreatedEventSchema 1`] = `
+{
+  "$ref": "#/definitions/UserCreatedEvent",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "UserCreatedEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "headers": {
+          "additionalProperties": false,
+          "properties": {
+            "causation_id": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string",
+                },
+                {
+                  "type": "null",
+                },
+              ],
+              "default": null,
+            },
+            "correlation_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+            "event_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+            "event_type": {
+              "pattern": "^[a-z_]+\\.[a-z_]+\\.[a-z_]+$",
+              "type": "string",
+            },
+            "event_version": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "type": "string",
+            },
+            "occurred_at": {
+              "format": "date-time",
+              "type": "string",
+            },
+            "producer": {
+              "minLength": 1,
+              "type": "string",
+            },
+            "tenant_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+          },
+          "required": [
+            "event_id",
+            "event_type",
+            "event_version",
+            "occurred_at",
+            "tenant_id",
+            "correlation_id",
+            "producer",
+          ],
+          "type": "object",
+        },
+        "payload": {
+          "additionalProperties": false,
+          "properties": {
+            "created_at": {
+              "format": "date-time",
+              "type": "string",
+            },
+            "roles": {
+              "items": {
+                "type": "string",
+              },
+              "minItems": 1,
+              "type": "array",
+            },
+            "tenant_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+            "user_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+          },
+          "required": [
+            "user_id",
+            "tenant_id",
+            "roles",
+            "created_at",
+          ],
+          "type": "object",
+        },
+      },
+      "required": [
+        "headers",
+        "payload",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;
+
+exports[`Auth event JSON Schema snapshots > UserDeactivatedEventSchema 1`] = `
+{
+  "$ref": "#/definitions/UserDeactivatedEvent",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "UserDeactivatedEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "headers": {
+          "additionalProperties": false,
+          "properties": {
+            "causation_id": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string",
+                },
+                {
+                  "type": "null",
+                },
+              ],
+              "default": null,
+            },
+            "correlation_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+            "event_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+            "event_type": {
+              "pattern": "^[a-z_]+\\.[a-z_]+\\.[a-z_]+$",
+              "type": "string",
+            },
+            "event_version": {
+              "pattern": "^\\d+\\.\\d+\\.\\d+$",
+              "type": "string",
+            },
+            "occurred_at": {
+              "format": "date-time",
+              "type": "string",
+            },
+            "producer": {
+              "minLength": 1,
+              "type": "string",
+            },
+            "tenant_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+          },
+          "required": [
+            "event_id",
+            "event_type",
+            "event_version",
+            "occurred_at",
+            "tenant_id",
+            "correlation_id",
+            "producer",
+          ],
+          "type": "object",
+        },
+        "payload": {
+          "additionalProperties": false,
+          "properties": {
+            "deactivated_at": {
+              "format": "date-time",
+              "type": "string",
+            },
+            "reason": {
+              "enum": [
+                "voluntary",
+                "role_revoked",
+                "security_incident",
+                "data_breach",
+              ],
+              "type": "string",
+            },
+            "tenant_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+            "user_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+          },
+          "required": [
+            "user_id",
+            "tenant_id",
+            "deactivated_at",
+            "reason",
+          ],
+          "type": "object",
+        },
+      },
+      "required": [
+        "headers",
+        "payload",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;

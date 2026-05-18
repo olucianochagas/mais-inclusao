@@ -1,4 +1,5 @@
 import { describe, expect, expectTypeOf, it } from 'vitest';
+import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import {
   type ApplicationId,
@@ -38,14 +39,32 @@ describe('Brand types', () => {
   it('UserId é distinto de ProgramId no sistema de tipos', () => {
     const userId = UserIdSchema.parse(validUuid);
     const programId = ProgramIdSchema.parse(validUuid);
-    expectTypeOf(userId).not.toMatchTypeOf<ProgramId>();
-    expectTypeOf(programId).not.toMatchTypeOf<UserId>();
+    expectTypeOf(userId).not.toExtend<ProgramId>();
+    expectTypeOf(programId).not.toExtend<UserId>();
   });
 
   it('CitizenId é distinto de ApplicationId', () => {
     const citizenId = CitizenIdSchema.parse(validUuid);
     const applicationId = ApplicationIdSchema.parse(validUuid);
-    expectTypeOf(citizenId).not.toMatchTypeOf<ApplicationId>();
-    expectTypeOf(applicationId).not.toMatchTypeOf<CitizenId>();
+    expectTypeOf(citizenId).not.toExtend<ApplicationId>();
+    expectTypeOf(applicationId).not.toExtend<CitizenId>();
+  });
+});
+
+describe('ID schemas JSON Schema snapshots', () => {
+  it('UserIdSchema', () => {
+    expect(zodToJsonSchema(UserIdSchema, { name: 'UserId' })).toMatchSnapshot();
+  });
+
+  it('ProgramIdSchema', () => {
+    expect(zodToJsonSchema(ProgramIdSchema, { name: 'ProgramId' })).toMatchSnapshot();
+  });
+
+  it('CitizenIdSchema', () => {
+    expect(zodToJsonSchema(CitizenIdSchema, { name: 'CitizenId' })).toMatchSnapshot();
+  });
+
+  it('ApplicationIdSchema', () => {
+    expect(zodToJsonSchema(ApplicationIdSchema, { name: 'ApplicationId' })).toMatchSnapshot();
   });
 });

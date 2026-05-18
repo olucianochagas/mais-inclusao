@@ -13,7 +13,7 @@ export const TenantIdSchema = z.string().uuid().brand<'TenantId'>();
 export type TenantId = z.infer<typeof TenantIdSchema>;
 
 /**
- * Claim do JWT lido por todo Guard de aplicação.
+ * Claim do JWT lido por cada Guard de aplicação.
  *
  * Materializado no AsyncLocalStorage de cada request. Repository base
  * usa essas informações para injetar `WHERE tenant_id = ...` em queries.

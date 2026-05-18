@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 /**
- * Headers obrigatórios em todo evento publicado no NATS JetStream (+Inclusão).
+ * Headers obrigatórios em cada evento publicado no NATS JetStream (+Inclusão).
  *
  * Materializa o padrão definido em ADR-0004 (Mensageria NATS JetStream + Outbox).
  *
@@ -32,7 +32,7 @@ export const EventHeadersSchema = z.object({
   /** ISO 8601 com timezone obrigatório. */
   occurred_at: z.string().datetime({ offset: true }),
 
-  /** UUID v4 branded. INVARIANTE — todo evento traz tenant_id. */
+  /** UUID v4 branded. INVARIANTE — cada evento traz tenant_id. */
   tenant_id: z.string().uuid().brand<'TenantId'>(),
 
   /** UUID v4. Rastreia uma operação ponta-a-ponta. */

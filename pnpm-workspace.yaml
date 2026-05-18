@@ -37,9 +37,9 @@ catalog:
 
   # OpenTelemetry
   "@opentelemetry/api": ^1.9.0
-  "@opentelemetry/sdk-node": ^0.55.0
-  "@opentelemetry/auto-instrumentations-node": ^0.53.0
-  "@opentelemetry/exporter-trace-otlp-grpc": ^0.55.0
+  "@opentelemetry/sdk-node": ^0.218.0
+  "@opentelemetry/auto-instrumentations-node": ^0.76.0
+  "@opentelemetry/exporter-trace-otlp-grpc": ^0.218.0
 
   # Frontend stack (Onda 1)
   react: ^19.2.6

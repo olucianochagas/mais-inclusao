@@ -11,9 +11,7 @@ export function parseEventType(eventType: string): {
   const normalized = eventType.trim();
 
   if (!EVENT_TYPE_PATTERN.test(normalized)) {
-    throw new Error(
-      'event_type deve seguir o formato <context>.<entity>.<event> em snake_case',
-    );
+    throw new Error('event_type deve seguir o formato <context>.<entity>.<event> em snake_case');
   }
 
   const [context, entity, event] = normalized.split('.') as [string, string, string];

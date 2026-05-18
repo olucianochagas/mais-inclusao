@@ -10,13 +10,13 @@ export interface PublishCommand {
 }
 
 export interface JetStreamTransport {
-  publish(subject: string, payload: Uint8Array, options: { msgID: string; }): Promise<PubAck>;
+  publish(subject: string, payload: Uint8Array, options: { msgID: string }): Promise<PubAck>;
 }
 
 export interface EventPublisher {
   publishEnvelope<TPayload>(
     envelope: EventEnvelope<TPayload>,
-  ): Promise<{ ack: PubAck; command: PublishCommand; }>;
+  ): Promise<{ ack: PubAck; command: PublishCommand }>;
 }
 
 export interface CreatePublisherOptions {

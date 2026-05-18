@@ -17,9 +17,7 @@ export interface BuiltOpenTelemetryEnvironment {
   readonly OTEL_RESOURCE_ATTRIBUTES?: string;
 }
 
-const buildResourceAttributes = (
-  input: OpenTelemetryEnvironmentInput,
-): string | undefined => {
+const buildResourceAttributes = (input: OpenTelemetryEnvironmentInput): string | undefined => {
   const attributes: Record<string, string> = {
     'service.name': input.serviceName,
   };
@@ -52,9 +50,7 @@ export const buildOpenTelemetryEnvironment = (
     : { OTEL_RESOURCE_ATTRIBUTES: buildResourceAttributes(input) }),
 });
 
-const applyEnvironmentIfMissing = (
-  environment: BuiltOpenTelemetryEnvironment,
-): void => {
+const applyEnvironmentIfMissing = (environment: BuiltOpenTelemetryEnvironment): void => {
   process.env.OTEL_SERVICE_NAME ??= environment.OTEL_SERVICE_NAME;
 
   if (environment.OTEL_RESOURCE_ATTRIBUTES !== undefined) {
@@ -62,13 +58,12 @@ const applyEnvironmentIfMissing = (
   }
 };
 
-export const bootstrapOpenTelemetry = (
-  input: OpenTelemetryBootstrapInput,
-): NodeSDK => {
+export const bootstrapOpenTelemetry = (input: OpenTelemetryBootstrapInput): NodeSDK => {
   applyEnvironmentIfMissing(buildOpenTelemetryEnvironment(input));
 
   return new NodeSDK({
-    instrumentations: input.enableAutoInstrumentations === false ? [] : [getNodeAutoInstrumentations()],
+    instrumentations:
+      input.enableAutoInstrumentations === false ? [] : [getNodeAutoInstrumentations()],
   });
 };
 

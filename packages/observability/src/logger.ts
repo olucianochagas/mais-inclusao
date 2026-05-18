@@ -1,9 +1,4 @@
-import pino, {
-  type Bindings,
-  type DestinationStream,
-  type Logger,
-  type LoggerOptions,
-} from 'pino';
+import pino, { type Bindings, type DestinationStream, type Logger, type LoggerOptions } from 'pino';
 
 export interface LogContext extends Bindings {
   readonly correlation_id?: string;
@@ -43,13 +38,8 @@ export const DEFAULT_REDACT_PATHS = [
 
 const uniquePaths = (paths: readonly string[]): string[] => [...new Set(paths)];
 
-export const buildLoggerOptions = (
-  input: BuildLoggerOptionsInput,
-): LoggerOptions => {
-  const redactPaths = uniquePaths([
-    ...DEFAULT_REDACT_PATHS,
-    ...(input.redactPaths ?? []),
-  ]);
+export const buildLoggerOptions = (input: BuildLoggerOptionsInput): LoggerOptions => {
+  const redactPaths = uniquePaths([...DEFAULT_REDACT_PATHS, ...(input.redactPaths ?? [])]);
 
   const base: Bindings = {
     service_name: input.serviceName,

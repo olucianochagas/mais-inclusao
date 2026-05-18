@@ -15,7 +15,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}" ]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -25,13 +25,13 @@ services:
     image: redis:7-alpine
     container_name: mais-inclusao-redis
     restart: unless-stopped
-    command: [ "redis-server", "--appendonly", "yes" ]
+    command: ["redis-server", "--appendonly", "yes"]
     ports:
       - "${REDIS_PORT:-6379}:6379"
     volumes:
       - redis_data:/data
     healthcheck:
-      test: [ "CMD", "redis-cli", "ping" ]
+      test: ["CMD", "redis-cli", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -51,7 +51,7 @@ services:
     volumes:
       - nats_data:/data
     healthcheck:
-      test: [ "CMD-SHELL", "wget -qO- http://127.0.0.1:8222/healthz || exit 1" ]
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8222/healthz || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -65,7 +65,7 @@ services:
       - "${MAILHOG_SMTP_PORT:-1025}:1025"
       - "${MAILHOG_UI_PORT:-8025}:8025"
     healthcheck:
-      test: [ "CMD-SHELL", "wget -qO- http://127.0.0.1:8025/api/v2/messages >/dev/null || exit 1" ]
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8025/api/v2/messages >/dev/null || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -82,7 +82,7 @@ services:
       - "${OTEL_GRPC_PORT:-4317}:4317"
       - "${OTEL_HTTP_PORT:-4318}:4318"
     healthcheck:
-      test: [ "CMD-SHELL", "wget -qO- http://127.0.0.1:16686/ >/dev/null || exit 1" ]
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:16686/ >/dev/null || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -92,7 +92,7 @@ services:
     image: minio/minio:RELEASE.2024-05-10T01-41-38Z
     container_name: mais-inclusao-minio
     restart: unless-stopped
-    command: [ "server", "/data", "--console-address", ":9001" ]
+    command: ["server", "/data", "--console-address", ":9001"]
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-mais_inclusao}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-mais_inclusao_dev}
@@ -102,7 +102,7 @@ services:
     volumes:
       - minio_data:/data
     healthcheck:
-      test: [ "CMD-SHELL", "curl -fsS http://127.0.0.1:9000/minio/health/live >/dev/null || exit 1" ]
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:9000/minio/health/live >/dev/null || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5

@@ -12,10 +12,15 @@ Helpers de NATS JetStream e Outbox para o monorepo **+Inclusão**. Este package 
 ## Uso rápido
 
 ```ts
-import { connectMessagingNats, createJetStreamPublisher } from '@mais-inclusao/messaging';
+import {
+  connectMessagingNats,
+  createJetStreamPublisher,
+} from '@mais-inclusao/messaging';
 
 const nc = await connectMessagingNats();
-const publisher = createJetStreamPublisher(nc.jetstream(), { environment: 'dev' });
+const publisher = createJetStreamPublisher(nc.jetstream(), {
+  environment: 'dev',
+});
 ```
 
 ## Padrão de subject

@@ -20,9 +20,7 @@ export const TenantCreatedPayloadSchema = z.object({
   created_by: z.string().min(1),
 });
 
-export const TenantCreatedEventSchema = EventEnvelopeSchema(
-  TenantCreatedPayloadSchema,
-);
+export const TenantCreatedEventSchema = EventEnvelopeSchema(TenantCreatedPayloadSchema);
 export type TenantCreatedPayload = z.infer<typeof TenantCreatedPayloadSchema>;
 export type TenantCreatedEvent = z.infer<typeof TenantCreatedEventSchema>;
 
@@ -38,15 +36,9 @@ export const TenantDeactivatedPayloadSchema = z.object({
   reason: z.enum(['contract_ended', 'data_breach', 'unpaid', 'manual']),
 });
 
-export const TenantDeactivatedEventSchema = EventEnvelopeSchema(
-  TenantDeactivatedPayloadSchema,
-);
-export type TenantDeactivatedPayload = z.infer<
-  typeof TenantDeactivatedPayloadSchema
->;
-export type TenantDeactivatedEvent = z.infer<
-  typeof TenantDeactivatedEventSchema
->;
+export const TenantDeactivatedEventSchema = EventEnvelopeSchema(TenantDeactivatedPayloadSchema);
+export type TenantDeactivatedPayload = z.infer<typeof TenantDeactivatedPayloadSchema>;
+export type TenantDeactivatedEvent = z.infer<typeof TenantDeactivatedEventSchema>;
 
 // ─── auth.user.created ───────────────────────────────────────
 
@@ -64,9 +56,7 @@ export const UserCreatedPayloadSchema = z.object({
   created_at: z.string().datetime({ offset: true }),
 });
 
-export const UserCreatedEventSchema = EventEnvelopeSchema(
-  UserCreatedPayloadSchema,
-);
+export const UserCreatedEventSchema = EventEnvelopeSchema(UserCreatedPayloadSchema);
 export type UserCreatedPayload = z.infer<typeof UserCreatedPayloadSchema>;
 export type UserCreatedEvent = z.infer<typeof UserCreatedEventSchema>;
 
@@ -81,18 +71,9 @@ export const UserDeactivatedPayloadSchema = z.object({
   user_id: UserIdSchema,
   tenant_id: TenantIdSchema,
   deactivated_at: z.string().datetime({ offset: true }),
-  reason: z.enum([
-    'voluntary',
-    'role_revoked',
-    'security_incident',
-    'data_breach',
-  ]),
+  reason: z.enum(['voluntary', 'role_revoked', 'security_incident', 'data_breach']),
 });
 
-export const UserDeactivatedEventSchema = EventEnvelopeSchema(
-  UserDeactivatedPayloadSchema,
-);
-export type UserDeactivatedPayload = z.infer<
-  typeof UserDeactivatedPayloadSchema
->;
+export const UserDeactivatedEventSchema = EventEnvelopeSchema(UserDeactivatedPayloadSchema);
+export type UserDeactivatedPayload = z.infer<typeof UserDeactivatedPayloadSchema>;
 export type UserDeactivatedEvent = z.infer<typeof UserDeactivatedEventSchema>;

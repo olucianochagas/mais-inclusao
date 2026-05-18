@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "@mais-inclusao/contracts",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Schemas Zod, eventos e DTOs públicos do monorepo +Inclusão. Fronteira pública entre serviços.",
   "license": "ISC",

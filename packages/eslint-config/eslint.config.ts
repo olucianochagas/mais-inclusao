@@ -1,29 +1,30 @@
 // Self-lint deste próprio package.
 //
-// Usa config minimal (sem type-aware) porque este package é JS-only
-// e queremos evitar dependência em vitest/node types só para self-lint.
-// O preset completo (src/index.js) é para consumers TypeScript.
+// Usa config minimal sem type-aware (evita dependência circular).
+// O preset completo (src/index.ts) é para consumers TypeScript.
 
 import js from '@eslint/js';
+import type { Linter } from 'eslint';
 import importPlugin from 'eslint-plugin-import';
 import security from 'eslint-plugin-security';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
-/** @type {import('eslint').Linter.Config[]} */
-export default [
+const config: Linter.Config[] = [
   js.configs.recommended,
   {
-    files: ['src/**/*.js', 'eslint.config.js'],
+    files: ['src/**/*.ts', 'eslint.config.ts', 'tsup.config.ts'],
     languageOptions: {
       ecmaVersion: 2023,
       sourceType: 'module',
+      parser: tseslint.parser,
       globals: { ...globals.node },
     },
     plugins: {
-      import: importPlugin,
-      'simple-import-sort': simpleImportSort,
-      security,
+      import: importPlugin as never,
+      'simple-import-sort': simpleImportSort as never,
+      security: security as never,
     },
     rules: {
       'simple-import-sort/imports': 'error',
@@ -36,5 +37,7 @@ export default [
       eqeqeq: ['error', 'always'],
     },
   },
-  { ignores: ['node_modules/**', 'dist/**'] },
+  { ignores: ['node_modules/**', 'dist/**', '**/*.d.ts'] },
 ];
+
+export default config;

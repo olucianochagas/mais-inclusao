@@ -1,8 +1,12 @@
 // @mais-inclusao/eslint-config — preset base
 //
-// Importado por nest.js, react.js e lib.js. Pode ser consumido direto
+// Importado por nest.ts, react.ts e lib.ts. Pode ser consumido direto
 // via `import config from '@mais-inclusao/eslint-config'` quando workspace
 // não se encaixa nas 3 categorias específicas.
+//
+// Ambient declarations dos plugins sem types publicados ficam em
+// `src/types/eslint-plugins.d.ts` — incluídos automaticamente pelo
+// tsconfig.json via `include: ["src/**/*"]`.
 
 import js from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
@@ -12,9 +16,10 @@ import tseslint from 'typescript-eslint';
 
 /**
  * Configuração base: TypeScript strict + organização de imports + segurança.
- * @type {import('eslint').Linter.Config[]}
+ *
+ * Retorno tipado via `ReturnType<typeof tseslint.config>` (alias para `Linter.Config[]`).
  */
-export const base = tseslint.config(
+export const base: ReturnType<typeof tseslint.config> = tseslint.config(
   js.configs.recommended,
 
   // typescript-eslint v8 strict + stylistic com type checking
@@ -23,9 +28,9 @@ export const base = tseslint.config(
 
   {
     plugins: {
-      import: importPlugin,
-      'simple-import-sort': simpleImportSort,
-      security,
+      import: importPlugin as never,
+      'simple-import-sort': simpleImportSort as never,
+      security: security as never,
     },
     languageOptions: {
       parserOptions: {
@@ -33,9 +38,10 @@ export const base = tseslint.config(
         // `allowDefaultProject` cobre configs na raiz do workspace consumer;
         // arquivos `src/**` devem ser cobertos pelo tsconfig do consumer.
         projectService: {
-          allowDefaultProject: ['eslint.config.js', '*.config.{js,ts,mjs,cjs}'],
+          allowDefaultProject: ['eslint.config.ts', '*.config.{js,ts,mjs,cjs}'],
         },
-        tsconfigRootDir: import.meta.dirname,
+        // `process.cwd()` é portable entre Node 20+ sem precisar de lib ES2024.
+        tsconfigRootDir: process.cwd(),
       },
     },
     rules: {
@@ -87,10 +93,10 @@ export const base = tseslint.config(
   {
     files: [
       '*.config.{js,ts,mjs,cjs}',
-      'src/index.js',
-      'src/nest.js',
-      'src/react.js',
-      'src/lib.js',
+      'src/index.ts',
+      'src/nest.ts',
+      'src/react.ts',
+      'src/lib.ts',
     ],
     rules: {
       'import/no-default-export': 'off',

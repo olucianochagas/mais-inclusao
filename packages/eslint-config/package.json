@@ -11,14 +11,33 @@
     "provenance": true
   },
   "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.js",
-    "./nest": "./src/nest.js",
-    "./react": "./src/react.js",
-    "./lib": "./src/lib.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./nest": {
+      "types": "./dist/nest.d.ts",
+      "import": "./dist/nest.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js"
+    },
+    "./lib": {
+      "types": "./dist/lib.d.ts",
+      "import": "./dist/lib.js"
+    },
+    "./package.json": "./package.json"
   },
-  "files": [ "src", "README.md" ],
+  "sideEffects": false,
+  "files": ["dist", "README.md"],
   "scripts": {
+    "build": "tsup && tsc --emitDeclarationOnly --declaration --outDir dist",
+    "dev": "tsup --watch",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
@@ -38,6 +57,8 @@
     "typescript-eslint": "catalog:"
   },
   "devDependencies": {
-    "@mais-inclusao/tsconfig": "workspace:*"
+    "@mais-inclusao/tsconfig": "workspace:*",
+    "@types/node": "^24.0.0",
+    "tsup": "catalog:"
   }
 }

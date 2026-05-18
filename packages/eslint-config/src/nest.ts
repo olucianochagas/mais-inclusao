@@ -1,10 +1,11 @@
 // @mais-inclusao/eslint-config/nest — preset para apps backend NestJS
 
 import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
 import { base } from './index.js';
 
-export default [
+const nestConfig: ReturnType<typeof tseslint.config> = [
   ...base,
   {
     languageOptions: { globals: { ...globals.node } },
@@ -37,3 +38,5 @@ export default [
     },
   },
 ];
+
+export default nestConfig;

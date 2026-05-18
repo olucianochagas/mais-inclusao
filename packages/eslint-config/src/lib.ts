@@ -1,8 +1,10 @@
 // @mais-inclusao/eslint-config/lib — preset para packages publicáveis
 
+import tseslint from 'typescript-eslint';
+
 import { base } from './index.js';
 
-export default [
+const libConfig: ReturnType<typeof tseslint.config> = [
   ...base,
   {
     rules: {
@@ -37,3 +39,5 @@ export default [
     rules: { 'import/no-default-export': 'off' },
   },
 ];
+
+export default libConfig;

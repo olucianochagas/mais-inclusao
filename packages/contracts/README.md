@@ -36,22 +36,22 @@ import { LoginRequestSchema } from '@mais-inclusao/contracts/auth';
 
 ## Status atual (Onda 1)
 
-| Contexto | Estado | Conteúdo                                                                                            |
-| -------- | ------ | --------------------------------------------------------------------------------------------------- |
+| Contexto | Estado | Conteúdo                                                                                                |
+| -------- | ------ | ------------------------------------------------------------------------------------------------------- |
 | `shared` | ✅     | `EventEnvelope`, `TenantId`, IDs (`User`/`Program`/`Citizen`/`Application`), Pagination, ProblemDetails |
-| `auth`   | ✅     | 4 eventos (`tenant.created`/`deactivated`, `user.created`/`deactivated`) + 5 DTOs HTTP              |
-| Demais   | ⏳     | `programs`, `applications`, `citizens`, `audit`, etc. — adicionados conforme cada serviço evolui    |
+| `auth`   | ✅     | 4 eventos (`tenant.created`/`deactivated`, `user.created`/`deactivated`) + 5 DTOs HTTP                  |
+| Demais   | ⏳     | `programs`, `applications`, `citizens`, `audit`, etc. — adicionados conforme cada serviço evolui        |
 
 ## Scripts
 
-| Comando             | O que faz                                          |
-| ------------------- | -------------------------------------------------- |
-| `pnpm build`        | Gera `dist/` com ESM + CJS + `.d.ts` (tsup + tsc). |
-| `pnpm test`         | Vitest run — schemas, validações e snapshots.      |
-| `pnpm test:watch`   | Vitest em modo watch.                              |
-| `pnpm test:coverage`| Cobertura (thresholds 90/85/90/90).                |
-| `pnpm typecheck`    | `tsc --noEmit` em src + test.                      |
-| `pnpm lint`         | ESLint flat config.                                |
+| Comando              | O que faz                                          |
+| -------------------- | -------------------------------------------------- |
+| `pnpm build`         | Gera `dist/` com ESM + CJS + `.d.ts` (tsup + tsc). |
+| `pnpm test`          | Vitest run — schemas, validações e snapshots.      |
+| `pnpm test:watch`    | Vitest em modo watch.                              |
+| `pnpm test:coverage` | Cobertura (thresholds 90/85/90/90).                |
+| `pnpm typecheck`     | `tsc --noEmit` em src + test.                      |
+| `pnpm lint`          | ESLint flat config.                                |
 
 ## Como adicionar um novo contexto
 

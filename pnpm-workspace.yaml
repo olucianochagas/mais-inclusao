@@ -136,4 +136,4 @@ shamefullyHoist: false
 shellEmulator: false
 saveExact: false
 allowBuilds:
-  esbuild: set this to true or false
+  esbuild: true

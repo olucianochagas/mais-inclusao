@@ -14,8 +14,8 @@ export interface TenantScopeOptions {
 
 export type TenantScopedWhere<TWhere extends TenantScopedInput | undefined> =
   TWhere extends TenantScopedInput
-  ? Omit<TWhere, 'tenant_id'> & { readonly tenant_id: TenantId; }
-  : { readonly tenant_id: TenantId; };
+    ? Omit<TWhere, 'tenant_id'> & { readonly tenant_id: TenantId }
+    : { readonly tenant_id: TenantId };
 
 export const assertTenantMatchesContext = (
   tenantId: TenantId,
@@ -48,8 +48,12 @@ export const scopeTenantWhere = <TWhere extends TenantScopedInput | undefined>(
     } as TenantScopedWhere<TWhere>;
   }
 
+  // `as unknown as` necessário: TypeScript não infere que `{...where, tenant_id}`
+  // satisfaz `Omit<TWhere, 'tenant_id'> & { readonly tenant_id }` por causa
+  // do brand em TenantId + `readonly` no shape alvo. Cast seguro porque
+  // estamos garantindo o shape manualmente.
   return {
     ...where,
     tenant_id: tenantContext.tenant_id,
-  } as TenantScopedWhere<TWhere>;
+  } as unknown as TenantScopedWhere<TWhere>;
 };

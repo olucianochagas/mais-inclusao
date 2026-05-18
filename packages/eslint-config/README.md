@@ -10,12 +10,12 @@ ESLint 9 flat config presets compartilhados do monorepo **+Inclusão**. Cada wor
 
 ## Presets
 
-| Preset | Quando usar |
-|---|---|
-| `@mais-inclusao/eslint-config` (base) | Workspaces que não se encaixam nas 3 categorias abaixo. |
-| `@mais-inclusao/eslint-config/nest` | Apps backend NestJS (`auth-service`, `bff-*`, etc.) |
-| `@mais-inclusao/eslint-config/react` | Apps frontend Module Federation (`shell`, `gestor-mf`, `cidadao-mf`) |
-| `@mais-inclusao/eslint-config/lib` | Packages publicáveis (`@mais-inclusao/contracts`, `@mais-inclusao/ui`, etc.) |
+| Preset                                | Quando usar                                                                  |
+| ------------------------------------- | ---------------------------------------------------------------------------- |
+| `@mais-inclusao/eslint-config` (base) | Workspaces que não se encaixam nas 3 categorias abaixo.                      |
+| `@mais-inclusao/eslint-config/nest`   | Apps backend NestJS (`auth-service`, `bff-*`, etc.)                          |
+| `@mais-inclusao/eslint-config/react`  | Apps frontend Module Federation (`shell`, `gestor-mf`, `cidadao-mf`)         |
+| `@mais-inclusao/eslint-config/lib`    | Packages publicáveis (`@mais-inclusao/contracts`, `@mais-inclusao/ui`, etc.) |
 
 ## Exemplos
 
@@ -26,10 +26,7 @@ ESLint 9 flat config presets compartilhados do monorepo **+Inclusão**. Cada wor
 ```javascript
 import nestConfig from '@mais-inclusao/eslint-config/nest';
 
-export default [
-  ...nestConfig,
-  { ignores: ['dist/**', '**/*.generated.ts'] },
-];
+export default [...nestConfig, { ignores: ['dist/**', '**/*.generated.ts'] }];
 ```
 
 ### App React (Module Federation)
@@ -39,10 +36,7 @@ export default [
 ```javascript
 import reactConfig from '@mais-inclusao/eslint-config/react';
 
-export default [
-  ...reactConfig,
-  { ignores: ['dist/**', '.rspack/**'] },
-];
+export default [...reactConfig, { ignores: ['dist/**', '.rspack/**'] }];
 ```
 
 ### Package publicável
@@ -84,6 +78,7 @@ Do `eslint-plugin-security` (em ordem de severidade):
 O preset `react` usa **`jsx-a11y` strict** (não `recommended`). Justificativa em [ADR-0007 — WCAG 2.2 AA como Definition of Done](../../docs/adr/0007-wcag-22-aa-como-definition-of-done.md).
 
 Rules adicionais reforçadas:
+
 - `click-events-have-key-events` — todo `onClick` precisa de `onKeyDown` equivalente.
 - `label-has-associated-control` — labels obrigatórias em inputs.
 - `no-autofocus` — focus management deve ser explícito.

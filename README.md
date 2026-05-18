@@ -93,24 +93,24 @@ A missão é ampla, mas o foco do produto é estreito: **operacionalizar o ciclo
 
 ### Valores que orientam decisões técnicas
 
-| Valor | Impacto concreto |
-|---|---|
-| **Equidade** | Critérios de elegibilidade visíveis e auditáveis. Sem black-box. |
-| **Acessibilidade** | WCAG 2.2 AA não é feature; é definição de pronto. Libras, audiodescrição e linguagem cidadã evoluem por ondas. |
-| **Privacidade desde o desenho** | PII em coluna criptografada com chave por tenant. Consentimento granular. ROPA versionado. |
-| **Transparência** | Decisões arquiteturais ficam em [`docs/superpowers/specs/`](./docs/superpowers/specs/) e em ADRs em [`docs/adr/`](./docs/adr). Discussões em PRs públicos. |
-| **Sustentabilidade** | Microsserviços extraídos por evidência, não por especulação ([gatilhos documentados](./docs/superpowers/specs/2026-05-16-programa-mais-inclusao-decomposicao.md#seção-6--ondas-seguintes-e-gatilhos-de-extração)). |
+| Valor                           | Impacto concreto                                                                                                                                                                                                   |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Equidade**                    | Critérios de elegibilidade visíveis e auditáveis. Sem black-box.                                                                                                                                                   |
+| **Acessibilidade**              | WCAG 2.2 AA não é feature; é definição de pronto. Libras, audiodescrição e linguagem cidadã evoluem por ondas.                                                                                                     |
+| **Privacidade desde o desenho** | PII em coluna criptografada com chave por tenant. Consentimento granular. ROPA versionado.                                                                                                                         |
+| **Transparência**               | Decisões arquiteturais ficam em [`docs/superpowers/specs/`](./docs/superpowers/specs/) e em ADRs em [`docs/adr/`](./docs/adr). Discussões em PRs públicos.                                                         |
+| **Sustentabilidade**            | Microsserviços extraídos por evidência, não por especulação ([gatilhos documentados](./docs/superpowers/specs/2026-05-16-programa-mais-inclusao-decomposicao.md#seção-6--ondas-seguintes-e-gatilhos-de-extração)). |
 
 ---
 
 ## Para quem é
 
-| Persona | O que faz no +Inclusão |
-|---|---|
-| **Gestor público / técnico social** | Cria programas, define critérios, triagem e concessão de benefícios, acompanha indicadores. |
-| **Cidadão atendido** | Descobre programas, autoinscreve-se, exerce direitos LGPD, acompanha status. |
-| **Operador SaaS** | Provisiona tenants, monitora saúde da plataforma, audita, gerencia billing. |
-| **Contribuidor técnico / pesquisador** | Estende a plataforma, contribui com módulos, melhora a11y, audita segurança. |
+| Persona                                | O que faz no +Inclusão                                                                      |
+| -------------------------------------- | ------------------------------------------------------------------------------------------- |
+| **Gestor público / técnico social**    | Cria programas, define critérios, triagem e concessão de benefícios, acompanha indicadores. |
+| **Cidadão atendido**                   | Descobre programas, autoinscreve-se, exerce direitos LGPD, acompanha status.                |
+| **Operador SaaS**                      | Provisiona tenants, monitora saúde da plataforma, audita, gerencia billing.                 |
+| **Contribuidor técnico / pesquisador** | Estende a plataforma, contribui com módulos, melhora a11y, audita segurança.                |
 
 **Não é** para: substituir CadÚnico, SUAS, SUS ou sistemas oficiais. **É** para complementá-los oferecendo a camada operacional, transparente e acessível que muitos órgãos ainda constroem em planilhas e formulários soltos.
 
@@ -307,7 +307,7 @@ corepack enable
 pnpm install
 
 # 4. Subir a infraestrutura de dev (Postgres, Redis, NATS, MailHog, Jaeger, MinIO)
-#    -- disponível após o primeiro ciclo de implementação --
+#    apps NestJS e MF serão adicionados nos próximos ciclos
 pnpm infra:up
 
 # 5. Aplicar migrations e popular dados de demo
@@ -320,20 +320,20 @@ pnpm dev
 
 ### Endpoints úteis (dev)
 
-| Serviço | URL |
-|---|---|
-| Shell + Gestor MF | http://localhost:5173/gestor |
-| Shell + Portal Cidadão | http://localhost:5173/ |
-| BFF Gestor | http://localhost:3000 |
-| BFF Cidadão | http://localhost:3001 |
-| auth-service | http://localhost:3010 |
-| programs-service | http://localhost:3020 |
-| citizens-service | http://localhost:3030 |
-| applications-service | http://localhost:3040 |
-| MailHog UI | http://localhost:8025 |
-| Jaeger UI | http://localhost:16686 |
-| Adminer (PG) | http://localhost:8080 |
-| MinIO console | http://localhost:9001 |
+| Serviço                | URL                          |
+| ---------------------- | ---------------------------- |
+| Shell + Gestor MF      | http://localhost:5173/gestor |
+| Shell + Portal Cidadão | http://localhost:5173/       |
+| BFF Gestor             | http://localhost:3000        |
+| BFF Cidadão            | http://localhost:3001        |
+| auth-service           | http://localhost:3010        |
+| programs-service       | http://localhost:3020        |
+| citizens-service       | http://localhost:3030        |
+| applications-service   | http://localhost:3040        |
+| MailHog UI             | http://localhost:8025        |
+| Jaeger UI              | http://localhost:16686       |
+| Adminer (PG)           | http://localhost:8080        |
+| MinIO console          | http://localhost:9001        |
 
 > ℹ️ Estes endpoints só estarão disponíveis após a Onda 1 ser implementada. O scaffold de cada serviço será criado em ciclos próprios de `brainstorming → spec → plano → implementação`.
 
@@ -367,6 +367,8 @@ Toda contribuição é bem-vinda — **código, documentação, tradução, test
 - 📖 **Issues marcadas com [`docs`](https://github.com/olucianochagas/mais-inclusao/labels/docs)** — sempre úteis, não exigem domínio técnico profundo.
 - 🌐 **Issues marcadas com [`help-wanted`](https://github.com/olucianochagas/mais-inclusao/labels/help%20wanted)** — onde mais precisamos.
 
+Se você pretende alterar **contratos públicos**, leia primeiro [`packages/contracts/README.md`](./packages/contracts/README.md).
+
 **Antes de contribuir**, leia também:
 
 - [Código de conduta](./CODE-OF-CONDUCT.md)
@@ -377,12 +379,12 @@ Toda contribuição é bem-vinda — **código, documentação, tradução, test
 
 ## Comunidade e suporte
 
-| Canal | Para |
-|---|---|
-| [GitHub Issues](https://github.com/olucianochagas/mais-inclusao/issues) | Bugs, propostas de feature, melhorias |
-| [GitHub Discussions](https://github.com/olucianochagas/mais-inclusao/discussions) | Dúvidas, ideias, perguntas abertas (a habilitar) |
-| **Vulnerabilidades de segurança** | ⚠️ NÃO usar Issues. Ver [SECURITY.md](./SECURITY.md). |
-| Contato direto | olucianochagas@gmail.com (apenas para questões sensíveis ou de governança) |
+| Canal                                                                             | Para                                                                       |
+| --------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [GitHub Issues](https://github.com/olucianochagas/mais-inclusao/issues)           | Bugs, propostas de feature, melhorias                                      |
+| [GitHub Discussions](https://github.com/olucianochagas/mais-inclusao/discussions) | Dúvidas, ideias, perguntas abertas (a habilitar)                           |
+| **Vulnerabilidades de segurança**                                                 | ⚠️ NÃO usar Issues. Ver [SECURITY.md](./SECURITY.md).                      |
+| Contato direto                                                                    | olucianochagas@gmail.com (apenas para questões sensíveis ou de governança) |
 
 Detalhamento em [SUPPORT.md](./SUPPORT.md).
 
@@ -421,12 +423,12 @@ O +Inclusão trata dados de **populações vulneráveis** e **dados sensíveis**
 
 Três ondas evolutivas; sem datas firmadas. Ondas avançam quando **gatilhos concretos** (escala, time, regulação, domínio, release cadence, teste) justificam.
 
-| Onda | Foco | Status |
-|---|---|---|
-| **Onda 1** — MVP de ponta a ponta | 4 microsserviços + 2 BFFs + Shell + 2 remotes MF + Design System. Cadastra programa → recebe inscrição → triagem → concessão. | 🚧 Em scaffolding |
-| **Onda 2** — Operação real + Privacidade | Gov.br, Notifications, Documents, Consent (LGPD ops), Identity Resolution, Delivery, Portal Cidadão full. | ⏳ Planejada |
-| **Onda 3** — Governança e escala | Analytics/BI, Referrals, Territory, Search, ETL, Billing, Feature Flags, Audit dedicado, Admin Plataforma MF. | ⏳ Planejada |
-| **Ondas 4+** — Visão | Open Data, API pública, ML para priorização (com governança ética), simulador orçamentário, federação entre tenants. | 🔮 Visão (não compromisso) |
+| Onda                                     | Foco                                                                                                                          | Status                     |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| **Onda 1** — MVP de ponta a ponta        | 4 microsserviços + 2 BFFs + Shell + 2 remotes MF + Design System. Cadastra programa → recebe inscrição → triagem → concessão. | 🚧 Em scaffolding          |
+| **Onda 2** — Operação real + Privacidade | Gov.br, Notifications, Documents, Consent (LGPD ops), Identity Resolution, Delivery, Portal Cidadão full.                     | ⏳ Planejada               |
+| **Onda 3** — Governança e escala         | Analytics/BI, Referrals, Territory, Search, ETL, Billing, Feature Flags, Audit dedicado, Admin Plataforma MF.                 | ⏳ Planejada               |
+| **Ondas 4+** — Visão                     | Open Data, API pública, ML para priorização (com governança ética), simulador orçamentário, federação entre tenants.          | 🔮 Visão (não compromisso) |
 
 Detalhamento em [`docs/superpowers/specs/2026-05-16-programa-mais-inclusao-decomposicao.md`](./docs/superpowers/specs/2026-05-16-programa-mais-inclusao-decomposicao.md).
 

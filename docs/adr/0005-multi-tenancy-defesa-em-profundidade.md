@@ -43,6 +43,7 @@ Guard global valida JWT, extrai `tenant_id`, popula `AsyncLocalStorage` com `{ t
 #### 4. PostgreSQL Row Level Security (RLS) — Onda 2
 
 Policy por tabela:
+
 ```sql
 USING (tenant_id = current_setting('app.current_tenant')::uuid)
 ```
@@ -85,6 +86,7 @@ Cada serviço tem suíte que cria 2 tenants, autentica como A, tenta acessar/mod
 **Resumo**: Cada tenant tem schema próprio (ex: `tenant_abc.programs`, `tenant_xyz.programs`).
 
 **Por que rejeitada**:
+
 - **Operação de migrations × N tenants** é cara e propensa a erro. Em N=100+ tenants, é pesadelo.
 - **Connection pooling** se complica (PgBouncer com search_path dinâmico).
 - **Backup/restore granular** é mais fácil — mas inverte o trade-off: ganho operacional limitado para custo operacional alto.
@@ -95,6 +97,7 @@ Cada serviço tem suíte que cria 2 tenants, autentica como A, tenta acessar/mod
 **Resumo**: Cada tenant tem banco PostgreSQL próprio.
 
 **Por que rejeitada**:
+
 - **Isolamento físico máximo**, mas custo de infra desproporcional para SaaS.
 - Multi-region torna-se inviável em escala.
 - Manutenção (versão de PG, backup, monitoring) por banco é proibitivo.
@@ -104,6 +107,7 @@ Cada serviço tem suíte que cria 2 tenants, autentica como A, tenta acessar/mod
 **Resumo**: Apenas `WHERE tenant_id = $1` na aplicação, sem RLS Postgres.
 
 **Por que rejeitada**:
+
 - **Uma única camada de defesa** — se app erra (ex: query SQL crua sem filtro, bug em ORM, migração manual), vazamento silencioso.
 - LGPD exige medidas de segurança adequadas — single camada não é defensável em auditoria.
 
@@ -112,6 +116,7 @@ Cada serviço tem suíte que cria 2 tenants, autentica como A, tenta acessar/mod
 **Resumo**: Confiar inteiramente no Postgres para isolamento, sem camada de aplicação.
 
 **Por que rejeitada**:
+
 - Erros de aplicação (esquecer `SET LOCAL`, conexão sem contexto) viram falha em runtime confusa.
 - Difícil debugar quando "query retorna vazio mas deveria retornar X".
 - Sem `MissingTenantContextError` explícito, contribuidor não entende rapidamente o problema.

@@ -23,14 +23,14 @@ Para entender como se tornar mantenedor, leia [GOVERNANCE.md](./GOVERNANCE.md#co
 
 ## Áreas e revisão (estado-alvo)
 
-| Área | Mantenedor primário (provisório) | Mantenedor secundário (futuro) |
-|---|---|---|
-| **Backend / NestJS** | @olucianochagas | _vacante_ |
-| **Frontend / MF** | @olucianochagas | _vacante_ |
-| **Infra & DevOps** | @olucianochagas | _vacante_ |
-| **Segurança & LGPD** | @olucianochagas | _vacante (idealmente especialista LGPD)_ |
-| **Acessibilidade & UX inclusivo** | @olucianochagas | _vacante (idealmente especialista a11y)_ |
-| **Documentação & Comunidade** | @olucianochagas | _vacante_ |
+| Área                              | Mantenedor primário (provisório) | Mantenedor secundário (futuro)           |
+| --------------------------------- | -------------------------------- | ---------------------------------------- |
+| **Backend / NestJS**              | @olucianochagas                  | _vacante_                                |
+| **Frontend / MF**                 | @olucianochagas                  | _vacante_                                |
+| **Infra & DevOps**                | @olucianochagas                  | _vacante_                                |
+| **Segurança & LGPD**              | @olucianochagas                  | _vacante (idealmente especialista LGPD)_ |
+| **Acessibilidade & UX inclusivo** | @olucianochagas                  | _vacante (idealmente especialista a11y)_ |
+| **Documentação & Comunidade**     | @olucianochagas                  | _vacante_                                |
 
 A atribuição automática de revisão em PRs vive em [`.github/CODEOWNERS`](./.github/CODEOWNERS).
 
@@ -52,12 +52,12 @@ Para questões privadas/sensíveis, use o e-mail listado acima do mantenedor.
 
 Para questões específicas:
 
-| Tema | Onde |
-|---|---|
-| Vulnerabilidades de segurança | [SECURITY.md](./SECURITY.md) |
+| Tema                           | Onde                                                     |
+| ------------------------------ | -------------------------------------------------------- |
+| Vulnerabilidades de segurança  | [SECURITY.md](./SECURITY.md)                             |
 | Violações de Código de Conduta | [CODE-OF-CONDUCT.md](./CODE-OF-CONDUCT.md#como-reportar) |
-| Suporte / dúvida geral | [SUPPORT.md](./SUPPORT.md) |
-| Proposta de governança | Issue com label `governance` |
+| Suporte / dúvida geral         | [SUPPORT.md](./SUPPORT.md)                               |
+| Proposta de governança         | Issue com label `governance`                             |
 
 ---
 

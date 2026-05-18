@@ -21,7 +21,7 @@
 
 ## Princípios
 
-1. **Transparência por padrão.** Decisões acontecem em espaços públicos (PRs, Issues, Discussions). Quando uma decisão precisa ser privada (segurança, conduta), o resultado é comunicado e a *razão* da privacidade é explicada.
+1. **Transparência por padrão.** Decisões acontecem em espaços públicos (PRs, Issues, Discussions). Quando uma decisão precisa ser privada (segurança, conduta), o resultado é comunicado e a _razão_ da privacidade é explicada.
 2. **Argumento bate hierarquia.** Em qualquer discussão técnica, o argumento melhor justificado vence — independente de quem o trouxe.
 3. **Reconhecer todo trabalho.** Código, design, docs, tradução, a11y testing, mentoria, evangelismo — todos têm peso de contribuição.
 4. **Equidade no acesso ao poder.** O caminho para se tornar mantenedor é explícito, objetivo e baseado em mérito demonstrável — não em rede social.
@@ -71,12 +71,12 @@ Escolhemos o primeiro.
 
 ### Marcos de evolução
 
-| Marco | Critério | Mudança no modelo |
-|---|---|---|
-| **0 → BDFL transitório** | Início do projeto | Atual |
-| **BDFL → Comitê** | 3+ mantenedores ativos | Decisões grandes passam de "BDFL decide" para "consenso ou maioria simples do comitê" |
-| **Comitê → Conselho com áreas** | 5+ mantenedores ativos em áreas distintas | Decisões setoriais ficam com mantenedores de área; estratégicas com o conselho |
-| **Conselho → Fundação / Org sem-fins** | Tração e operação real | Estrutura jurídica formal (ex: associação ou fundação) se justificar |
+| Marco                                  | Critério                                  | Mudança no modelo                                                                     |
+| -------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------- |
+| **0 → BDFL transitório**               | Início do projeto                         | Atual                                                                                 |
+| **BDFL → Comitê**                      | 3+ mantenedores ativos                    | Decisões grandes passam de "BDFL decide" para "consenso ou maioria simples do comitê" |
+| **Comitê → Conselho com áreas**        | 5+ mantenedores ativos em áreas distintas | Decisões setoriais ficam com mantenedores de área; estratégicas com o conselho        |
+| **Conselho → Fundação / Org sem-fins** | Tração e operação real                    | Estrutura jurídica formal (ex: associação ou fundação) se justificar                  |
 
 Cada transição é **proposta via RFC** e debatida publicamente antes de efetivada. Não há promessa de prazos.
 
@@ -102,6 +102,7 @@ Quem abre issues, PRs, discussions, ou contribui de outra forma (docs, design, a
 ### 🛠 **Mantenedor**
 
 Tem permissão de:
+
 - Revisar e aprovar PRs em sua área (`CODEOWNERS`).
 - Mergear PRs aprovados (em sua área).
 - Triar issues.
@@ -109,6 +110,7 @@ Tem permissão de:
 - Votar em decisões do comitê (no futuro).
 
 **Responsabilidades:**
+
 - Best-effort de resposta a issues/PRs em sua área (objetivo: < 7 dias para primeira resposta).
 - Manter qualidade técnica e ética do código em sua área.
 - Mentorar contribuidores novos.
@@ -127,6 +129,7 @@ Substituirá o BDFL quando os critérios de transição forem atingidos.
 ### 🧑‍🏫 **DPO (Data Protection Officer) — futuro**
 
 Quando o produto começar a operar com dados reais, designaremos um DPO responsável por:
+
 - Manutenção do ROPA.
 - Resposta a pedidos de titulares (Art. 18 LGPD).
 - Comunicação com ANPD.

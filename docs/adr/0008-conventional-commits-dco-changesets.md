@@ -36,6 +36,7 @@ Estrutura padrão:
 **Tipos**: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`, mais **`a11y`** e **`security`** (extensões +Inclusão).
 
 **Validado por**:
+
 - `commitlint` em **pre-commit hook** (Husky) — bloqueia commits malformados localmente.
 - **Workflow CI** que valida o **título do PR** (que vira mensagem do squash merge).
 
@@ -58,11 +59,13 @@ pnpm changeset
 ```
 
 Cria arquivo em `.changeset/` declarando:
+
 - Quais pacotes são afetados
 - Tipo de bump (`major`, `minor`, `patch`)
 - Descrição da mudança
 
 **Releases** são feitas pelo workflow `release.yml` que:
+
 1. Cria PR de "Version Packages" consolidando changesets.
 2. Ao mergear, publica pacotes, gera tags, e atualiza `CHANGELOG.md`.
 
@@ -95,6 +98,7 @@ Cria arquivo em `.changeset/` declarando:
 **Resumo**: Cada contribuidor assina contrato explícito (via CLA Assistant ou similar).
 
 **Por que rejeitada**:
+
 - Adiciona barreira legal que **filtra contribuição casual** — exatamente o tipo de contribuidor que esperamos atrair (pessoas com vivência, em começo de carreira, com tempo limitado).
 - Para projeto sob ISC (permissiva), CLA não adiciona proteção real sobre DCO.
 - Modelo Linux Kernel funciona há 20+ anos com DCO em ecosistema gigantesco — provou-se suficiente.
@@ -104,6 +108,7 @@ Cria arquivo em `.changeset/` declarando:
 **Resumo**: Cada commit livre, CHANGELOG editado à mão.
 
 **Por que rejeitada**:
+
 - Esquecimentos são certos. CHANGELOG vira inconsistente, perde valor.
 - Sem disciplina de commit, o `git log` deixa de ser ferramenta de exploração.
 - Releases viram manuais e propensas a erro humano.
@@ -113,6 +118,7 @@ Cria arquivo em `.changeset/` declarando:
 **Resumo**: Mensagem de commit decide bump automaticamente, sem changeset.
 
 **Por que rejeitada**:
+
 - Em monorepo com múltiplos pacotes de ritmos diferentes, semantic-release é menos flexível que Changesets.
 - Quem contribui pode não saber distinguir minor de major sem revisar — Changesets força a declaração explícita.
 
@@ -121,6 +127,7 @@ Cria arquivo em `.changeset/` declarando:
 **Resumo**: Mantenedor bumps versões e edita CHANGELOG manualmente.
 
 **Por que rejeitada**:
+
 - Não escala em monorepo com 20+ pacotes.
 - Custo de release alto desencoraja releases frequentes.
 

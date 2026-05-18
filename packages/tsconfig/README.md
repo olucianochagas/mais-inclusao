@@ -4,13 +4,17 @@ Configurações TypeScript compartilhadas do monorepo **+Inclusão**. Cada works
 
 ## Variantes
 
-| Variante | Quando usar |
-|---|---|
-| `@mais-inclusao/tsconfig/base.json` | Núcleo strict — outros extendem dele. Raramente usado direto. |
-| `@mais-inclusao/tsconfig/nest.json` | Apps backend NestJS (`auth-service`, `programs-service`, `bff-*`, etc.) |
-| `@mais-inclusao/tsconfig/react.json` | Apps frontend Module Federation (`shell`, `gestor-mf`, `cidadao-mf`) |
-| `@mais-inclusao/tsconfig/lib.json` | Packages publicáveis (`@mais-inclusao/contracts`, `@mais-inclusao/ui`, etc.) |
-| `@mais-inclusao/tsconfig/test.json` | Arquivos `*.test.ts` e `test/` — relaxa unused, adiciona globals do Vitest |
+| Variante                             | Quando usar                                                                  |
+| ------------------------------------ | ---------------------------------------------------------------------------- |
+| `@mais-inclusao/tsconfig/base.json`  | Núcleo strict — outros extendem dele. Raramente usado direto.                |
+| `@mais-inclusao/tsconfig/nest.json`  | Apps backend NestJS (`auth-service`, `programs-service`, `bff-*`, etc.)      |
+| `@mais-inclusao/tsconfig/react.json` | Apps frontend Module Federation (`shell`, `gestor-mf`, `cidadao-mf`)         |
+| `@mais-inclusao/tsconfig/lib.json`   | Packages publicáveis (`@mais-inclusao/contracts`, `@mais-inclusao/ui`, etc.) |
+| `@mais-inclusao/tsconfig/test.json`  | Arquivos `*.test.ts` e `test/` — relaxa unused, adiciona globals do Vitest   |
+
+`experimentalDecorators` e `emitDecoratorMetadata` ficam restritos a
+`nest.json`. Packages de biblioteca não devem carregar metadata de decorators,
+evitando warnings do `tsup` e dependência desnecessária de `@swc/core`.
 
 ## Exemplos
 
@@ -23,10 +27,10 @@ Configurações TypeScript compartilhadas do monorepo **+Inclusão**. Cada works
   "extends": "@mais-inclusao/tsconfig/nest.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
   },
   "include": ["src/**/*"],
-  "exclude": ["**/*.test.ts", "test/**", "dist/**"]
+  "exclude": ["**/*.test.ts", "test/**", "dist/**"],
 }
 ```
 
@@ -38,7 +42,7 @@ Configurações TypeScript compartilhadas do monorepo **+Inclusão**. Cada works
 {
   "extends": "@mais-inclusao/tsconfig/react.json",
   "compilerOptions": { "outDir": "./dist" },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
 }
 ```
 
@@ -51,7 +55,7 @@ Configurações TypeScript compartilhadas do monorepo **+Inclusão**. Cada works
   "extends": "@mais-inclusao/tsconfig/lib.json",
   "compilerOptions": { "outDir": "./dist", "rootDir": "./src" },
   "include": ["src/**/*"],
-  "exclude": ["dist/**", "test/**"]
+  "exclude": ["dist/**", "test/**"],
 }
 ```
 
@@ -62,7 +66,7 @@ Configurações TypeScript compartilhadas do monorepo **+Inclusão**. Cada works
 ```jsonc
 {
   "extends": "@mais-inclusao/tsconfig/test.json",
-  "include": ["test/**/*", "src/**/*"]
+  "include": ["test/**/*", "src/**/*"],
 }
 ```
 

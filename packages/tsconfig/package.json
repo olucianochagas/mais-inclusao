@@ -18,6 +18,14 @@
     "./lib.json": "./lib.json",
     "./test.json": "./test.json"
   },
-  "files": ["*.json", "README.md"],
-  "keywords": ["typescript", "tsconfig", "mais-inclusao", "monorepo"]
+  "files": [
+    "*.json",
+    "README.md"
+  ],
+  "keywords": [
+    "typescript",
+    "tsconfig",
+    "mais-inclusao",
+    "monorepo"
+  ]
 }

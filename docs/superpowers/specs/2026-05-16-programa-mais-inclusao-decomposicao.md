@@ -1,13 +1,13 @@
 # +Inclusão (mais-inclusao) — Decomposição do programa em subprojetos
 
-| | |
-|---|---|
-| **Data** | 2026-05-16 |
-| **Autor** | Luciano Douglas Machado Chagas <olucianochagas@gmail.com> |
-| **Tipo de spec** | Decomposição de programa (não-feature). Mapa pleno de bounded contexts + arquitetura da Onda 1 + roadmap evolutivo. |
-| **Status** | Aprovado pelo usuário em todas as 6 seções. Aguarda revisão final do doc consolidado. |
-| **Próximo artefato** | Plano de implementação da Onda 1 (`writing-plans`) para o primeiro subprojeto escolhido. |
-| **Repositório** | `git+ssh://git@github.com/olucianochagas/mais-inclusao.git` |
+|                      |                                                                                                                     |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| **Data**             | 2026-05-16                                                                                                          |
+| **Autor**            | Luciano Douglas Machado Chagas <olucianochagas@gmail.com>                                                           |
+| **Tipo de spec**     | Decomposição de programa (não-feature). Mapa pleno de bounded contexts + arquitetura da Onda 1 + roadmap evolutivo. |
+| **Status**           | Aprovado pelo usuário em todas as 6 seções. Aguarda revisão final do doc consolidado.                               |
+| **Próximo artefato** | Plano de implementação da Onda 1 (`writing-plans`) para o primeiro subprojeto escolhido.                            |
+| **Repositório**      | `git+ssh://git@github.com/olucianochagas/mais-inclusao.git`                                                         |
 
 ---
 
@@ -59,6 +59,7 @@ Inscrições podem ser originadas por três canais distintos no mesmo programa:
 3. **Integração externa** (CadÚnico, planilhas, APIs parceiras)
 
 Cada candidatura registra **proveniência do canal de origem**. A omnicanalidade adiciona:
+
 - Portal cidadão (segunda app Module Federation com requisitos pesados de a11y e autenticação cidadã)
 - ETL/ingestão de integrações
 - Resolução de identidade (mesmo cidadão entrando por 3 canais não pode virar 3 cadastros)
@@ -83,12 +84,12 @@ População em vulnerabilidade social, pessoas com deficiência, idosos, crianç
 
 Três abordagens foram avaliadas:
 
-| | A — Big-bang microservices | B — Microsserviços evolutivos por bounded context (Recomendada) | C — Capability-based |
-|---|---|---|---|
-| Granularidade | 15–20 serviços do dia 0 | 4 serviços + 2 BFFs na Onda 1, expansão por evidência | 1 monolito de domínio + serviços técnicos |
-| Velocidade do MVP | Baixa | Média-alta | Alta |
-| Complexidade operacional | Brutal | Sustentável | Baixa-média |
-| Risco | Fronteiras adivinhadas erram, refactor distribuído caro | Disciplina exigida para contratos públicos | Monolito de domínio cresce; atrito com requisito original |
+|                          | A — Big-bang microservices                              | B — Microsserviços evolutivos por bounded context (Recomendada) | C — Capability-based                                      |
+| ------------------------ | ------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------- |
+| Granularidade            | 15–20 serviços do dia 0                                 | 4 serviços + 2 BFFs na Onda 1, expansão por evidência           | 1 monolito de domínio + serviços técnicos                 |
+| Velocidade do MVP        | Baixa                                                   | Média-alta                                                      | Alta                                                      |
+| Complexidade operacional | Brutal                                                  | Sustentável                                                     | Baixa-média                                               |
+| Risco                    | Fronteiras adivinhadas erram, refactor distribuído caro | Disciplina exigida para contratos públicos                      | Monolito de domínio cresce; atrito com requisito original |
 
 **Escolha: Abordagem B — Microsserviços evolutivos por bounded context.**
 
@@ -104,54 +105,54 @@ A disciplina não-negociável é: **contratos públicos entre serviços desde o 
 
 ### Core domain (5 contextos)
 
-| Contexto | Onda | Papel |
-|---|---|---|
-| **Programs Catalog** | 1 | Configuração de programas/benefícios, critérios de elegibilidade, ciclo de vida. **Eligibility embutido** na Onda 1 e extraído como serviço dedicado na Onda 3 (mesmo contexto, refinado). |
-| **Application Lifecycle** | 1 | Inscrição omnichannel → triagem → concessão. Estado-máquina único. Proveniência do canal gravada. |
-| **Citizens** | 1 | Cadastro de cidadão (versão **light** na Onda 1; completa a partir da Onda 2 com direitos LGPD operacionalizados). |
-| **Identity Resolution** | 2 | Matching/merging cross-canal (determinístico + probabilístico). Trilha reversível. |
-| **Delivery** | 2 | Operação pós-concessão: agendamento, retirada, comprovação fotográfica, no-show. |
+| Contexto                  | Onda | Papel                                                                                                                                                                                      |
+| ------------------------- | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Programs Catalog**      | 1    | Configuração de programas/benefícios, critérios de elegibilidade, ciclo de vida. **Eligibility embutido** na Onda 1 e extraído como serviço dedicado na Onda 3 (mesmo contexto, refinado). |
+| **Application Lifecycle** | 1    | Inscrição omnichannel → triagem → concessão. Estado-máquina único. Proveniência do canal gravada.                                                                                          |
+| **Citizens**              | 1    | Cadastro de cidadão (versão **light** na Onda 1; completa a partir da Onda 2 com direitos LGPD operacionalizados).                                                                         |
+| **Identity Resolution**   | 2    | Matching/merging cross-canal (determinístico + probabilístico). Trilha reversível.                                                                                                         |
+| **Delivery**              | 2    | Operação pós-concessão: agendamento, retirada, comprovação fotográfica, no-show.                                                                                                           |
 
 ### Supporting subdomains (6 contextos)
 
-| Contexto | Onda | Papel |
-|---|---|---|
-| **Documents** | 2 | Anexos com criptografia em repouso e AV scan. |
-| **Case Notes** | 2 | Diário operacional de atendimentos (não é prontuário completo). |
-| **Referrals** | 3 | Encaminhamentos entre programas e entre tenants conveniados. |
-| **Territory** | 3 | Geolocalização, setores censitários, busca ativa, mapeamento de cobertura. |
-| **Analytics / Indicators** | 3 | Governança por evidências: cobertura, desigualdades por raça/gênero/idade. |
-| **ETL / Integrations** | 3 | Ingestão CadÚnico, planilhas, APIs de parceiros. Idempotência + reconciliação. |
+| Contexto                   | Onda | Papel                                                                          |
+| -------------------------- | ---- | ------------------------------------------------------------------------------ |
+| **Documents**              | 2    | Anexos com criptografia em repouso e AV scan.                                  |
+| **Case Notes**             | 2    | Diário operacional de atendimentos (não é prontuário completo).                |
+| **Referrals**              | 3    | Encaminhamentos entre programas e entre tenants conveniados.                   |
+| **Territory**              | 3    | Geolocalização, setores censitários, busca ativa, mapeamento de cobertura.     |
+| **Analytics / Indicators** | 3    | Governança por evidências: cobertura, desigualdades por raça/gênero/idade.     |
+| **ETL / Integrations**     | 3    | Ingestão CadÚnico, planilhas, APIs de parceiros. Idempotência + reconciliação. |
 
 ### Generic / platform (7 contextos)
 
-| Contexto | Onda | Papel |
-|---|---|---|
-| **Identity (gestor) + Tenancy** | 1 | Tenants, usuários gestores, papéis, OIDC interno, RBAC. **Fundidos** na Onda 1. |
-| **Citizen Identity** | 2 | Autenticação do cidadão (e-mail+CPF na Onda 1; Gov.br plugável na Onda 2). |
-| **Notifications** | 2 | Email/SMS/WhatsApp/push. Templates por tenant, fila persistente, fallback entre canais. |
-| **Consent & LGPD** | 2 | Aceites granulares, ROPA digital, direitos do titular operacionalizados. |
-| **Search** | 3 | Indexação cross-context (Meilisearch ou OpenSearch). |
-| **Billing** | 3 | Planos, faturas, gateway. Só quando houver tenant pagante. |
-| **Feature Flags / Config** | 3 | Toggles por tenant, segmentação. |
+| Contexto                        | Onda | Papel                                                                                   |
+| ------------------------------- | ---- | --------------------------------------------------------------------------------------- |
+| **Identity (gestor) + Tenancy** | 1    | Tenants, usuários gestores, papéis, OIDC interno, RBAC. **Fundidos** na Onda 1.         |
+| **Citizen Identity**            | 2    | Autenticação do cidadão (e-mail+CPF na Onda 1; Gov.br plugável na Onda 2).              |
+| **Notifications**               | 2    | Email/SMS/WhatsApp/push. Templates por tenant, fila persistente, fallback entre canais. |
+| **Consent & LGPD**              | 2    | Aceites granulares, ROPA digital, direitos do titular operacionalizados.                |
+| **Search**                      | 3    | Indexação cross-context (Meilisearch ou OpenSearch).                                    |
+| **Billing**                     | 3    | Planos, faturas, gateway. Só quando houver tenant pagante.                              |
+| **Feature Flags / Config**      | 3    | Toggles por tenant, segmentação.                                                        |
 
 ### Frontend apps (4 contextos)
 
-| Contexto | Onda | Papel |
-|---|---|---|
-| **Shell Host** | 1 | Casca MF: layout, auth context, theme, i18n, router, telemetria. |
-| **Gestor MF (remote)** | 1 | Painel gestor: programas, inscrições, triagem, concessão, atendimentos. |
-| **Cidadão MF (remote)** | 1 | Portal do cidadão. Versão **light** na Onda 1 (descobrir programas, criar conta, inscrever-se, WCAG 2.2 AA); evolui para **full** na Onda 2 (Gov.br, direitos LGPD, PWA). |
-| **Admin Plataforma MF** | 3 | Super-admin do operador SaaS. Substitui CLI `tools/cli`. |
+| Contexto                | Onda | Papel                                                                                                                                                                     |
+| ----------------------- | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Shell Host**          | 1    | Casca MF: layout, auth context, theme, i18n, router, telemetria.                                                                                                          |
+| **Gestor MF (remote)**  | 1    | Painel gestor: programas, inscrições, triagem, concessão, atendimentos.                                                                                                   |
+| **Cidadão MF (remote)** | 1    | Portal do cidadão. Versão **light** na Onda 1 (descobrir programas, criar conta, inscrever-se, WCAG 2.2 AA); evolui para **full** na Onda 2 (Gov.br, direitos LGPD, PWA). |
+| **Admin Plataforma MF** | 3    | Super-admin do operador SaaS. Substitui CLI `tools/cli`.                                                                                                                  |
 
 ### Unidades transversais (4 — não-bounded-contexts)
 
-| Unidade | Onda | Tipo | Papel |
-|---|---|---|---|
-| **Audit** | 1 (capability) · 3 (serviço dedicado) | Capability transversal | Nest Interceptor + `packages/audit` consumido por todos serviços na Onda 1; vira serviço próprio na Onda 3 com storage especializado e export legal. |
-| **`packages/ui` — Design System** | 1 | Package compartilhado | Radix + Tailwind copiado shadcn-style. Consumido por todos os frontends. |
-| **Eligibility (dedicado)** | 3 | Extração do Programs Catalog | Mesmo contexto refinado: motor de regras complexas (cruzamento, simulação) extraído quando atinge >5 ramos condicionais. |
-| **Outras packages cross-cutting** | 1 | Packages compartilhados | `packages/contracts`, `packages/persistence`, `packages/messaging`, `packages/observability`, `packages/auth-react`, `packages/testing`, configs ESLint/tsconfig/tailwind. |
+| Unidade                           | Onda                                  | Tipo                         | Papel                                                                                                                                                                      |
+| --------------------------------- | ------------------------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Audit**                         | 1 (capability) · 3 (serviço dedicado) | Capability transversal       | Nest Interceptor + `packages/audit` consumido por todos serviços na Onda 1; vira serviço próprio na Onda 3 com storage especializado e export legal.                       |
+| **`packages/ui` — Design System** | 1                                     | Package compartilhado        | Radix + Tailwind copiado shadcn-style. Consumido por todos os frontends.                                                                                                   |
+| **Eligibility (dedicado)**        | 3                                     | Extração do Programs Catalog | Mesmo contexto refinado: motor de regras complexas (cruzamento, simulação) extraído quando atinge >5 ramos condicionais.                                                   |
+| **Outras packages cross-cutting** | 1                                     | Packages compartilhados      | `packages/contracts`, `packages/persistence`, `packages/messaging`, `packages/observability`, `packages/auth-react`, `packages/testing`, configs ESLint/tsconfig/tailwind. |
 
 ### Dependências determinantes entre contextos
 
@@ -169,26 +170,27 @@ A disciplina não-negociável é: **contratos públicos entre serviços desde o 
 
 ### Stack opinionado da Onda 1
 
-| Camada | Decisão |
-|---|---|
-| Runtime | Node.js `^24.15.0` |
-| Linguagem | TypeScript 5.6+ (strict) |
-| Framework | NestJS 11 + `@nestjs/microservices` |
-| ORM | Prisma 6 (migrações declarativas) |
-| Banco | PostgreSQL 16 — 1 schema por serviço, mesmo cluster |
-| Mensageria | NATS JetStream (leve, durável, ack) |
-| Outbox | Tabela `outbox_event` + worker por serviço |
-| Cache / Sessão | Redis 7 |
-| Validação | Zod + DTOs em `packages/contracts` |
-| Auth | OIDC interno; JWT com claim `tenant_id`; `argon2id` para senhas |
-| Multi-tenancy | Discriminator `tenant_id` em toda tabela; RLS Postgres como Onda 2 |
-| Logs | Pino JSON (com `tenant_id`, `trace_id`, `user_id` em todo log) |
-| Tracing | OpenTelemetry → Tempo ou Jaeger |
-| Testes | Vitest unit + Testcontainers integração + Pact contratos |
+| Camada         | Decisão                                                            |
+| -------------- | ------------------------------------------------------------------ |
+| Runtime        | Node.js `^24.15.0`                                                 |
+| Linguagem      | TypeScript 5.6+ (strict)                                           |
+| Framework      | NestJS 11 + `@nestjs/microservices`                                |
+| ORM            | Prisma 6 (migrações declarativas)                                  |
+| Banco          | PostgreSQL 16 — 1 schema por serviço, mesmo cluster                |
+| Mensageria     | NATS JetStream (leve, durável, ack)                                |
+| Outbox         | Tabela `outbox_event` + worker por serviço                         |
+| Cache / Sessão | Redis 7                                                            |
+| Validação      | Zod + DTOs em `packages/contracts`                                 |
+| Auth           | OIDC interno; JWT com claim `tenant_id`; `argon2id` para senhas    |
+| Multi-tenancy  | Discriminator `tenant_id` em toda tabela; RLS Postgres como Onda 2 |
+| Logs           | Pino JSON (com `tenant_id`, `trace_id`, `user_id` em todo log)     |
+| Tracing        | OpenTelemetry → Tempo ou Jaeger                                    |
+| Testes         | Vitest unit + Testcontainers integração + Pact contratos           |
 
 ### 7 unidades da Onda 1 backend
 
 #### 1. `auth-service` — Identity + Tenancy
+
 - **Porta:** 3010 · **Schema PG:** `auth`
 - **Responsabilidades:** tenants, usuários gestores, papéis/RBAC, OIDC interno (login/refresh), emissão de JWT com claim `tenant_id`.
 - **Agregados:** `Tenant`, `User`, `Role`, `Permission`.
@@ -198,6 +200,7 @@ A disciplina não-negociável é: **contratos públicos entre serviços desde o 
 - **Limites Onda 1:** sem MFA (Onda 2), sem SSO empresarial (Onda 3), sem self-service de tenant (operador provisiona via CLI), sem identidade do cidadão (vem em Onda 2 via `citizen-identity-service`).
 
 #### 2. `programs-service` — Programs Catalog + Eligibility (embutido)
+
 - **Porta:** 3020 · **Schema PG:** `programs`
 - **Responsabilidades:** CRUD de programas por tenant, critérios de elegibilidade em DSL JSON simples, ciclo de vida `DRAFT → PUBLISHED → CLOSED`, avaliação de elegibilidade (consulta sync).
 - **Agregados:** `Program` (raiz), `EligibilityRule` (filha).
@@ -208,6 +211,7 @@ A disciplina não-negociável é: **contratos públicos entre serviços desde o 
 - **Limites Onda 1:** sem motor estilo Drools, sem simulação, sem versionamento histórico de regras.
 
 #### 3. `citizens-service` — Citizens (light)
+
 - **Porta:** 3030 · **Schema PG:** `citizens`
 - **Responsabilidades:** cadastro de cidadão, família simples (parent_id linear), vulnerabilidades autodeclaradas.
 - **Agregados:** `Citizen` (raiz), `Household` (raiz), `Vulnerability` (valor).
@@ -217,6 +221,7 @@ A disciplina não-negociável é: **contratos públicos entre serviços desde o 
 - **Limites Onda 1:** sem deduplicação omnichannel (Onda 2 via `identity-resolution-service`), sem busca avançada (Onda 3), sem direitos LGPD operacionalizados (Onda 2).
 
 #### 4. `applications-service` — Application Lifecycle
+
 - **Porta:** 3040 · **Schema PG:** `applications`
 - **Responsabilidades:** Inscrição (omnichannel: cidadão, gestor, ETL stub) + Triagem (humana + regras) + Concessão (workflow). Estado-máquina único por candidatura. Proveniência do canal de origem.
 - **Agregados:** `Application` (raiz, com `state`, `channel`, `provenance`), `TriageDecision`, `Grant`.
@@ -228,15 +233,18 @@ A disciplina não-negociável é: **contratos públicos entre serviços desde o 
 - **Limites Onda 1:** sem entrega pós-concessão (Onda 2 via `delivery-service`); sem encaminhamento entre programas (Onda 3 via `referrals-service`); triagem só linear (uma fase).
 
 #### 5. `bff-gestor` — Backend for Frontend (gestor)
+
 - **Porta:** 3000 · **Stateless**
 - **Responsabilidades:** agrega chamadas para o Gestor MF; valida JWT contra `auth-service` (cache de JWKS); sessão de UI em Redis (cookie `HttpOnly Secure SameSite=Lax`); CSRF, CORS estrito, rate limiting moderado.
 - **Não faz:** regra de negócio, persistência de domínio, GraphQL (REST + caching de leituras).
 
 #### 6. `bff-cidadao` — Backend for Frontend (cidadão)
+
 - **Porta:** 3001 · **Stateless**
 - **Responsabilidades:** endpoint público para listar programas e abrir inscrição; sessão cidadã (e-mail+CPF+senha na Onda 1; Gov.br Onda 2); rate limit agressivo por IP+CPF; CSP rígido, CSRF, captcha em endpoints sensíveis.
 
 #### 7. `@mais-inclusao/audit` — capability transversal (não-serviço)
+
 - **Package:** `packages/audit`
 - **Implementação:** pacote npm interno consumido por todos serviços; exporta `AuditInterceptor` Nest + decorator `@Audited`.
 - **O que é auditado:** acessos a endpoints que tocam PII; mudanças de estado em Application e Grant; criação/desativação de User e Tenant.
@@ -255,29 +263,31 @@ A disciplina não-negociável é: **contratos públicos entre serviços desde o 
 
 ### Stack opinionado de frontend
 
-| Camada | Decisão |
-|---|---|
-| UI Framework | React 19 (SPA-mode; sem RSC nesta onda) |
-| Bundler | Rspack + Module Federation 2.0 |
-| Router | React Router v7 (data router) |
-| Server state | TanStack Query v5 |
-| UI state | Zustand (mínimo, sem Redux) |
-| Estilo | Tailwind CSS 4 + design tokens via CSS vars |
-| Componentes | shadcn/ui (Radix) **copiado** em `packages/ui` |
-| Forms | React Hook Form + Zod (schemas de `packages/contracts`) |
-| i18n | react-i18next — pt-BR único na Onda 1 |
-| A11y | WCAG 2.2 AA + `@axe-core/playwright` no CI |
-| Testes | Vitest+RTL (unit) + Playwright (E2E) |
-| Observabilidade | OpenTelemetry web SDK + Core Web Vitals → backend |
+| Camada          | Decisão                                                 |
+| --------------- | ------------------------------------------------------- |
+| UI Framework    | React 19 (SPA-mode; sem RSC nesta onda)                 |
+| Bundler         | Rspack + Module Federation 2.0                          |
+| Router          | React Router v7 (data router)                           |
+| Server state    | TanStack Query v5                                       |
+| UI state        | Zustand (mínimo, sem Redux)                             |
+| Estilo          | Tailwind CSS 4 + design tokens via CSS vars             |
+| Componentes     | shadcn/ui (Radix) **copiado** em `packages/ui`          |
+| Forms           | React Hook Form + Zod (schemas de `packages/contracts`) |
+| i18n            | react-i18next — pt-BR único na Onda 1                   |
+| A11y            | WCAG 2.2 AA + `@axe-core/playwright` no CI              |
+| Testes          | Vitest+RTL (unit) + Playwright (E2E)                    |
+| Observabilidade | OpenTelemetry web SDK + Core Web Vitals → backend       |
 
 ### 5 unidades da Onda 1 frontend
 
 #### 1. `apps/shell` — Host (Module Federation)
+
 - **Responsabilidades:** carregar remotes em runtime via federation manifest; layout global (header/footer/nav); providers (Auth, Theme, i18n, QueryClient, ErrorBoundary global); roteamento de top-level (`/gestor/*`, `/cidadao/*`, `/` público); bootstrap de telemetria (OpenTelemetry web + Web Vitals); registro de Service Worker (apenas portal cidadão).
 - **Singletons compartilhados (MF shared, strictVersion):** `react`, `react-dom`, `react-router-dom`, `@tanstack/react-query`, `@mais-inclusao/ui`, `@mais-inclusao/auth-react`.
 - **Não faz:** regra de domínio, chamadas diretas a serviços, montar ambos remotes simultaneamente.
 
 #### 2. `apps/gestor-mf` — Remote: Painel Gestor
+
 - **Exposição:** `./GestorApp` · **Basename:** `/gestor`
 - **Rotas:** `/programs`, `/applications`, `/applications/:id`, `/citizens`, `/reports`.
 - **Conexões:** lê `useAuth()` do `@mais-inclusao/auth-react`; componentes do `@mais-inclusao/ui`; chamadas via fetch interceptado (injeta JWT) → `bff-gestor`.
@@ -285,6 +295,7 @@ A disciplina não-negociável é: **contratos públicos entre serviços desde o 
 - **Limites Onda 1:** relatórios = listagem + CSV (sem BI); sem agendamento de entrega (Onda 2); triagem com 1 avaliador.
 
 #### 3. `apps/cidadao-mf` — Remote: Portal Cidadão (light)
+
 - **Exposição:** `./CidadaoApp` · **Basename:** `/cidadao` · **Mobile-first** · **PWA**
 - **Rotas:** `/`, `/programas`, `/programas/:slug`, `/criar-conta`, `/entrar`, `/minhas-inscricoes`, `/inscricao/:programa`.
 - **Postura:** mobile-first (testado em viewport 320px); WCAG 2.2 AA obrigatório; PWA mínimo (manifest + SW para shell-caching, não offline-first); SEO via SSG do shell para landing pages; sitemap dinâmico via BFF.
@@ -292,28 +303,30 @@ A disciplina não-negociável é: **contratos públicos entre serviços desde o 
 - **Limites Onda 1:** sem Gov.br (Onda 2); sem direitos LGPD operacionalizados (Onda 2); sem notificações in-app (Onda 2); sem offline-first.
 
 #### 4. `packages/ui` — Design System
+
 - **Filosofia:** shadcn-style — componentes **copiados** e versionados no monorepo, não importados de pacote externo. Zero peso de runtime extra. Multi-tenant theming via `data-theme` + CSS vars.
 - **Entrega:** tokens (cores, espaçamentos, tipografia) via CSS variables; componentes acessíveis (Button, Input, Combobox, Dialog, Tabs, Toast, DataGrid, Pagination, Form RHF wrappers); layout primitives (Stack, Grid, Cluster); ícones (Lucide React singleton).
 - **A11y embutida:** focus ring, ARIA correto, suporte completo a teclado.
 - **Storybook:** Onda 2. Na Onda 1, docs em README + rota oculta no shell para playground.
 
 #### 5. `packages/auth-react` — SDK frontend de auth
+
 - **Exporta:** `<AuthProvider />` (hospedado no shell); `useAuth()` retornando `{ user, tenant, roles, signIn, signOut, isAuthenticated }`; `createAuthFetch()` (fetch wrapper que injeta JWT + silent refresh em 401); `<RequireRole />` guard declarativo.
 - **Comportamento:** tokens em `HttpOnly Secure SameSite=Lax` (definidos pelos BFFs); refresh automático antes da expiração; logout cross-tab via BroadcastChannel.
 
 ### Acessibilidade WCAG 2.2 AA — postura Onda 1
 
-| Prática | Implementação |
-|---|---|
-| Contraste | Mínimo 4.5:1 (texto) / 3:1 (não-texto). Tokens validados em build via script no CI. |
-| Teclado | 100% dos fluxos críticos do cidadão navegáveis sem mouse. Skip-to-content em todas as páginas. |
-| Foco visível | `:focus-visible` com outline 2px, contraste AA contra fundo. Nunca remover. |
-| Forms | Labels associadas, erros descritivos com `aria-describedby`, agrupamento por `fieldset`, instruções antes do campo. |
-| Live regions | Mudanças de estado anunciadas via `aria-live="polite"`. |
-| Imagens | Alt obrigatório em semânticas; `alt=""` em decorativas; ícones com `aria-label` quando interativos. |
-| Movimento | Respeito a `prefers-reduced-motion`; sem auto-play > 5s. |
-| Teste automático | `@axe-core/playwright` em E2E críticos do cidadão; falha o build em violação A/AA. |
-| Teste manual | Cada release passa por checklist com NVDA/VoiceOver em 1 fluxo crítico do cidadão. |
+| Prática          | Implementação                                                                                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Contraste        | Mínimo 4.5:1 (texto) / 3:1 (não-texto). Tokens validados em build via script no CI.                                 |
+| Teclado          | 100% dos fluxos críticos do cidadão navegáveis sem mouse. Skip-to-content em todas as páginas.                      |
+| Foco visível     | `:focus-visible` com outline 2px, contraste AA contra fundo. Nunca remover.                                         |
+| Forms            | Labels associadas, erros descritivos com `aria-describedby`, agrupamento por `fieldset`, instruções antes do campo. |
+| Live regions     | Mudanças de estado anunciadas via `aria-live="polite"`.                                                             |
+| Imagens          | Alt obrigatório em semânticas; `alt=""` em decorativas; ícones com `aria-label` quando interativos.                 |
+| Movimento        | Respeito a `prefers-reduced-motion`; sem auto-play > 5s.                                                            |
+| Teste automático | `@axe-core/playwright` em E2E críticos do cidadão; falha o build em violação A/AA.                                  |
+| Teste manual     | Cada release passa por checklist com NVDA/VoiceOver em 1 fluxo crítico do cidadão.                                  |
 
 ### Decisões transversais do frontend
 
@@ -388,50 +401,50 @@ mais-inclusao/
 
 ### Pipelines do `turbo.json`
 
-| Pipeline | dependsOn | outputs | notas |
-|---|---|---|---|
-| `build` | `^build` | `dist/**`, `.rspack/**` | Compila TS e gera artefatos. |
-| `dev` | — | (none, persistent: true) | Watch em paralelo. |
-| `lint` | — | — | ESLint via `@mais-inclusao/eslint-config`. |
-| `typecheck` | `^typecheck` | — | `tsc --noEmit`. |
-| `test` | `^build` | `coverage/**` | Vitest + RTL. |
-| `test:integration` | `^build` | — | Testcontainers (PG, NATS, Redis). |
-| `e2e` | — | (cache: false) | Playwright; só em main / PR com label `e2e`. |
-| `db:migrate` | — | (cache: false) | `prisma migrate deploy` por serviço. |
-| `db:generate` | — | `node_modules/.prisma/**` | `prisma generate`. |
-| `contracts:codegen` | — | `dist/codegen/**` | Gera cliente HTTP tipado. |
-| `format` | — | (cache: false) | Prettier; roda em pre-commit. |
-| `release` | — | — | Changesets version + build + publish + tag; só em main, gated por approval. |
+| Pipeline            | dependsOn    | outputs                   | notas                                                                       |
+| ------------------- | ------------ | ------------------------- | --------------------------------------------------------------------------- |
+| `build`             | `^build`     | `dist/**`, `.rspack/**`   | Compila TS e gera artefatos.                                                |
+| `dev`               | —            | (none, persistent: true)  | Watch em paralelo.                                                          |
+| `lint`              | —            | —                         | ESLint via `@mais-inclusao/eslint-config`.                                  |
+| `typecheck`         | `^typecheck` | —                         | `tsc --noEmit`.                                                             |
+| `test`              | `^build`     | `coverage/**`             | Vitest + RTL.                                                               |
+| `test:integration`  | `^build`     | —                         | Testcontainers (PG, NATS, Redis).                                           |
+| `e2e`               | —            | (cache: false)            | Playwright; só em main / PR com label `e2e`.                                |
+| `db:migrate`        | —            | (cache: false)            | `prisma migrate deploy` por serviço.                                        |
+| `db:generate`       | —            | `node_modules/.prisma/**` | `prisma generate`.                                                          |
+| `contracts:codegen` | —            | `dist/codegen/**`         | Gera cliente HTTP tipado.                                                   |
+| `format`            | —            | (cache: false)            | Prettier; roda em pre-commit.                                               |
+| `release`           | —            | —                         | Changesets version + build + publish + tag; só em main, gated por approval. |
 
 ### Tooling compartilhado
 
-| Ferramenta | Decisão | Por quê |
-|---|---|---|
-| Package manager | **pnpm 11.1.2 via corepack** | Evita phantom dependencies em `packages/contracts` (crítico em MF singletons); install em CI ~3× mais rápido; isolamento de deps por workspace via symlinks. |
-| Monorepo | Turborepo 2.9+ | Cache local + remote (Onda 2). |
-| TypeScript | 5.6+ strict | Project references no root. |
-| ESLint | 9 flat config em `packages/eslint-config` | Plugins: typescript, react, jsx-a11y, security. |
-| Prettier | 3 + plugin Tailwind | Config raiz única. |
-| Husky + lint-staged | Pre-commit | Format + lint dos arquivos staged. Sem typecheck. |
-| commitlint + Commitizen | Conventional Commits | Obrigatório. `cz` para composição. |
-| Changesets | Gerência de versão | `packages/contracts` é o ponto sensível. |
-| Dependabot | (não Renovate) | Hospedagem GitHub; suporte oficial a pnpm desde 2024; grupos para minor/patch. |
-| syncpack | Dep version consistency | Zero drift entre workspaces. |
-| EditorConfig + `.nvmrc` | Padronização | Node 24.x pin. |
+| Ferramenta              | Decisão                                   | Por quê                                                                                                                                                      |
+| ----------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Package manager         | **pnpm 11.1.2 via corepack**              | Evita phantom dependencies em `packages/contracts` (crítico em MF singletons); install em CI ~3× mais rápido; isolamento de deps por workspace via symlinks. |
+| Monorepo                | Turborepo 2.9+                            | Cache local + remote (Onda 2).                                                                                                                               |
+| TypeScript              | 5.6+ strict                               | Project references no root.                                                                                                                                  |
+| ESLint                  | 9 flat config em `packages/eslint-config` | Plugins: typescript, react, jsx-a11y, security.                                                                                                              |
+| Prettier                | 3 + plugin Tailwind                       | Config raiz única.                                                                                                                                           |
+| Husky + lint-staged     | Pre-commit                                | Format + lint dos arquivos staged. Sem typecheck.                                                                                                            |
+| commitlint + Commitizen | Conventional Commits                      | Obrigatório. `cz` para composição.                                                                                                                           |
+| Changesets              | Gerência de versão                        | `packages/contracts` é o ponto sensível.                                                                                                                     |
+| Dependabot              | (não Renovate)                            | Hospedagem GitHub; suporte oficial a pnpm desde 2024; grupos para minor/patch.                                                                               |
+| syncpack                | Dep version consistency                   | Zero drift entre workspaces.                                                                                                                                 |
+| EditorConfig + `.nvmrc` | Padronização                              | Node 24.x pin.                                                                                                                                               |
 
 ### Ambiente de dev local — **dev-container purista**
 
 Toda a stack (infra **e apps**) rodam containerizadas via `infra/docker/dev/docker-compose.yml`:
 
-| Serviço container | Função |
-|---|---|
-| `postgres:16-alpine` | Porta 5432. Init script cria 1 banco por serviço. |
-| `redis:7-alpine` | Porta 6379. Sessões + rate limit + locks. |
-| `nats:2.10-alpine` | JetStream habilitado. Porta 4222 (clients), 8222 (admin). |
-| `mailhog` | SMTP fake para Notifications (UI em :8025). |
-| `jaegertracing/all-in-one` | UI :16686 para visualizar traces OTel localmente. |
-| `minio` | S3-compatible para Documents (Onda 2). Pre-provisionado para teste. |
-| `adminer` | UI :8080 para inspecionar PG durante dev. |
+| Serviço container                                                                                                                               | Função                                                                                       |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `postgres:16-alpine`                                                                                                                            | Porta 5432. Init script cria 1 banco por serviço.                                            |
+| `redis:7-alpine`                                                                                                                                | Porta 6379. Sessões + rate limit + locks.                                                    |
+| `nats:2.10-alpine`                                                                                                                              | JetStream habilitado. Porta 4222 (clients), 8222 (admin).                                    |
+| `mailhog`                                                                                                                                       | SMTP fake para Notifications (UI em :8025).                                                  |
+| `jaegertracing/all-in-one`                                                                                                                      | UI :16686 para visualizar traces OTel localmente.                                            |
+| `minio`                                                                                                                                         | S3-compatible para Documents (Onda 2). Pre-provisionado para teste.                          |
+| `adminer`                                                                                                                                       | UI :8080 para inspecionar PG durante dev.                                                    |
 | `auth-service`, `programs-service`, `citizens-service`, `applications-service`, `bff-gestor`, `bff-cidadao`, `shell`, `gestor-mf`, `cidadao-mf` | Cada um em container próprio, com bind mount do código e volume nomeado para `node_modules`. |
 
 **Why dev-container purista:** paridade dev/prod absoluta, sem "funciona na minha máquina". Penalidade de file-watching via virtiofs não se aplica (usuário em Linux nativo).
@@ -440,12 +453,12 @@ Comandos: `pnpm infra:up` (sobe o compose), `pnpm dev` (orquestra Turbo em watch
 
 ### CI mínimo — `.github/workflows/`
 
-| Workflow | Trigger | O que faz |
-|---|---|---|
-| `ci.yml` | PR + push main | Setup Node 24 + pnpm + Turbo cache → lint, typecheck, test em paralelo → build incremental. |
-| `e2e.yml` | PR com label `e2e`, push main | Playwright contra docker-compose dev. |
-| `release.yml` | push main | Changesets version PR → publish + tag + build images. Gated por approval manual. |
-| `codeql.yml` | schedule + PR | Security scan estático + `pnpm audit`. Falha em high/critical. |
+| Workflow      | Trigger                       | O que faz                                                                                   |
+| ------------- | ----------------------------- | ------------------------------------------------------------------------------------------- |
+| `ci.yml`      | PR + push main                | Setup Node 24 + pnpm + Turbo cache → lint, typecheck, test em paralelo → build incremental. |
+| `e2e.yml`     | PR com label `e2e`, push main | Playwright contra docker-compose dev.                                                       |
+| `release.yml` | push main                     | Changesets version PR → publish + tag + build images. Gated por approval manual.            |
+| `codeql.yml`  | schedule + PR                 | Security scan estático + `pnpm audit`. Falha em high/critical.                              |
 
 ### Decisões transversais do monorepo
 
@@ -489,17 +502,17 @@ packages/contracts/src/
 
 ```typescript
 // packages/contracts/src/shared/event-envelope.ts
-import { z } from "zod";
+import { z } from 'zod';
 
 export const EventHeadersSchema = z.object({
-  event_id:       z.string().uuid(),                        // idempotency key — NATS Msg-ID
-  event_type:     z.string().regex(/^[a-z]+\.[a-z_]+\.[a-z_]+$/),
-  event_version:  z.string().regex(/^\d+\.\d+\.\d+$/),      // SemVer do payload
-  occurred_at:    z.string().datetime(),
-  tenant_id:      z.string().uuid(),                        // INVARIANTE
+  event_id: z.string().uuid(), // idempotency key — NATS Msg-ID
+  event_type: z.string().regex(/^[a-z]+\.[a-z_]+\.[a-z_]+$/),
+  event_version: z.string().regex(/^\d+\.\d+\.\d+$/), // SemVer do payload
+  occurred_at: z.string().datetime(),
+  tenant_id: z.string().uuid(), // INVARIANTE
   correlation_id: z.string().uuid(),
-  causation_id:   z.string().uuid().optional(),
-  producer:       z.string(),
+  causation_id: z.string().uuid().optional(),
+  producer: z.string(),
 });
 
 export const EventEnvelopeSchema = <T extends z.ZodTypeAny>(payload: T) =>
@@ -544,6 +557,7 @@ model OutboxEvent {
 ```
 
 **Fluxo:**
+
 1. BFF chama serviço.
 2. Serviço abre **transação única** Prisma: insere entidade + insere `outbox_event`.
 3. Commit. 201 ao BFF.
@@ -581,33 +595,33 @@ Sequência típica:
 
 ### Catálogo de eventos da Onda 1
 
-| Evento | Produtor | Consumidores Onda 1 | Trigger |
-|---|---|---|---|
-| `auth.tenant.created` | auth-service | — | Operador provisionou tenant via CLI |
-| `auth.tenant.deactivated` | auth-service | programs-service | Encerra programs órfãos |
-| `auth.user.created` | auth-service | — | Gestor adicionou usuário |
-| `auth.user.deactivated` | auth-service | applications-service | Reatribui applications em triagem |
-| `programs.program.published` | programs-service | — | Program saiu de DRAFT |
-| `programs.program.closed` | programs-service | applications-service | Cancela applications em DRAFT do programa |
-| `programs.program.rules_updated` | programs-service | — | Auditoria |
-| `citizens.citizen.created` | citizens-service | — | Novo cadastro |
-| `citizens.citizen.updated` | citizens-service | — | Dados alterados |
-| `citizens.vulnerability.declared` | citizens-service | — (Analytics Onda 3) | Autodeclaração |
-| `applications.application.submitted` | applications-service | applications-service (self, auto-triage) | Inscrição enviada |
-| `applications.triage.completed` | applications-service | — (Notifications Onda 2) | Triagem concluída |
-| `applications.application.granted` | applications-service | — (Delivery+Notifications Onda 2; Analytics Onda 3) | Concessão final |
-| `applications.application.rejected` | applications-service | — (Notifications Onda 2) | Decisão final negativa |
+| Evento                               | Produtor             | Consumidores Onda 1                                 | Trigger                                   |
+| ------------------------------------ | -------------------- | --------------------------------------------------- | ----------------------------------------- |
+| `auth.tenant.created`                | auth-service         | —                                                   | Operador provisionou tenant via CLI       |
+| `auth.tenant.deactivated`            | auth-service         | programs-service                                    | Encerra programs órfãos                   |
+| `auth.user.created`                  | auth-service         | —                                                   | Gestor adicionou usuário                  |
+| `auth.user.deactivated`              | auth-service         | applications-service                                | Reatribui applications em triagem         |
+| `programs.program.published`         | programs-service     | —                                                   | Program saiu de DRAFT                     |
+| `programs.program.closed`            | programs-service     | applications-service                                | Cancela applications em DRAFT do programa |
+| `programs.program.rules_updated`     | programs-service     | —                                                   | Auditoria                                 |
+| `citizens.citizen.created`           | citizens-service     | —                                                   | Novo cadastro                             |
+| `citizens.citizen.updated`           | citizens-service     | —                                                   | Dados alterados                           |
+| `citizens.vulnerability.declared`    | citizens-service     | — (Analytics Onda 3)                                | Autodeclaração                            |
+| `applications.application.submitted` | applications-service | applications-service (self, auto-triage)            | Inscrição enviada                         |
+| `applications.triage.completed`      | applications-service | — (Notifications Onda 2)                            | Triagem concluída                         |
+| `applications.application.granted`   | applications-service | — (Delivery+Notifications Onda 2; Analytics Onda 3) | Concessão final                           |
+| `applications.application.rejected`  | applications-service | — (Notifications Onda 2)                            | Decisão final negativa                    |
 
 ### Sync vs Async — regra dura
 
-| Caso | Regra |
-|---|---|
-| BFF → serviço de domínio | **Sync** (sempre) |
-| BFF → auth-service (login) | **Sync** |
-| Serviço → auth-service (validar JWT) | **Sync** com cache de JWKS |
-| Serviço de domínio → outro serviço de domínio | **PROIBIDO** — use eventos + read models locais |
-| Mudança de estado relevante para outro contexto | **Async** (evento) |
-| Side effect (notificação, integração, analytics) | **Async** |
+| Caso                                             | Regra                                           |
+| ------------------------------------------------ | ----------------------------------------------- |
+| BFF → serviço de domínio                         | **Sync** (sempre)                               |
+| BFF → auth-service (login)                       | **Sync**                                        |
+| Serviço → auth-service (validar JWT)             | **Sync** com cache de JWKS                      |
+| Serviço de domínio → outro serviço de domínio    | **PROIBIDO** — use eventos + read models locais |
+| Mudança de estado relevante para outro contexto  | **Async** (evento)                              |
+| Side effect (notificação, integração, analytics) | **Async**                                       |
 
 **Read models locais:** se `applications-service` precisa saber se um program está PUBLISHED, mantém **cópia local read-only** de Program (id + status), atualizada por `program.published` / `program.closed`. Nunca chama programs-service por HTTP.
 
@@ -617,36 +631,36 @@ Sequência típica:
 
 ### Papéis LGPD
 
-| Papel | Quem | Responsabilidade-chave | No +Inclusão |
-|---|---|---|---|
-| Controlador | Tenant (secretaria/ONG) | Decide finalidade e meios; presta contas à ANPD | Configura aviso de privacidade, bases legais por finalidade, DPO do tenant |
-| Operador | +Inclusão SaaS | Trata dados conforme instruções do controlador; medidas de segurança; notifica em incidente | DPA por tenant; ROPA em `docs/legal/ropa.md`; logs de tratamento |
-| Titular | Cidadão atendido | Exerce direitos do Art. 18; consente quando aplicável | Portal cidadão expõe direitos (Onda 2); aceites granulares |
-| Sub-operador | Cloud, KMS, email/SMS | Trata dados em nome do operador | Lista pública em `docs/legal/subprocessors.md`; aprovação prévia do tenant |
+| Papel        | Quem                    | Responsabilidade-chave                                                                      | No +Inclusão                                                               |
+| ------------ | ----------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Controlador  | Tenant (secretaria/ONG) | Decide finalidade e meios; presta contas à ANPD                                             | Configura aviso de privacidade, bases legais por finalidade, DPO do tenant |
+| Operador     | +Inclusão SaaS          | Trata dados conforme instruções do controlador; medidas de segurança; notifica em incidente | DPA por tenant; ROPA em `docs/legal/ropa.md`; logs de tratamento           |
+| Titular      | Cidadão atendido        | Exerce direitos do Art. 18; consente quando aplicável                                       | Portal cidadão expõe direitos (Onda 2); aceites granulares                 |
+| Sub-operador | Cloud, KMS, email/SMS   | Trata dados em nome do operador                                                             | Lista pública em `docs/legal/subprocessors.md`; aprovação prévia do tenant |
 
 ### Bases legais por finalidade
 
-| Finalidade | Dados | Base legal | Consentimento obrigatório? |
-|---|---|---|---|
-| Cadastro de cidadão pelo gestor | CPF, contato, endereço | Art. 7º III (políticas públicas) | Não para comuns; sim para sensíveis se houver opções |
-| Autocadastro do cidadão | Idem + sensíveis autodeclarados | Art. 7º I + Art. 11 II 'a' (consentimento) | Sempre |
-| Inscrição em programa | Vínculo a programa | Art. 7º III | Não — necessário para finalidade |
-| Comunicação (SMS/email) | Telefone, e-mail | Art. 7º V (contrato) + IX (legítimo interesse) | Marketing sim; operacional não |
-| Indicadores agregados | Pseudonimizado | Não aplicável (após anonimização efetiva) | Não |
-| Auditoria interna | Logs de acesso a PII | Art. 7º IX (legítimo interesse) | Não, mas no ROPA |
+| Finalidade                      | Dados                           | Base legal                                     | Consentimento obrigatório?                           |
+| ------------------------------- | ------------------------------- | ---------------------------------------------- | ---------------------------------------------------- |
+| Cadastro de cidadão pelo gestor | CPF, contato, endereço          | Art. 7º III (políticas públicas)               | Não para comuns; sim para sensíveis se houver opções |
+| Autocadastro do cidadão         | Idem + sensíveis autodeclarados | Art. 7º I + Art. 11 II 'a' (consentimento)     | Sempre                                               |
+| Inscrição em programa           | Vínculo a programa              | Art. 7º III                                    | Não — necessário para finalidade                     |
+| Comunicação (SMS/email)         | Telefone, e-mail                | Art. 7º V (contrato) + IX (legítimo interesse) | Marketing sim; operacional não                       |
+| Indicadores agregados           | Pseudonimizado                  | Não aplicável (após anonimização efetiva)      | Não                                                  |
+| Auditoria interna               | Logs de acesso a PII            | Art. 7º IX (legítimo interesse)                | Não, mas no ROPA                                     |
 
 ### Direitos do titular — operacionalização
 
-| Direito (Art. 18) | Onda |
-|---|---|
-| Confirmação | 1 |
-| Acesso aos dados | 1 |
-| Correção | 2 |
-| Anonimização / Eliminação | 2 |
-| Portabilidade | 2 |
-| Eliminação de dados consentidos | 2 |
-| Informação sobre compartilhamento | 2 |
-| Revogação de consentimento | 2 |
+| Direito (Art. 18)                 | Onda |
+| --------------------------------- | ---- |
+| Confirmação                       | 1    |
+| Acesso aos dados                  | 1    |
+| Correção                          | 2    |
+| Anonimização / Eliminação         | 2    |
+| Portabilidade                     | 2    |
+| Eliminação de dados consentidos   | 2    |
+| Informação sobre compartilhamento | 2    |
+| Revogação de consentimento        | 2    |
 
 ### Multi-tenancy em 6 camadas de defesa em profundidade
 
@@ -659,62 +673,62 @@ Sequência típica:
 
 ### Classificação de dados (4 níveis)
 
-| Nível | Exemplo | Criptografia | Log | Audit |
-|---|---|---|---|---|
-| L0 — Público | Programas publicados, descrição | TLS apenas | Livre | — |
-| L1 — Interno | Configuração, papéis, métricas | TLS+TLS | IDs redacted | Mudanças |
-| L2 — PII sensível | CPF, nome, contato, endereço | Coluna AES-256-GCM (KEK por tenant) | PROIBIDO | Todo acesso |
-| L3 — PII altamente sensível (Art. 11) | Raça, gênero, deficiência, saúde | Coluna + chave separada | PROIBIDO | Todo acesso + revisão mensal |
+| Nível                                 | Exemplo                          | Criptografia                        | Log          | Audit                        |
+| ------------------------------------- | -------------------------------- | ----------------------------------- | ------------ | ---------------------------- |
+| L0 — Público                          | Programas publicados, descrição  | TLS apenas                          | Livre        | —                            |
+| L1 — Interno                          | Configuração, papéis, métricas   | TLS+TLS                             | IDs redacted | Mudanças                     |
+| L2 — PII sensível                     | CPF, nome, contato, endereço     | Coluna AES-256-GCM (KEK por tenant) | PROIBIDO     | Todo acesso                  |
+| L3 — PII altamente sensível (Art. 11) | Raça, gênero, deficiência, saúde | Coluna + chave separada             | PROIBIDO     | Todo acesso + revisão mensal |
 
 **Chaves de criptografia:** 1 KEK (Key Encryption Key) por tenant em KMS/Vault; DEK (Data Encryption Key) por linha gerada via HKDF; rotação anual da KEK; DEKs antigas permanecem decifráveis. CPF tem hash determinístico (HMAC-SHA256 com pepper global) em coluna separada para busca sem decifrar.
 
 ### Segurança técnica
 
-| Área | Onda 1 | Evolução |
-|---|---|---|
-| Rede | TLS 1.3, HSTS, WAF na frente do BFF Cidadão, rate limit (30 req/min IP, 100 req/h CPF) | mTLS interno + Istio Onda 2 |
-| Auth gestor | OIDC interno, JWT 15min + refresh 7d rotation, argon2id | MFA opcional Onda 2 (TOTP/WebAuthn); SSO empresarial Onda 3 |
-| Auth cidadão | E-mail+CPF+senha | Gov.br + magic link Onda 2 |
-| Autorização | RBAC por tenant + permission strings | ABAC Onda 3 |
-| Secrets | `.env.local` em dev (gitignore + pre-commit validation); Vault/KMS em prod | Verificação de assinaturas npm Onda 2 |
-| Input | Zod + DOMPurify + Prisma | — |
-| Output | PII nunca em log; CSP rígido, HSTS, X-Frame-Options DENY, CSRF, CORS explícito | — |
-| Supply chain | Dependabot, `pnpm audit`, Snyk no CI, SBOM em release | — |
-| Detecção | Pino → Loki/ELK; métricas críticas (tenant_id_mismatch, auth_failed, pii_access); OTel | Notificação ANPD 72h Onda 2 |
-| Testes seg | CodeQL no CI | DAST OWASP ZAP Onda 2; pentest bianual Onda 3; bug bounty Onda 3+ |
-| Backup | PG WAL contínuo + snapshots diários (retenção 30 dias) | DR RPO 15min/RTO 4h Onda 2; restore por tenant Onda 3; drill trimestral Onda 3 |
+| Área         | Onda 1                                                                                 | Evolução                                                                       |
+| ------------ | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Rede         | TLS 1.3, HSTS, WAF na frente do BFF Cidadão, rate limit (30 req/min IP, 100 req/h CPF) | mTLS interno + Istio Onda 2                                                    |
+| Auth gestor  | OIDC interno, JWT 15min + refresh 7d rotation, argon2id                                | MFA opcional Onda 2 (TOTP/WebAuthn); SSO empresarial Onda 3                    |
+| Auth cidadão | E-mail+CPF+senha                                                                       | Gov.br + magic link Onda 2                                                     |
+| Autorização  | RBAC por tenant + permission strings                                                   | ABAC Onda 3                                                                    |
+| Secrets      | `.env.local` em dev (gitignore + pre-commit validation); Vault/KMS em prod             | Verificação de assinaturas npm Onda 2                                          |
+| Input        | Zod + DOMPurify + Prisma                                                               | —                                                                              |
+| Output       | PII nunca em log; CSP rígido, HSTS, X-Frame-Options DENY, CSRF, CORS explícito         | —                                                                              |
+| Supply chain | Dependabot, `pnpm audit`, Snyk no CI, SBOM em release                                  | —                                                                              |
+| Detecção     | Pino → Loki/ELK; métricas críticas (tenant_id_mismatch, auth_failed, pii_access); OTel | Notificação ANPD 72h Onda 2                                                    |
+| Testes seg   | CodeQL no CI                                                                           | DAST OWASP ZAP Onda 2; pentest bianual Onda 3; bug bounty Onda 3+              |
+| Backup       | PG WAL contínuo + snapshots diários (retenção 30 dias)                                 | DR RPO 15min/RTO 4h Onda 2; restore por tenant Onda 3; drill trimestral Onda 3 |
 
 ### Acessibilidade — operação contínua
 
-| Prática | Onda |
-|---|---|
-| DoD com axe-core pass + checklist a11y | 1 |
-| Componentes em `packages/ui` com `@testing-library/jest-axe` | 1 |
-| SLA P0=24h, P1=1 semana para `a11y-bug` | 1 |
-| VLibras plugin Gov.br | 2 |
-| Revisão editorial de linguagem cidadã | 2 |
-| Audiodescrição estruturada em conteúdo programático | 3 |
-| Acessibilidade cognitiva (WCAG Cognitive AT) | 3 |
-| Auditoria externa anual com selo (ABNT/W3C) | 3 |
+| Prática                                                      | Onda |
+| ------------------------------------------------------------ | ---- |
+| DoD com axe-core pass + checklist a11y                       | 1    |
+| Componentes em `packages/ui` com `@testing-library/jest-axe` | 1    |
+| SLA P0=24h, P1=1 semana para `a11y-bug`                      | 1    |
+| VLibras plugin Gov.br                                        | 2    |
+| Revisão editorial de linguagem cidadã                        | 2    |
+| Audiodescrição estruturada em conteúdo programático          | 3    |
+| Acessibilidade cognitiva (WCAG Cognitive AT)                 | 3    |
+| Auditoria externa anual com selo (ABNT/W3C)                  | 3    |
 
 ### Governança de dados
 
-| Artefato | Local | Atualização |
-|---|---|---|
-| ROPA | `docs/legal/ropa.md` | PR que mexe em PII exige atualização (CI rule) |
-| Política de retenção automatizada | Cron jobs por serviço | Onda 2 |
-| Anonimização para analytics | Pseudonimização determinística com pepper separado | Onda 3 |
-| RIPD | `docs/legal/ripd-template.md` | Onda 2; revisão anual |
-| Termos e avisos por tenant | `docs/legal/templates/` | Versionado + hash do termo no aceite |
-| Lista de sub-operadores | `docs/legal/subprocessors.md` | Notificação aos tenants com 30 dias |
+| Artefato                          | Local                                              | Atualização                                    |
+| --------------------------------- | -------------------------------------------------- | ---------------------------------------------- |
+| ROPA                              | `docs/legal/ropa.md`                               | PR que mexe em PII exige atualização (CI rule) |
+| Política de retenção automatizada | Cron jobs por serviço                              | Onda 2                                         |
+| Anonimização para analytics       | Pseudonimização determinística com pepper separado | Onda 3                                         |
+| RIPD                              | `docs/legal/ripd-template.md`                      | Onda 2; revisão anual                          |
+| Termos e avisos por tenant        | `docs/legal/templates/`                            | Versionado + hash do termo no aceite           |
+| Lista de sub-operadores           | `docs/legal/subprocessors.md`                      | Notificação aos tenants com 30 dias            |
 
 ### Incident response
 
-| Severidade | Exemplos | SLA |
-|---|---|---|
-| P0 — Crítico | Cross-tenant leak, vazamento PII >100 cidadãos, comprometimento admin | Detecção imediata; contenção 1h; ANPD 72h |
-| P1 — Alto | Falha de auth em prod, PII em log, bug que permite acesso não autorizado | Detecção 15min; contenção 4h; postmortem 7 dias |
-| P2/P3 — Médio/Baixo | Bug a11y P0, métrica não-crítica, CVE médio | Dias a semanas |
+| Severidade          | Exemplos                                                                 | SLA                                             |
+| ------------------- | ------------------------------------------------------------------------ | ----------------------------------------------- |
+| P0 — Crítico        | Cross-tenant leak, vazamento PII >100 cidadãos, comprometimento admin    | Detecção imediata; contenção 1h; ANPD 72h       |
+| P1 — Alto           | Falha de auth em prod, PII em log, bug que permite acesso não autorizado | Detecção 15min; contenção 4h; postmortem 7 dias |
+| P2/P3 — Médio/Baixo | Bug a11y P0, métrica não-crítica, CVE médio                              | Dias a semanas                                  |
 
 Postmortem blameless obrigatório para P0/P1. Template em `docs/security/postmortem-template.md`. Action items rastreados em issues com label `postmortem-followup`.
 
@@ -736,14 +750,14 @@ Extrair um módulo para serviço próprio só é justificado quando **pelo menos
 
 ### 6 gatilhos concretos
 
-| Gatilho | Condição que dispara |
-|---|---|
-| 📈 Pressão de escala | p99 do módulo > 500ms **e** p99 dos outros módulos correlaciona com X > 200ms |
-| 👥 Pressão de time | > 3 colisões de PR no mesmo módulo em uma sprint |
-| ⚖️ Pressão regulatória | Novo RIPD identifica retenção, criptografia ou audit distintos |
-| 🧠 Pressão de domínio | > 3 ramificações condicionais por tenant_type / program_type |
-| 🚀 Pressão de release cadence | > 50% dos deploys do serviço bloqueados pelo módulo |
-| 🧪 Pressão de teste | Tempo de CI > 15min **e** > 50% causado pelos testes do módulo |
+| Gatilho                       | Condição que dispara                                                          |
+| ----------------------------- | ----------------------------------------------------------------------------- |
+| 📈 Pressão de escala          | p99 do módulo > 500ms **e** p99 dos outros módulos correlaciona com X > 200ms |
+| 👥 Pressão de time            | > 3 colisões de PR no mesmo módulo em uma sprint                              |
+| ⚖️ Pressão regulatória        | Novo RIPD identifica retenção, criptografia ou audit distintos                |
+| 🧠 Pressão de domínio         | > 3 ramificações condicionais por tenant_type / program_type                  |
+| 🚀 Pressão de release cadence | > 50% dos deploys do serviço bloqueados pelo módulo                           |
+| 🧪 Pressão de teste           | Tempo de CI > 15min **e** > 50% causado pelos testes do módulo                |
 
 ### Onda 2 — operação real + privacidade (7 novos contextos)
 
@@ -788,14 +802,14 @@ Disparada por >3 tenants pagantes, >100k cidadãos cadastrados, ou exigência co
 
 ### 6 anti-padrões — quando NÃO extrair
 
-| Sinal | Por que veta |
-|---|---|
-| Aggregate fragmentado entre 2+ serviços | Você está dividindo no lugar errado |
-| Joins frequentes entre serviços | Custo de read models locais ou sync calls supera ganho |
-| Cadeia síncrona crítica | Fragilidade composta; latency-sensitive flow |
-| Falta de time para manter dois serviços | Cada microsserviço novo tem custo fixo (pipeline, observability, on-call) |
-| Sem evento natural para integrar | Talvez não seja bounded context independente — é módulo do mesmo |
-| Migração de dados não-trivial sem ganho proporcional | Operação delicada não justificada |
+| Sinal                                                | Por que veta                                                              |
+| ---------------------------------------------------- | ------------------------------------------------------------------------- |
+| Aggregate fragmentado entre 2+ serviços              | Você está dividindo no lugar errado                                       |
+| Joins frequentes entre serviços                      | Custo de read models locais ou sync calls supera ganho                    |
+| Cadeia síncrona crítica                              | Fragilidade composta; latency-sensitive flow                              |
+| Falta de time para manter dois serviços              | Cada microsserviço novo tem custo fixo (pipeline, observability, on-call) |
+| Sem evento natural para integrar                     | Talvez não seja bounded context independente — é módulo do mesmo          |
+| Migração de dados não-trivial sem ganho proporcional | Operação delicada não justificada                                         |
 
 ### Decisões transversais da Seção 6
 
@@ -823,52 +837,52 @@ Ver Seção 4 acima. Resumo: 14 eventos publicados em 4 contextos (auth, program
 
 ### Apêndice B — Decisões de tooling consolidadas
 
-| Decisão | Escolha | Justificativa |
-|---|---|---|
-| Package manager | pnpm 11.1.2 via corepack | Evita phantom deps em `packages/contracts`; isolamento via symlinks |
-| Monorepo | Turborepo 2.9+ | Cache local + remote (Onda 2) |
-| Linguagem | TypeScript 5.6+ strict | Project references |
-| Backend framework | NestJS 11 | DI, modularidade, ecossistema MS |
-| ORM | Prisma 6 | DX, migrações declarativas |
-| Banco | PostgreSQL 16 (1 schema/serviço, mesmo cluster) | RLS disponível para Onda 2 |
-| Mensageria | NATS JetStream | Leve, durável, ack semantics |
-| Cache/sessão | Redis 7 | Sessões + rate limit + locks |
-| Bundler frontend | Rspack + Module Federation 2.0 | Performance + typing de remotes |
-| UI framework | React 19 (CSR) | Ecossistema MF maduro |
-| Roteamento frontend | React Router v7 (data router) | Estado nativo |
-| Server state | TanStack Query v5 | Idiomático para REST |
-| UI state | Zustand | Mínimo, sem boilerplate |
-| Estilo | Tailwind CSS 4 + shadcn/ui copiado | Controle total, zero runtime extra |
-| Forms | React Hook Form + Zod resolver | Compartilha schemas com `packages/contracts` |
-| i18n | react-i18next (pt-BR único Onda 1) | Preparado para multi-locale |
-| Bot de updates | Dependabot (suporte oficial pnpm) | Hospedagem GitHub |
-| CI | GitHub Actions (ci, e2e, release, codeql) | Hospedagem GitHub |
-| Versão de pacotes internos | Changesets | Flexibilidade em monorepo |
-| Testes | Vitest + RTL + Testcontainers + Pact + Playwright + `@axe-core/playwright` | Cobre unit, integração, contrato, E2E, a11y |
-| Observabilidade | Pino + OpenTelemetry | Padrão de mercado, vendor-neutro |
-| Ambiente dev | Dev-container purista (docker-compose com apps + infra) | Paridade dev/prod absoluta |
-| Convenção de commit | Conventional Commits via commitlint + Commitizen | Geração automática de changelog |
+| Decisão                    | Escolha                                                                    | Justificativa                                                       |
+| -------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Package manager            | pnpm 11.1.2 via corepack                                                   | Evita phantom deps em `packages/contracts`; isolamento via symlinks |
+| Monorepo                   | Turborepo 2.9+                                                             | Cache local + remote (Onda 2)                                       |
+| Linguagem                  | TypeScript 5.6+ strict                                                     | Project references                                                  |
+| Backend framework          | NestJS 11                                                                  | DI, modularidade, ecossistema MS                                    |
+| ORM                        | Prisma 6                                                                   | DX, migrações declarativas                                          |
+| Banco                      | PostgreSQL 16 (1 schema/serviço, mesmo cluster)                            | RLS disponível para Onda 2                                          |
+| Mensageria                 | NATS JetStream                                                             | Leve, durável, ack semantics                                        |
+| Cache/sessão               | Redis 7                                                                    | Sessões + rate limit + locks                                        |
+| Bundler frontend           | Rspack + Module Federation 2.0                                             | Performance + typing de remotes                                     |
+| UI framework               | React 19 (CSR)                                                             | Ecossistema MF maduro                                               |
+| Roteamento frontend        | React Router v7 (data router)                                              | Estado nativo                                                       |
+| Server state               | TanStack Query v5                                                          | Idiomático para REST                                                |
+| UI state                   | Zustand                                                                    | Mínimo, sem boilerplate                                             |
+| Estilo                     | Tailwind CSS 4 + shadcn/ui copiado                                         | Controle total, zero runtime extra                                  |
+| Forms                      | React Hook Form + Zod resolver                                             | Compartilha schemas com `packages/contracts`                        |
+| i18n                       | react-i18next (pt-BR único Onda 1)                                         | Preparado para multi-locale                                         |
+| Bot de updates             | Dependabot (suporte oficial pnpm)                                          | Hospedagem GitHub                                                   |
+| CI                         | GitHub Actions (ci, e2e, release, codeql)                                  | Hospedagem GitHub                                                   |
+| Versão de pacotes internos | Changesets                                                                 | Flexibilidade em monorepo                                           |
+| Testes                     | Vitest + RTL + Testcontainers + Pact + Playwright + `@axe-core/playwright` | Cobre unit, integração, contrato, E2E, a11y                         |
+| Observabilidade            | Pino + OpenTelemetry                                                       | Padrão de mercado, vendor-neutro                                    |
+| Ambiente dev               | Dev-container purista (docker-compose com apps + infra)                    | Paridade dev/prod absoluta                                          |
+| Convenção de commit        | Conventional Commits via commitlint + Commitizen                           | Geração automática de changelog                                     |
 
 ### Apêndice C — Glossário
 
-| Termo | Definição |
-|---|---|
-| **Aggregate** | Cluster de entidades + valores tratado como unidade transacional (DDD). |
-| **BFF** | Backend for Frontend — gateway HTTP que agrega chamadas a serviços de domínio para um frontend específico. |
-| **Bounded context** | Fronteira semântica em que um modelo de domínio se aplica (DDD). |
-| **Choreography** | Padrão de saga em que cada serviço reage a eventos sem coordenação central. |
-| **Controlador (LGPD)** | Pessoa natural/jurídica que decide finalidade e meios do tratamento (Art. 5º VI). |
-| **DEK / KEK** | Data Encryption Key / Key Encryption Key — hierarquia de chaves para criptografia em coluna. |
-| **DPA** | Data Processing Agreement — contrato entre controlador e operador. |
-| **MF (Module Federation)** | Arquitetura de micro frontends com carregamento de remotes em runtime. |
-| **Operador (LGPD)** | Pessoa que trata dados em nome do controlador (Art. 5º X). |
-| **Outbox Pattern** | Padrão para garantir consistência transacional entre banco e mensageria sem 2PC. |
-| **RIPD** | Relatório de Impacto à Proteção de Dados Pessoais (LGPD). |
-| **RLS** | Row Level Security — política PostgreSQL de filtragem por linha. |
-| **ROPA** | Registro de Operações de Tratamento de Dados Pessoais (LGPD). |
-| **Tenant** | Cliente isolado em SaaS multi-tenant. |
-| **Titular (LGPD)** | Pessoa natural a quem se referem os dados pessoais (Art. 5º V). |
-| **VLibras** | Plugin oficial Gov.br para tradução de Libras (Língua Brasileira de Sinais). |
+| Termo                      | Definição                                                                                                  |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| **Aggregate**              | Cluster de entidades + valores tratado como unidade transacional (DDD).                                    |
+| **BFF**                    | Backend for Frontend — gateway HTTP que agrega chamadas a serviços de domínio para um frontend específico. |
+| **Bounded context**        | Fronteira semântica em que um modelo de domínio se aplica (DDD).                                           |
+| **Choreography**           | Padrão de saga em que cada serviço reage a eventos sem coordenação central.                                |
+| **Controlador (LGPD)**     | Pessoa natural/jurídica que decide finalidade e meios do tratamento (Art. 5º VI).                          |
+| **DEK / KEK**              | Data Encryption Key / Key Encryption Key — hierarquia de chaves para criptografia em coluna.               |
+| **DPA**                    | Data Processing Agreement — contrato entre controlador e operador.                                         |
+| **MF (Module Federation)** | Arquitetura de micro frontends com carregamento de remotes em runtime.                                     |
+| **Operador (LGPD)**        | Pessoa que trata dados em nome do controlador (Art. 5º X).                                                 |
+| **Outbox Pattern**         | Padrão para garantir consistência transacional entre banco e mensageria sem 2PC.                           |
+| **RIPD**                   | Relatório de Impacto à Proteção de Dados Pessoais (LGPD).                                                  |
+| **RLS**                    | Row Level Security — política PostgreSQL de filtragem por linha.                                           |
+| **ROPA**                   | Registro de Operações de Tratamento de Dados Pessoais (LGPD).                                              |
+| **Tenant**                 | Cliente isolado em SaaS multi-tenant.                                                                      |
+| **Titular (LGPD)**         | Pessoa natural a quem se referem os dados pessoais (Art. 5º V).                                            |
+| **VLibras**                | Plugin oficial Gov.br para tradução de Libras (Língua Brasileira de Sinais).                               |
 
 ### Apêndice D — Recomendação de subprojeto inicial
 
@@ -882,11 +896,11 @@ Para o próximo ciclo `brainstorming → spec → plano → implementação`, re
 
 ### Apêndice E — Decisões revertidas durante o brainstorming
 
-| Decisão original | Revertida para | Razão |
-|---|---|---|
-| Manter `npm` 11 | Migrar para `pnpm@11.1.2` | Após explicação detalhada do trade-off concreto (phantom deps em `packages/contracts`, hoisting imprevisível com MF singletons, tempo de install em CI), o usuário autorizou a migração. Já executada: `package.json` atualizado, `pnpm-workspace.yaml` criado, `package-lock.json` removido, `pnpm install` rodou em 3.2s. |
-| Renovate | Dependabot | Hospedagem no GitHub torna Dependabot mais integrado; suporte oficial a pnpm desde 2024. |
-| Apps Nest/Rspack fora do Docker em dev | Dev-container purista (tudo containerizado) | Paridade dev/prod absoluta solicitada pelo usuário. Linux nativo evita penalidade de file-watching via virtiofs. |
+| Decisão original                       | Revertida para                              | Razão                                                                                                                                                                                                                                                                                                                       |
+| -------------------------------------- | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Manter `npm` 11                        | Migrar para `pnpm@11.1.2`                   | Após explicação detalhada do trade-off concreto (phantom deps em `packages/contracts`, hoisting imprevisível com MF singletons, tempo de install em CI), o usuário autorizou a migração. Já executada: `package.json` atualizado, `pnpm-workspace.yaml` criado, `package-lock.json` removido, `pnpm install` rodou em 3.2s. |
+| Renovate                               | Dependabot                                  | Hospedagem no GitHub torna Dependabot mais integrado; suporte oficial a pnpm desde 2024.                                                                                                                                                                                                                                    |
+| Apps Nest/Rspack fora do Docker em dev | Dev-container purista (tudo containerizado) | Paridade dev/prod absoluta solicitada pelo usuário. Linux nativo evita penalidade de file-watching via virtiofs.                                                                                                                                                                                                            |
 
 ### Apêndice F — Decisões pendentes
 
@@ -905,4 +919,4 @@ Pontos cuja decisão final ainda não foi tomada e ficam para os ciclos de spec 
 
 ---
 
-*Fim do documento. Próximo artefato: `docs/superpowers/specs/<data>-<subprojeto>-design.md`.*
+_Fim do documento. Próximo artefato: `docs/superpowers/specs/<data>-<subprojeto>-design.md`._

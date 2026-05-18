@@ -28,21 +28,29 @@ const reactConfig: ReturnType<typeof tseslint.config> = [
     },
     settings: { react: { version: 'detect' } },
     rules: {
-      ...((react as unknown) as {
-        configs: {
-          recommended: { rules: Record<string, unknown> };
-          'jsx-runtime': { rules: Record<string, unknown> };
-        };
-      }).configs.recommended.rules,
-      ...((react as unknown) as {
-        configs: { 'jsx-runtime': { rules: Record<string, unknown> } };
-      }).configs['jsx-runtime'].rules,
-      ...((reactHooks as unknown) as {
-        configs: { recommended: { rules: Record<string, unknown> } };
-      }).configs.recommended.rules,
-      ...((jsxA11y as unknown) as {
-        configs: { strict: { rules: Record<string, unknown> } };
-      }).configs.strict.rules,
+      ...(
+        react as unknown as {
+          configs: {
+            recommended: { rules: Record<string, unknown> };
+            'jsx-runtime': { rules: Record<string, unknown> };
+          };
+        }
+      ).configs.recommended.rules,
+      ...(
+        react as unknown as {
+          configs: { 'jsx-runtime': { rules: Record<string, unknown> } };
+        }
+      ).configs['jsx-runtime'].rules,
+      ...(
+        reactHooks as unknown as {
+          configs: { recommended: { rules: Record<string, unknown> } };
+        }
+      ).configs.recommended.rules,
+      ...(
+        jsxA11y as unknown as {
+          configs: { strict: { rules: Record<string, unknown> } };
+        }
+      ).configs.strict.rules,
 
       // React 19: novas convenções
       'react/react-in-jsx-scope': 'off',

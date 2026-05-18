@@ -16,16 +16,16 @@ O +Inclusão tem múltiplos serviços (NestJS, Rspack para frontends) que depend
 
 Tradeoffs conhecidos:
 
-| | Híbrido | Purista |
-|---|---|---|
-| Velocidade de HMR | Excelente (sem virtiofs) | Variável (depende da plataforma) |
-| Paridade dev/prod | Baixa (diferenças sutis em libsystem, versões) | **Alta** (mesma imagem) |
-| Setup inicial | Médio (instalar Node, pnpm, locale do PG, etc.) | Mais simples (`docker compose up`) |
-| Onboarding novo contribuidor | Vários passos | "Clone, suba os containers" |
-| Reprodutibilidade de bug | Variável | Alta |
-| Custo de RAM em dev | Médio | Alto |
-| Limitações em Mac/Windows | Poucas | virtiofs lento para file-watching |
-| Limitações em Linux nativo | Poucas | **Quase nenhuma** (bind mount nativo) |
+|                              | Híbrido                                         | Purista                               |
+| ---------------------------- | ----------------------------------------------- | ------------------------------------- |
+| Velocidade de HMR            | Excelente (sem virtiofs)                        | Variável (depende da plataforma)      |
+| Paridade dev/prod            | Baixa (diferenças sutis em libsystem, versões)  | **Alta** (mesma imagem)               |
+| Setup inicial                | Médio (instalar Node, pnpm, locale do PG, etc.) | Mais simples (`docker compose up`)    |
+| Onboarding novo contribuidor | Vários passos                                   | "Clone, suba os containers"           |
+| Reprodutibilidade de bug     | Variável                                        | Alta                                  |
+| Custo de RAM em dev          | Médio                                           | Alto                                  |
+| Limitações em Mac/Windows    | Poucas                                          | virtiofs lento para file-watching     |
+| Limitações em Linux nativo   | Poucas                                          | **Quase nenhuma** (bind mount nativo) |
 
 Considerando:
 
@@ -99,6 +99,7 @@ pnpm infra:reset
 **Resumo**: Postgres, Redis, NATS em containers; Nest e Rspack rodam direto no host com `pnpm dev`.
 
 **Por que rejeitada**:
+
 - Diferenças sutis entre Node local (versão minor, libsystem, locale) e Node de prod podem virar bugs.
 - Onboarding requer instalar Node 24 com versão exata, garantir corepack, etc. — barreira para contribuidor novo.
 - Linux nativo, Mac, Windows + WSL têm comportamentos sutilmente diferentes — falta paridade.
@@ -108,6 +109,7 @@ pnpm infra:reset
 **Resumo**: VS Code Dev Containers com um único container para todo o monorepo.
 
 **Por que rejeitada**:
+
 - Único container roda todos os serviços — perde isolamento, fica mais difícil simular falha de serviço específico.
 - VS Code-specific (outros editores precisam de adaptação).
 - docker-compose é mais flexível e amplamente suportado.
@@ -117,6 +119,7 @@ pnpm infra:reset
 **Resumo**: Usar Nix para garantir reprodutibilidade sem containers.
 
 **Por que rejeitada**:
+
 - Curva de aprendizado de Nix é alta, e onboarding seria mais complexo, não mais simples.
 - Não cobre infra (PG, Redis, NATS) — ainda precisaria de containers ou serviços nativos.
 - Combinação Nix + Docker é overhead sem ganho proporcional para este projeto.
@@ -126,6 +129,7 @@ pnpm infra:reset
 **Resumo**: Uma VM dedicada para desenvolvimento (Ubuntu, etc.) com tudo instalado.
 
 **Por que rejeitada**:
+
 - Modelo Vagrant é antigo, comunidade enxugou nos últimos anos.
 - VM consome mais recursos que containers.
 - Sem ganhos sobre Docker.

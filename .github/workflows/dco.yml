@@ -47,6 +47,18 @@ jobs:
             author_name=$(git log -1 --pretty='%an' "$sha")
             author_email=$(git log -1 --pretty='%ae' "$sha")
             body=$(git log -1 --pretty='%B' "$sha")
+
+            # Exceção para bots gerenciados pelo próprio repo (Changesets,
+            # Dependabot, github-actions, etc.). O sufixo "[bot]" no GitHub é
+            # reservado e não pode ser usado por contas humanas — é um marker
+            # seguro para identificar identidades de bot. DCO existe para
+            # certificar origem de contribuição externa; commits de bots
+            # instalados no repo já têm consentimento implícito do owner.
+            if [[ "$author_name" == *"[bot]" ]]; then
+              echo "🤖 $short_sha — bot ($author_name), DCO implícito"
+              continue
+            fi
+
             expected="Signed-off-by: ${author_name} <${author_email}>"
 
             # `grep -F` (fixed string) + `-x` (line full match) trata o body como dados,

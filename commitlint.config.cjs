@@ -14,6 +14,23 @@
 module.exports = {
   extends: ['@commitlint/config-conventional'],
 
+  /**
+   * Mensagens auto-geradas por bots gerenciados pelo repo (Dependabot,
+   * Renovate, github-actions[bot]). O Dependabot usa "Bump"/"Update" em
+   * sentence-case (não há forma de forçar lower-case via dependabot.yml),
+   * o que colide com a regra `subject-case: never sentence-case`.
+   *
+   * Trade-off: aceitamos esse pequeno desvio cosmético em troca de não
+   * precisar editar manualmente o título de cada PR do Dependabot.
+   * A regra continua estrita para commits humanos.
+   */
+  ignores: [
+    // Dependabot npm: `chore(deps): Bump X` / `chore(deps): Update X` / `chore(deps-dev): ...`
+    (message) => /^chore\(deps(-dev)?\): (Bump|Update) /.test(message),
+    // Dependabot github_actions: `ci(deps): Bump X`
+    (message) => message.startsWith('ci(deps): Bump '),
+  ],
+
   rules: {
     'type-enum': [
       2,

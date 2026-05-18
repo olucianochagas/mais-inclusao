@@ -1,9 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@mais-inclusao/contracts",
-  "version": "0.2.0",
+  "name": "@mais-inclusao/messaging",
+  "version": "0.1.0",
   "private": true,
-  "description": "Schemas Zod, eventos e DTOs públicos do monorepo +Inclusão. Fronteira pública entre serviços.",
+  "description": "Helpers de NATS JetStream e Outbox do monorepo +Inclusão.",
   "license": "ISC",
   "publishConfig": {
     "access": "public",
@@ -20,15 +20,25 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./shared": {
-      "types": "./dist/shared/index.d.ts",
-      "import": "./dist/shared/index.js",
-      "require": "./dist/shared/index.cjs"
+    "./backoff": {
+      "types": "./dist/backoff.d.ts",
+      "import": "./dist/backoff.js",
+      "require": "./dist/backoff.cjs"
     },
-    "./auth": {
-      "types": "./dist/auth/index.d.ts",
-      "import": "./dist/auth/index.js",
-      "require": "./dist/auth/index.cjs"
+    "./nats": {
+      "types": "./dist/nats.d.ts",
+      "import": "./dist/nats.js",
+      "require": "./dist/nats.cjs"
+    },
+    "./outbox": {
+      "types": "./dist/outbox.d.ts",
+      "import": "./dist/outbox.js",
+      "require": "./dist/outbox.cjs"
+    },
+    "./subject": {
+      "types": "./dist/subject.d.ts",
+      "import": "./dist/subject.js",
+      "require": "./dist/subject.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -47,7 +57,8 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "zod": "catalog:"
+    "@mais-inclusao/contracts": "workspace:*",
+    "nats": "catalog:"
   },
   "devDependencies": {
     "@mais-inclusao/eslint-config": "workspace:*",
@@ -57,8 +68,6 @@
     "eslint": "catalog:",
     "tsup": "catalog:",
     "typescript": "catalog:",
-    "vite": "catalog:",
-    "vitest": "catalog:",
-    "zod-to-json-schema": "catalog:"
+    "vitest": "catalog:"
   }
 }

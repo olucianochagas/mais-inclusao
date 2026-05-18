@@ -3,7 +3,7 @@ import { z } from 'zod';
 /**
  * Padrão de erro HTTP unificado conforme RFC 9457 (Problem Details for HTTP APIs).
  *
- * Todo BFF e service retornam este shape em erros 4xx/5xx.
+ * Cada BFF e service retorna este shape em erros 4xx/5xx.
  *
  * Importante (LGPD): NÃO incluir PII em `detail`, `instance` ou
  * `errors[].message` que são enviados ao cliente. Detalhes de PII vão em

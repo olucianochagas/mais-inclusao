@@ -1,9 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@mais-inclusao/contracts",
-  "version": "0.2.0",
+  "name": "@mais-inclusao/persistence",
+  "version": "0.1.0",
   "private": true,
-  "description": "Schemas Zod, eventos e DTOs públicos do monorepo +Inclusão. Fronteira pública entre serviços.",
+  "description": "Contexto de tenant e guardas de persistência para isolamento multi-tenant.",
   "license": "ISC",
   "publishConfig": {
     "access": "public",
@@ -19,16 +19,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
-    },
-    "./shared": {
-      "types": "./dist/shared/index.d.ts",
-      "import": "./dist/shared/index.js",
-      "require": "./dist/shared/index.cjs"
-    },
-    "./auth": {
-      "types": "./dist/auth/index.d.ts",
-      "import": "./dist/auth/index.js",
-      "require": "./dist/auth/index.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -47,7 +37,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "zod": "catalog:"
+    "@mais-inclusao/contracts": "workspace:*"
   },
   "devDependencies": {
     "@mais-inclusao/eslint-config": "workspace:*",
@@ -58,7 +48,6 @@
     "tsup": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
-    "vitest": "catalog:",
-    "zod-to-json-schema": "catalog:"
+    "vitest": "catalog:"
   }
 }

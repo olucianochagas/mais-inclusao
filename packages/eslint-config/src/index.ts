@@ -9,6 +9,7 @@
 // tsconfig.json via `include: ["src/**/*"]`.
 
 import js from '@eslint/js';
+import { defineConfig } from 'eslint/config';
 import importPlugin from 'eslint-plugin-import';
 import security from 'eslint-plugin-security';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
@@ -19,7 +20,7 @@ import tseslint from 'typescript-eslint';
  *
  * Retorno tipado via `ReturnType<typeof tseslint.config>` (alias para `Linter.Config[]`).
  */
-export const base: ReturnType<typeof tseslint.config> = tseslint.config(
+export const base = defineConfig(
   js.configs.recommended,
 
   // typescript-eslint v8 strict + stylistic com type checking

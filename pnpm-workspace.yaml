@@ -73,8 +73,9 @@ catalog:
   "zod-to-json-schema": ^3.24.1
 
   # Testing
-  vitest: ^2.1.5
-  "@vitest/coverage-v8": ^2.1.5
+  vitest: ^4.1.6
+  "@vitest/coverage-v8": ^4.1.6
+  vite: ^8.0.13
   "@testing-library/react": ^16.1.0
   "@testing-library/jest-dom": ^6.9.1
   "@testing-library/user-event": ^14.5.2
@@ -137,3 +138,4 @@ shellEmulator: false
 saveExact: false
 allowBuilds:
   esbuild: true
+  protobufjs: true

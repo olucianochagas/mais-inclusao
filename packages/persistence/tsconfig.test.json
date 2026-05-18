@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@mais-inclusao/tsconfig/test.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": ".",
+    "tsBuildInfoFile": "./dist/tsconfig.test.tsbuildinfo"
+  },
+  "include": ["*.config.ts", "eslint.config.ts", "src/**/*.ts", "test/**/*.ts"]
+}

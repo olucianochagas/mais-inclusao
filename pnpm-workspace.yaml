@@ -33,7 +33,7 @@ catalog:
   nats: ^2.28.0
   ioredis: ^5.4.1
   reflect-metadata: ^0.2.2
-  rxjs: ^7.8.1
+  rxjs: ^7.8.2
 
   # OpenTelemetry
   "@opentelemetry/api": ^1.9.0

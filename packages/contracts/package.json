@@ -57,6 +57,7 @@
     "eslint": "catalog:",
     "tsup": "catalog:",
     "typescript": "catalog:",
+    "vite": "catalog:",
     "vitest": "catalog:",
     "zod-to-json-schema": "catalog:"
   }

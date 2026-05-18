@@ -27,7 +27,7 @@ catalog:
   "@prisma/client": ^6.0.0
   prisma: ^6.0.0
   zod: ^3.23.8
-  pino: ^9.5.0
+  pino: ^9.14.0
   "nestjs-pino": ^4.2.0
   argon2: ^0.41.1
   nats: ^2.28.0

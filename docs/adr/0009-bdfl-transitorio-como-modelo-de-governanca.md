@@ -20,13 +20,13 @@ Considerando:
 
 Modelos possíveis:
 
-| | BDFL transitório | Comitê desde o dia 0 | Meritocracia "informal" | Fundação formal |
-|---|---|---|---|---|
-| Honestidade sobre quem decide | **Sim** | Não (1 pessoa fingindo comitê) | Não (decisão opaca) | Sim |
-| Velocidade de decisão | Alta | Alta (com 1 pessoa) | Variável | Baixa |
-| Atratividade para contribuidores | Média (depende do BDFL) | Baixa (parece fechada) | Baixa (parece arbitrária) | Alta |
-| Custo administrativo | Baixo | Baixo (fictício) | Baixo | Alto |
-| Adequado a pre-alpha | **Sim** | Não | Não | Não |
+|                                  | BDFL transitório        | Comitê desde o dia 0           | Meritocracia "informal"   | Fundação formal |
+| -------------------------------- | ----------------------- | ------------------------------ | ------------------------- | --------------- |
+| Honestidade sobre quem decide    | **Sim**                 | Não (1 pessoa fingindo comitê) | Não (decisão opaca)       | Sim             |
+| Velocidade de decisão            | Alta                    | Alta (com 1 pessoa)            | Variável                  | Baixa           |
+| Atratividade para contribuidores | Média (depende do BDFL) | Baixa (parece fechada)         | Baixa (parece arbitrária) | Alta            |
+| Custo administrativo             | Baixo                   | Baixo (fictício)               | Baixo                     | Alto            |
+| Adequado a pre-alpha             | **Sim**                 | Não                            | Não                       | Não             |
 
 ## Decisão
 
@@ -52,12 +52,12 @@ Modelos possíveis:
 
 ### Marcos de transição
 
-| Marco | Critério | Mudança no modelo |
-|---|---|---|
-| **0 → BDFL transitório** | Início do projeto | Atual |
-| **BDFL → Comitê** | 3+ mantenedores ativos | Decisões grandes passam de "BDFL decide" para "consenso ou maioria simples do comitê" |
-| **Comitê → Conselho com áreas** | 5+ mantenedores ativos em áreas distintas | Decisões setoriais ficam com mantenedores de área; estratégicas com o conselho |
-| **Conselho → Fundação / Org sem-fins** | Tração e operação real | Estrutura jurídica formal se justificar |
+| Marco                                  | Critério                                  | Mudança no modelo                                                                     |
+| -------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------- |
+| **0 → BDFL transitório**               | Início do projeto                         | Atual                                                                                 |
+| **BDFL → Comitê**                      | 3+ mantenedores ativos                    | Decisões grandes passam de "BDFL decide" para "consenso ou maioria simples do comitê" |
+| **Comitê → Conselho com áreas**        | 5+ mantenedores ativos em áreas distintas | Decisões setoriais ficam com mantenedores de área; estratégicas com o conselho        |
+| **Conselho → Fundação / Org sem-fins** | Tração e operação real                    | Estrutura jurídica formal se justificar                                               |
 
 Cada transição é **proposta via RFC** e debatida publicamente antes de efetivada.
 
@@ -102,6 +102,7 @@ Processo: PR adicionando a pessoa em `MAINTAINERS.md` e `.github/CODEOWNERS`. PR
 **Resumo**: Estabelecer estrutura formal de comitê de mantenedores desde o início, mesmo com 1 pessoa.
 
 **Por que rejeitada**:
+
 - Teatro. Comitê de 1 pessoa é apenas BDFL com maquiagem.
 - Pior em transparência (parece coletivo, mas não é).
 
@@ -110,6 +111,7 @@ Processo: PR adicionando a pessoa em `MAINTAINERS.md` e `.github/CODEOWNERS`. PR
 **Resumo**: Não declarar modelo; deixar fluir.
 
 **Por que rejeitada**:
+
 - Opacidade afasta contribuidores. Pessoas marginalizadas (público do projeto, lembremos) são especialmente prejudicadas por estruturas opacas.
 - Sem critério objetivo para virar mantenedor, ascensão depende de "conhecer alguém" — anti-equidade.
 
@@ -118,6 +120,7 @@ Processo: PR adicionando a pessoa em `MAINTAINERS.md` e `.github/CODEOWNERS`. PR
 **Resumo**: Constituir CNPJ desde o início, com estatuto, conselho, etc.
 
 **Por que rejeitada**:
+
 - Custo administrativo desproporcional para projeto pre-alpha.
 - Estrutura formal é boa em fase posterior, quando há recursos para sustentar.
 - Marca como marco de transição (Conselho → Fundação) — não como ponto de partida.

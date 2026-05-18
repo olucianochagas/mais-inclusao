@@ -1,0 +1,53 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ID schemas JSON Schema snapshots > ApplicationIdSchema 1`] = `
+{
+  "$ref": "#/definitions/ApplicationId",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ApplicationId": {
+      "format": "uuid",
+      "type": "string",
+    },
+  },
+}
+`;
+
+exports[`ID schemas JSON Schema snapshots > CitizenIdSchema 1`] = `
+{
+  "$ref": "#/definitions/CitizenId",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "CitizenId": {
+      "format": "uuid",
+      "type": "string",
+    },
+  },
+}
+`;
+
+exports[`ID schemas JSON Schema snapshots > ProgramIdSchema 1`] = `
+{
+  "$ref": "#/definitions/ProgramId",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ProgramId": {
+      "format": "uuid",
+      "type": "string",
+    },
+  },
+}
+`;
+
+exports[`ID schemas JSON Schema snapshots > UserIdSchema 1`] = `
+{
+  "$ref": "#/definitions/UserId",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "UserId": {
+      "format": "uuid",
+      "type": "string",
+    },
+  },
+}
+`;

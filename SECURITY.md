@@ -23,10 +23,10 @@
 
 O +Inclusão está em **pre-alpha**; ainda não há releases públicos. Quando releases começarem, esta seção declarará quais versões recebem patches de segurança.
 
-| Versão | Suporte de segurança |
-|---|---|
+| Versão                    | Suporte de segurança                   |
+| ------------------------- | -------------------------------------- |
 | `main` (atual, pre-alpha) | ✅ Best effort durante desenvolvimento |
-| `<não há releases ainda>` | — |
+| `<não há releases ainda>` | —                                      |
 
 **Política futura** (a partir do primeiro release estável):
 
@@ -100,7 +100,7 @@ O +Inclusão está em **pre-alpha**; ainda não há releases públicos. Quando r
 
 Se você não tem conta GitHub ou prefere e-mail, envie para:
 
-- **security@mais-inclusao.org** *(a configurar; placeholder)*
+- **security@mais-inclusao.org** _(a configurar; placeholder)_
 - Enquanto este não estiver ativo: **olucianochagas@gmail.com** com assunto `[SECURITY]`
 
 **Recomendamos cifrar e-mails sensíveis com GPG.** Chave pública será publicada em `docs/security/pgp-key.asc` na primeira Onda — até lá, use Security Advisories preferencialmente.
@@ -120,23 +120,23 @@ Não deixe de reportar por não saber tudo isso. **Reporte o que conseguiu.**
 
 ## Processo de resposta
 
-| Etapa | Prazo alvo | Quem |
-|---|---|---|
-| **Confirmação de recebimento** | 48 horas úteis | Mantenedor |
-| **Avaliação inicial e classificação** | 7 dias | Mantenedor |
-| **Investigação completa** | 14-30 dias (depende da complexidade) | Mantenedor + autor do relato (se quiser colaborar) |
-| **Fix proposto** | Conforme severidade (ver tabela) | Mantenedor |
-| **Validação do relator** | Você confirma antes de divulgar | Você |
-| **Disclosure coordenada** | Após fix aplicado nas versões suportadas | Mantenedor + relator |
+| Etapa                                 | Prazo alvo                               | Quem                                               |
+| ------------------------------------- | ---------------------------------------- | -------------------------------------------------- |
+| **Confirmação de recebimento**        | 48 horas úteis                           | Mantenedor                                         |
+| **Avaliação inicial e classificação** | 7 dias                                   | Mantenedor                                         |
+| **Investigação completa**             | 14-30 dias (depende da complexidade)     | Mantenedor + autor do relato (se quiser colaborar) |
+| **Fix proposto**                      | Conforme severidade (ver tabela)         | Mantenedor                                         |
+| **Validação do relator**              | Você confirma antes de divulgar          | Você                                               |
+| **Disclosure coordenada**             | Após fix aplicado nas versões suportadas | Mantenedor + relator                               |
 
 ### Prazos de fix por severidade
 
-| Severidade | Critério | Prazo para fix | Notificação proativa de tenants |
-|---|---|---|---|
-| 🔴 **Crítico (CVSS 9.0+)** | Cross-tenant leak, RCE, comprometimento total de auth | 7 dias | Sim, imediata |
-| 🟠 **Alto (CVSS 7.0-8.9)** | Bypass de RLS, exposição de PII em prod, escalada de privilégio | 30 dias | Sim |
-| 🟡 **Médio (CVSS 4.0-6.9)** | XSS estored, CSRF em ação destrutiva, leak de info não-PII | 60 dias | Não, mas anunciado |
-| 🟢 **Baixo (CVSS 0.1-3.9)** | Exposição de info técnica, missing security header | 90 dias | Não |
+| Severidade                  | Critério                                                        | Prazo para fix | Notificação proativa de tenants |
+| --------------------------- | --------------------------------------------------------------- | -------------- | ------------------------------- |
+| 🔴 **Crítico (CVSS 9.0+)**  | Cross-tenant leak, RCE, comprometimento total de auth           | 7 dias         | Sim, imediata                   |
+| 🟠 **Alto (CVSS 7.0-8.9)**  | Bypass de RLS, exposição de PII em prod, escalada de privilégio | 30 dias        | Sim                             |
+| 🟡 **Médio (CVSS 4.0-6.9)** | XSS estored, CSRF em ação destrutiva, leak de info não-PII      | 60 dias        | Não, mas anunciado              |
+| 🟢 **Baixo (CVSS 0.1-3.9)** | Exposição de info técnica, missing security header              | 90 dias        | Não                             |
 
 Severidades seguem [CVSS v3.1](https://www.first.org/cvss/) com ajustes contextuais (uma vuln que normalmente seria média pode subir para alta se envolver PII de menores, por exemplo).
 
@@ -192,18 +192,18 @@ Até lá: nossa moeda é **gratidão pública**, atribuição, e o conforto de s
 
 Esta seção é **especialmente importante** para um produto sob LGPD.
 
-| Situação | É vulnerabilidade técnica? | É incidente LGPD? |
-|---|---|---|
-| Você descobriu que `citizens-service` permite ler PII de outro tenant em ambiente de teste | ✅ Sim | ❌ Não (dados sintéticos) |
-| Você descobriu o mesmo, e há indício de que ocorreu com dados reais em prod | ✅ Sim | ✅ **SIM — notificação ANPD em 72h** |
-| Você descobriu que logs contêm CPF (dados sintéticos em dev) | ✅ Sim | ❌ Não |
-| Você descobriu CPFs reais expostos em log de prod acessível externamente | ✅ Sim | ✅ **SIM — notificação ANPD em 72h** |
+| Situação                                                                                   | É vulnerabilidade técnica? | É incidente LGPD?                    |
+| ------------------------------------------------------------------------------------------ | -------------------------- | ------------------------------------ |
+| Você descobriu que `citizens-service` permite ler PII de outro tenant em ambiente de teste | ✅ Sim                     | ❌ Não (dados sintéticos)            |
+| Você descobriu o mesmo, e há indício de que ocorreu com dados reais em prod                | ✅ Sim                     | ✅ **SIM — notificação ANPD em 72h** |
+| Você descobriu que logs contêm CPF (dados sintéticos em dev)                               | ✅ Sim                     | ❌ Não                               |
+| Você descobriu CPFs reais expostos em log de prod acessível externamente                   | ✅ Sim                     | ✅ **SIM — notificação ANPD em 72h** |
 
 **Se houver suspeita de que dados reais de cidadãos foram expostos**:
 
 1. **Não baixe** os dados além do mínimo absoluto para comprovar a exposição.
 2. **Reporte imediatamente** via canal de segurança.
-3. Mencione explicitamente: *"Há indício de exposição de dados reais — pode ser incidente LGPD."*
+3. Mencione explicitamente: _"Há indício de exposição de dados reais — pode ser incidente LGPD."_
 4. Nós ativamos o **playbook de incidente** (notificação à ANPD em 72h conforme Art. 48 LGPD, notificação aos titulares, comunicação aos tenants controladores).
 
 ### O que NÃO fazer

@@ -12,8 +12,9 @@
   "description": "Promovendo inclusão, garantindo direitos e consolidando uma governança pública orientada por evidências, equidade e transformação social.",
   "devDependencies": {
     "@changesets/cli": "^2.27.10",
-    "@commitlint/cli": "^19.6.0",
-    "@commitlint/config-conventional": "^19.6.0",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@mais-inclusao/tsconfig": "workspace:*",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.10",
     "prettier": "^3.8.3",

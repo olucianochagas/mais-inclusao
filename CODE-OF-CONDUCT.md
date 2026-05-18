@@ -134,7 +134,7 @@ Este Código de Conduta se aplica em **todos os espaços comunitários** do +Inc
 
 ## Aplicação
 
-Casos de comportamento abusivo, assediante ou inaceitável podem ser reportados aos mantenedores responsáveis pela aplicação em **conduct@mais-inclusao.org** *(a configurar)* ou, enquanto este endereço não estiver ativo, diretamente em **olucianochagas@gmail.com** com o assunto `[Conduta]`.
+Casos de comportamento abusivo, assediante ou inaceitável podem ser reportados aos mantenedores responsáveis pela aplicação em **conduct@mais-inclusao.org** _(a configurar)_ ou, enquanto este endereço não estiver ativo, diretamente em **olucianochagas@gmail.com** com o assunto `[Conduta]`.
 
 Todas as queixas serão revisadas e investigadas **prontamente e de maneira justa**.
 
@@ -176,7 +176,7 @@ Os líderes da comunidade seguirão estas diretrizes de impacto comunitário par
 
 ### Para violações deste Código de Conduta
 
-1. **E-mail:** conduct@mais-inclusao.org *(a configurar — provisoriamente: olucianochagas@gmail.com com assunto `[Conduta]`)*
+1. **E-mail:** conduct@mais-inclusao.org _(a configurar — provisoriamente: olucianochagas@gmail.com com assunto `[Conduta]`)_
 2. **Se quem violou for um mantenedor:** envie o relato a **outro** mantenedor listado em [MAINTAINERS.md](./MAINTAINERS.md).
 
 ### O que incluir no relato

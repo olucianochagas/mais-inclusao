@@ -18,16 +18,16 @@
 
 ## Identificação
 
-| Campo | Valor |
-|---|---|
-| **Operador (LGPD Art. 5º X)** | Luciano Douglas Machado Chagas (mantenedor; provisório enquanto não houver entidade jurídica) |
-| **Encarregado de proteção de dados (DPO)** | A designar quando o produto entrar em operação real |
-| **Canal de contato do operador** | olucianochagas@gmail.com com assunto `[LGPD]` (provisório) → lgpd@mais-inclusao.org *(a configurar)* |
-| **Controladores (LGPD Art. 5º VI)** | Cada tenant (município, secretaria, ONG, consórcio) instanciado na plataforma |
-| **Titulares (LGPD Art. 5º V)** | Cidadãos atendidos por programas sociais via tenants |
-| **Versão deste ROPA** | 0.1 (template inicial — sem operação real ainda) |
-| **Última revisão** | 2026-05-16 |
-| **Próxima revisão obrigatória** | 2027-05-16 ou em mudança material de tratamento |
+| Campo                                      | Valor                                                                                                |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| **Operador (LGPD Art. 5º X)**              | Luciano Douglas Machado Chagas (mantenedor; provisório enquanto não houver entidade jurídica)        |
+| **Encarregado de proteção de dados (DPO)** | A designar quando o produto entrar em operação real                                                  |
+| **Canal de contato do operador**           | olucianochagas@gmail.com com assunto `[LGPD]` (provisório) → lgpd@mais-inclusao.org _(a configurar)_ |
+| **Controladores (LGPD Art. 5º VI)**        | Cada tenant (município, secretaria, ONG, consórcio) instanciado na plataforma                        |
+| **Titulares (LGPD Art. 5º V)**             | Cidadãos atendidos por programas sociais via tenants                                                 |
+| **Versão deste ROPA**                      | 0.1 (template inicial — sem operação real ainda)                                                     |
+| **Última revisão**                         | 2026-05-16                                                                                           |
+| **Próxima revisão obrigatória**            | 2027-05-16 ou em mudança material de tratamento                                                      |
 
 ---
 
@@ -35,17 +35,17 @@
 
 Cada **operação de tratamento** abaixo descreve uma atividade discreta que o +Inclusão executa com dados pessoais em nome de um controlador. Cada operação tem os campos exigidos pelo Art. 37 da LGPD:
 
-| Campo | O que registra |
-|---|---|
-| **Finalidade** | Para que o dado é tratado |
-| **Base legal** | Art. 7º (dados comuns) ou Art. 11 (sensíveis) da LGPD |
-| **Categorias de titulares** | Quem são as pessoas cujos dados são tratados |
-| **Categorias de dados** | Que dados, com classificação L0/L1/L2/L3 (ver [SECURITY.md](../../SECURITY.md#classificação-de-dados-4-níveis)) |
-| **Categorias de destinatários** | Quem recebe (sub-operadores, controladores, terceiros) |
-| **Prazo de retenção** | Quanto tempo o dado permanece |
-| **Medidas de segurança** | Salvaguardas técnicas e organizacionais |
-| **Transferência internacional** | Se aplicável |
-| **Onda** | Quando a operação entra em produção |
+| Campo                           | O que registra                                                                                                  |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| **Finalidade**                  | Para que o dado é tratado                                                                                       |
+| **Base legal**                  | Art. 7º (dados comuns) ou Art. 11 (sensíveis) da LGPD                                                           |
+| **Categorias de titulares**     | Quem são as pessoas cujos dados são tratados                                                                    |
+| **Categorias de dados**         | Que dados, com classificação L0/L1/L2/L3 (ver [SECURITY.md](../../SECURITY.md#classificação-de-dados-4-níveis)) |
+| **Categorias de destinatários** | Quem recebe (sub-operadores, controladores, terceiros)                                                          |
+| **Prazo de retenção**           | Quanto tempo o dado permanece                                                                                   |
+| **Medidas de segurança**        | Salvaguardas técnicas e organizacionais                                                                         |
+| **Transferência internacional** | Se aplicável                                                                                                    |
+| **Onda**                        | Quando a operação entra em produção                                                                             |
 
 > ⚠️ Operações marcadas como **Onda 2/3** ainda não estão implementadas. Estão listadas aqui para que tenants e revisores entendam o que virá. Quando entrarem em operação, esta seção é atualizada e os campos completados.
 
@@ -201,9 +201,9 @@ Cada **operação de tratamento** abaixo descreve uma atividade discreta que o +
 
 > A regra geral é **não transferir** dados pessoais para fora do Brasil sem necessidade. Quando o tenant explicitamente optar por sub-operador internacional (ex: provedor de e-mail SaaS estrangeiro), a transferência é declarada no DPA do tenant e registrada nesta seção.
 
-| Sub-operador | País | Dados transferidos | Salvaguarda | Status |
-|---|---|---|---|---|
-| _(nenhum em operação)_ | — | — | — | — |
+| Sub-operador           | País | Dados transferidos | Salvaguarda | Status |
+| ---------------------- | ---- | ------------------ | ----------- | ------ |
+| _(nenhum em operação)_ | —    | —                  | —           | —      |
 
 Salvaguardas aceitas (LGPD Art. 33): cláusulas-padrão da ANPD, normas corporativas globais, certificações reconhecidas, ou consentimento específico e destacado do titular.
 

@@ -14,6 +14,7 @@
 Descreva as **forças** em jogo (técnicas, políticas, sociais, regulatórias) que motivam a necessidade de uma decisão. Que problema precisa ser resolvido? Quais restrições existem?
 
 Algumas perguntas que ajudam:
+
 - Qual é o cenário sem esta decisão?
 - Quem é afetado?
 - O que acontece se não decidirmos?

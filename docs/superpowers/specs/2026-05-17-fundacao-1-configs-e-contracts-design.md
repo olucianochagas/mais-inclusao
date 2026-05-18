@@ -1,16 +1,16 @@
 # Fundação 1 — Configs compartilhadas + `packages/contracts` core
 
-| | |
-|---|---|
-| **Data** | 2026-05-17 |
-| **Autor** | Luciano Douglas Machado Chagas <olucianochagas@gmail.com> |
-| **Status** | Design aprovado em brainstorming. Aguarda revisão final do doc e transição para `writing-plans`. |
-| **Tipo** | Spec de subprojeto da **Onda 1** (primeiro ciclo de implementação). |
-| **Onda** | 1 (MVP) |
-| **Pré-requisitos** | Bootstrap do monorepo concluído (32 commits, configurações raiz, workflows GitHub Actions). |
-| **Spec mestra** | [`2026-05-16-programa-mais-inclusao-decomposicao.md`](./2026-05-16-programa-mais-inclusao-decomposicao.md) |
-| **ADRs relevantes** | [ADR-0001](../../adr/0001-microsservicos-evolutivos-por-bounded-context.md) · [ADR-0003](../../adr/0003-monorepo-turborepo-pnpm.md) · [ADR-0004](../../adr/0004-nats-jetstream-outbox-pattern.md) · [ADR-0005](../../adr/0005-multi-tenancy-defesa-em-profundidade.md) · [ADR-0007](../../adr/0007-wcag-22-aa-como-definition-of-done.md) · [ADR-0008](../../adr/0008-conventional-commits-dco-changesets.md) |
-| **Próximo artefato** | Plano de implementação via `writing-plans`. |
+|                      |                                                                                                                                                                                                                                                                                                                                                                                                               |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Data**             | 2026-05-17                                                                                                                                                                                                                                                                                                                                                                                                    |
+| **Autor**            | Luciano Douglas Machado Chagas <olucianochagas@gmail.com>                                                                                                                                                                                                                                                                                                                                                     |
+| **Status**           | Design aprovado em brainstorming. Aguarda revisão final do doc e transição para `writing-plans`.                                                                                                                                                                                                                                                                                                              |
+| **Tipo**             | Spec de subprojeto da **Onda 1** (primeiro ciclo de implementação).                                                                                                                                                                                                                                                                                                                                           |
+| **Onda**             | 1 (MVP)                                                                                                                                                                                                                                                                                                                                                                                                       |
+| **Pré-requisitos**   | Bootstrap do monorepo concluído (32 commits, configurações raiz, workflows GitHub Actions).                                                                                                                                                                                                                                                                                                                   |
+| **Spec mestra**      | [`2026-05-16-programa-mais-inclusao-decomposicao.md`](./2026-05-16-programa-mais-inclusao-decomposicao.md)                                                                                                                                                                                                                                                                                                    |
+| **ADRs relevantes**  | [ADR-0001](../../adr/0001-microsservicos-evolutivos-por-bounded-context.md) · [ADR-0003](../../adr/0003-monorepo-turborepo-pnpm.md) · [ADR-0004](../../adr/0004-nats-jetstream-outbox-pattern.md) · [ADR-0005](../../adr/0005-multi-tenancy-defesa-em-profundidade.md) · [ADR-0007](../../adr/0007-wcag-22-aa-como-definition-of-done.md) · [ADR-0008](../../adr/0008-conventional-commits-dco-changesets.md) |
+| **Próximo artefato** | Plano de implementação via `writing-plans`.                                                                                                                                                                                                                                                                                                                                                                   |
 
 ---
 
@@ -56,13 +56,13 @@ O Apêndice D da [spec mestra](./2026-05-16-programa-mais-inclusao-decomposicao.
 
 ## Decisões fechadas no brainstorming
 
-| Pergunta | Resposta | Implicação |
-|---|---|---|
-| **Q1**: Escopo dos packages de configuração? | Só `tsconfig` + `eslint-config`. | `tailwind-config` fica para a fatia da UI. YAGNI rigoroso. |
-| **Q2**: Quanto de `packages/contracts`? | Shared + auth events + auth DTOs HTTP mínimos. | 4 eventos auth + 5 DTOs HTTP definidos; demais (Tenants CRUD, Users CRUD) ficam para o ciclo do `auth-service`. |
-| **Q3**: Estratégia de testes? | Vitest unit + snapshots JSON Schema. | `zod-to-json-schema` gera schema → snapshot versionado em git. Mudança não-intencional quebra CI. |
-| **Q4**: Postura de publicação? | Privado com `publishConfig` pronto. | `"private": true` bloqueia npm publish acidental; `publishConfig` deixa pronto para abrir publicação no futuro. |
-| **Abordagem de execução** | α — Estrutura completa, qualidade alta desde o dia 0. | ~3-5 dias de scaffolding com pattern bem estabelecido para próximos packages copiarem. |
+| Pergunta                                     | Resposta                                              | Implicação                                                                                                      |
+| -------------------------------------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| **Q1**: Escopo dos packages de configuração? | Só `tsconfig` + `eslint-config`.                      | `tailwind-config` fica para a fatia da UI. YAGNI rigoroso.                                                      |
+| **Q2**: Quanto de `packages/contracts`?      | Shared + auth events + auth DTOs HTTP mínimos.        | 4 eventos auth + 5 DTOs HTTP definidos; demais (Tenants CRUD, Users CRUD) ficam para o ciclo do `auth-service`. |
+| **Q3**: Estratégia de testes?                | Vitest unit + snapshots JSON Schema.                  | `zod-to-json-schema` gera schema → snapshot versionado em git. Mudança não-intencional quebra CI.               |
+| **Q4**: Postura de publicação?               | Privado com `publishConfig` pronto.                   | `"private": true` bloqueia npm publish acidental; `publishConfig` deixa pronto para abrir publicação no futuro. |
+| **Abordagem de execução**                    | α — Estrutura completa, qualidade alta desde o dia 0. | ~3-5 dias de scaffolding com pattern bem estabelecido para próximos packages copiarem.                          |
 
 ---
 
@@ -138,11 +138,11 @@ A ordem importa para build/instalação. O pnpm com workspaces resolve via symli
 
 ### Forma de exportação por package
 
-| Package | Forma | Como consumer usa |
-|---|---|---|
-| `tsconfig` | Arquivos JSON via `files` + `exports` map | `"extends": "@mais-inclusao/tsconfig/nest.json"` |
-| `eslint-config` | JS presets (flat config) via `exports` | `import nest from '@mais-inclusao/eslint-config/nest'` |
-| `contracts` | TS compilado para ESM+CJS+`.d.ts` via tsup | `import { EventEnvelopeSchema } from '@mais-inclusao/contracts/shared'` |
+| Package         | Forma                                      | Como consumer usa                                                       |
+| --------------- | ------------------------------------------ | ----------------------------------------------------------------------- |
+| `tsconfig`      | Arquivos JSON via `files` + `exports` map  | `"extends": "@mais-inclusao/tsconfig/nest.json"`                        |
+| `eslint-config` | JS presets (flat config) via `exports`     | `import nest from '@mais-inclusao/eslint-config/nest'`                  |
+| `contracts`     | TS compilado para ESM+CJS+`.d.ts` via tsup | `import { EventEnvelopeSchema } from '@mais-inclusao/contracts/shared'` |
 
 ### Migração do `tsconfig.base.json` raiz
 
@@ -159,13 +159,13 @@ Isso permite `git log --follow tsconfig.base.json` rastrear evolução sem perda
 
 ### Variantes
 
-| Variante | Para | Adições/overrides sobre `base` |
-|---|---|---|
-| `base.json` | Comum a todos | Strict + 5 extras, ES2023, Bundler resolution, isolatedModules, verbatimModuleSyntax, incremental |
-| `nest.json` | Apps backend NestJS | `experimentalDecorators`, `emitDecoratorMetadata`, `useDefineForClassFields: false`, `types: ["node"]`, `module: NodeNext`, `composite: true` |
-| `react.json` | Apps frontend MF | `jsx: react-jsx`, `lib: ["ES2023", "DOM", "DOM.Iterable"]`, `types: ["vite/client", "@module-federation/enhanced/runtime"]`, `composite: false` |
-| `lib.json` | Packages publicáveis | `declaration: true`, `declarationMap: true`, `sourceMap: true`, `composite: true`, `stripInternal: true` |
-| `test.json` | Arquivos `*.test.ts` | `types: ["node", "vitest/globals"]`, `noUnusedLocals: false`, `isolatedModules: false` |
+| Variante     | Para                 | Adições/overrides sobre `base`                                                                                                                  |
+| ------------ | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `base.json`  | Comum a todos        | Strict + 5 extras, ES2023, Bundler resolution, isolatedModules, verbatimModuleSyntax, incremental                                               |
+| `nest.json`  | Apps backend NestJS  | `experimentalDecorators`, `emitDecoratorMetadata`, `useDefineForClassFields: false`, `types: ["node"]`, `module: NodeNext`, `composite: true`   |
+| `react.json` | Apps frontend MF     | `jsx: react-jsx`, `lib: ["ES2023", "DOM", "DOM.Iterable"]`, `types: ["vite/client", "@module-federation/enhanced/runtime"]`, `composite: false` |
+| `lib.json`   | Packages publicáveis | `declaration: true`, `declarationMap: true`, `sourceMap: true`, `composite: true`, `stripInternal: true`                                        |
+| `test.json`  | Arquivos `*.test.ts` | `types: ["node", "vitest/globals"]`, `noUnusedLocals: false`, `isolatedModules: false`                                                          |
 
 ### `package.json`
 
@@ -177,7 +177,7 @@ Isso permite `git log --follow tsconfig.base.json` rastrear evolução sem perda
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org",
-    "provenance": true
+    "provenance": true,
   },
   "type": "commonjs",
   "exports": {
@@ -185,9 +185,9 @@ Isso permite `git log --follow tsconfig.base.json` rastrear evolução sem perda
     "./nest.json": "./nest.json",
     "./react.json": "./react.json",
     "./lib.json": "./lib.json",
-    "./test.json": "./test.json"
+    "./test.json": "./test.json",
   },
-  "files": ["*.json", "README.md"]
+  "files": ["*.json", "README.md"],
 }
 ```
 
@@ -202,7 +202,7 @@ Sem `scripts`, sem `dependencies`. JSONs distribuídos diretamente.
   "extends": "@mais-inclusao/tsconfig/nest.json",
   "compilerOptions": { "outDir": "./dist", "rootDir": "./src" },
   "include": ["src/**/*"],
-  "exclude": ["**/*.test.ts", "test/**"]
+  "exclude": ["**/*.test.ts", "test/**"],
 }
 ```
 
@@ -212,7 +212,7 @@ Sem `scripts`, sem `dependencies`. JSONs distribuídos diretamente.
 {
   "extends": "@mais-inclusao/tsconfig/react.json",
   "compilerOptions": { "outDir": "./dist" },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
 }
 ```
 
@@ -230,12 +230,12 @@ Sem `scripts`, sem `dependencies`. JSONs distribuídos diretamente.
 
 ### Presets exportados
 
-| Preset | Para | Base + adições |
-|---|---|---|
+| Preset                | Para                    | Base + adições                                                                                                                                                                                         |
+| --------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `src/index.js` (base) | Reusado pelos 3 presets | typescript-eslint strict + import + simple-import-sort + security; regras críticas: `no-floating-promises`, `consistent-type-imports`, `switch-exhaustiveness-check`, `no-console` (exceto warn/error) |
-| `src/nest.js` | Backend NestJS | Base + node globals; desabilita `no-extraneous-class`, `parameter-properties`; **`no-restricted-imports` bloqueia `PrismaClient` direto** (força uso de `TenantAwareRepository`) |
-| `src/react.js` | Frontend MF | Base + react + react-hooks + **jsx-a11y `strict`** (alinhado ADR-0007); `no-autofocus` strict; `label-has-associated-control` rigoroso |
-| `src/lib.js` | Packages publicáveis | Base + `explicit-function-return-type`, `explicit-module-boundary-types`, `no-default-export`, `no-internal-modules` |
+| `src/nest.js`         | Backend NestJS          | Base + node globals; desabilita `no-extraneous-class`, `parameter-properties`; **`no-restricted-imports` bloqueia `PrismaClient` direto** (força uso de `TenantAwareRepository`)                       |
+| `src/react.js`        | Frontend MF             | Base + react + react-hooks + **jsx-a11y `strict`** (alinhado ADR-0007); `no-autofocus` strict; `label-has-associated-control` rigoroso                                                                 |
+| `src/lib.js`          | Packages publicáveis    | Base + `explicit-function-return-type`, `explicit-module-boundary-types`, `no-default-export`, `no-internal-modules`                                                                                   |
 
 ### `package.json`
 
@@ -244,13 +244,17 @@ Sem `scripts`, sem `dependencies`. JSONs distribuídos diretamente.
   "name": "@mais-inclusao/eslint-config",
   "version": "0.1.0",
   "private": true,
-  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org", "provenance": true },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org",
+    "provenance": true,
+  },
   "type": "module",
   "exports": {
     ".": "./src/index.js",
     "./nest": "./src/nest.js",
     "./react": "./src/react.js",
-    "./lib": "./src/lib.js"
+    "./lib": "./src/lib.js",
   },
   "files": ["src", "README.md"],
   "peerDependencies": { "eslint": "catalog:", "typescript": "catalog:" },
@@ -263,8 +267,8 @@ Sem `scripts`, sem `dependencies`. JSONs distribuídos diretamente.
     "eslint-plugin-react": "catalog:",
     "eslint-plugin-react-hooks": "catalog:",
     "eslint-plugin-jsx-a11y": "catalog:",
-    "globals": "^15.13.0"
-  }
+    "globals": "^15.13.0",
+  },
 }
 ```
 
@@ -332,10 +336,14 @@ export const EventHeadersSchema = z.object({
 
 export type EventHeaders = z.infer<typeof EventHeadersSchema>;
 
-export const EventEnvelopeSchema = <TPayload extends z.ZodTypeAny>(payload: TPayload) =>
-  z.object({ headers: EventHeadersSchema, payload });
+export const EventEnvelopeSchema = <TPayload extends z.ZodTypeAny>(
+  payload: TPayload,
+) => z.object({ headers: EventHeadersSchema, payload });
 
-export type EventEnvelope<TPayload> = { headers: EventHeaders; payload: TPayload };
+export type EventEnvelope<TPayload> = {
+  headers: EventHeaders;
+  payload: TPayload;
+};
 ```
 
 ### `src/shared/tenant.ts` + `src/shared/ids.ts`
@@ -363,7 +371,7 @@ export const ApplicationIdSchema = z.string().uuid().brand<'ApplicationId'>();
 ```typescript
 export const PaginationQuerySchema = z.object({
   cursor: z.string().optional(),
-  limit: z.coerce.number().int().min(1).max(100).default(20),  // max 100: defesa DoS
+  limit: z.coerce.number().int().min(1).max(100).default(20), // max 100: defesa DoS
 });
 
 export const PaginatedResultSchema = <T extends z.ZodTypeAny>(item: T) =>
@@ -384,34 +392,38 @@ export const ProblemDetailsSchema = z.object({
   detail: z.string().optional(),
   instance: z.string().optional(),
   correlation_id: z.string().uuid().optional(),
-  errors: z.array(z.object({
-    path: z.string(),
-    code: z.string(),
-    message: z.string(),
-  })).optional(),
+  errors: z
+    .array(
+      z.object({
+        path: z.string(),
+        code: z.string(),
+        message: z.string(),
+      }),
+    )
+    .optional(),
 });
 ```
 
 ### `src/auth/events.ts` — 4 eventos
 
-| Evento | Payload (campos essenciais) |
-|---|---|
-| `auth.tenant.created` | `tenant_id`, `slug`, `name`, `plan`, `created_at`, `created_by` |
-| `auth.tenant.deactivated` | `tenant_id`, `deactivated_at`, `reason` (enum: contract_ended/data_breach/unpaid/manual) |
-| `auth.user.created` | `user_id`, `tenant_id`, `roles[]`, `created_at` (sem email — é PII) |
-| `auth.user.deactivated` | `user_id`, `tenant_id`, `deactivated_at`, `reason` (enum: voluntary/role_revoked/security_incident/data_breach) |
+| Evento                    | Payload (campos essenciais)                                                                                     |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `auth.tenant.created`     | `tenant_id`, `slug`, `name`, `plan`, `created_at`, `created_by`                                                 |
+| `auth.tenant.deactivated` | `tenant_id`, `deactivated_at`, `reason` (enum: contract_ended/data_breach/unpaid/manual)                        |
+| `auth.user.created`       | `user_id`, `tenant_id`, `roles[]`, `created_at` (sem email — é PII)                                             |
+| `auth.user.deactivated`   | `user_id`, `tenant_id`, `deactivated_at`, `reason` (enum: voluntary/role_revoked/security_incident/data_breach) |
 
 Cada um envolto via `EventEnvelopeSchema(<Payload>)`.
 
 ### `src/auth/http.ts` — 5 DTOs HTTP mínimos
 
-| DTO | Schema |
-|---|---|
-| `LoginRequestSchema` | `email`, `password (min 12)`, `tenant_slug` |
-| `LoginResponseSchema` | `access_token`, `refresh_token`, `expires_in`, `token_type: 'Bearer'` |
-| `RefreshRequestSchema` | `refresh_token` |
-| `RefreshResponseSchema` | alias de `LoginResponseSchema` |
-| `MeResponseSchema` | `user{user_id,name,email}`, `tenant{tenant_id,slug,name}`, `roles[]` |
+| DTO                     | Schema                                                                |
+| ----------------------- | --------------------------------------------------------------------- |
+| `LoginRequestSchema`    | `email`, `password (min 12)`, `tenant_slug`                           |
+| `LoginResponseSchema`   | `access_token`, `refresh_token`, `expires_in`, `token_type: 'Bearer'` |
+| `RefreshRequestSchema`  | `refresh_token`                                                       |
+| `RefreshResponseSchema` | alias de `LoginResponseSchema`                                        |
+| `MeResponseSchema`      | `user{user_id,name,email}`, `tenant{tenant_id,slug,name}`, `roles[]`  |
 
 **`MeResponse` é o único DTO que retorna email** — está autorizado pela LGPD Art. 18 II (direito de acesso aos próprios dados).
 
@@ -422,7 +434,11 @@ Cada um envolto via `EventEnvelopeSchema(<Payload>)`.
   "name": "@mais-inclusao/contracts",
   "version": "0.1.0",
   "private": true,
-  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org", "provenance": true },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org",
+    "provenance": true,
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -431,19 +447,19 @@ Cada um envolto via `EventEnvelopeSchema(<Payload>)`.
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "require": "./dist/index.cjs",
     },
     "./shared": {
       "types": "./dist/shared/index.d.ts",
       "import": "./dist/shared/index.js",
-      "require": "./dist/shared/index.cjs"
+      "require": "./dist/shared/index.cjs",
     },
     "./auth": {
       "types": "./dist/auth/index.d.ts",
       "import": "./dist/auth/index.js",
-      "require": "./dist/auth/index.cjs"
+      "require": "./dist/auth/index.cjs",
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
   },
   "sideEffects": false,
   "files": ["dist", "README.md"],
@@ -453,7 +469,7 @@ Cada um envolto via `EventEnvelopeSchema(<Payload>)`.
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
   },
   "dependencies": { "zod": "catalog:" },
   "devDependencies": {
@@ -461,8 +477,8 @@ Cada um envolto via `EventEnvelopeSchema(<Payload>)`.
     "@mais-inclusao/tsconfig": "workspace:*",
     "tsup": "^8.3.5",
     "vitest": "catalog:",
-    "zod-to-json-schema": "^3.24.1"
-  }
+    "zod-to-json-schema": "^3.24.1",
+  },
 }
 ```
 
@@ -543,16 +559,16 @@ export default defineConfig({
 
 Os 8 workflows já commitados cobrem este subprojeto **sem mudança**:
 
-| Workflow | Comportamento neste subprojeto |
-|---|---|
-| `ci.yml` | Lint, typecheck, test, build em paralelo. Turborepo cacheia. |
-| `commitlint.yml` | Escopos válidos novos: `tsconfig`, `eslint-config`, `contracts`. |
-| `dco.yml` | Valida `Signed-off-by:` em todos commits. |
-| `codeql.yml` | SAST sobre novo TS. |
-| `release.yml` | Quando Changesets pendentes em `main`, abre "Version Packages" PR. |
+| Workflow         | Comportamento neste subprojeto                                         |
+| ---------------- | ---------------------------------------------------------------------- |
+| `ci.yml`         | Lint, typecheck, test, build em paralelo. Turborepo cacheia.           |
+| `commitlint.yml` | Escopos válidos novos: `tsconfig`, `eslint-config`, `contracts`.       |
+| `dco.yml`        | Valida `Signed-off-by:` em todos commits.                              |
+| `codeql.yml`     | SAST sobre novo TS.                                                    |
+| `release.yml`    | Quando Changesets pendentes em `main`, abre "Version Packages" PR.     |
 | `pr-labeler.yml` | Aplica labels `area:contracts`, `area:tsconfig`, `area:eslint-config`. |
-| `e2e.yml` | Não dispara (sem frontend). |
-| `stale.yml` | Sem impacto direto. |
+| `e2e.yml`        | Não dispara (sem frontend).                                            |
+| `stale.yml`      | Sem impacto direto.                                                    |
 
 ### Integração com Changesets
 
@@ -560,15 +576,15 @@ Os 8 workflows já commitados cobrem este subprojeto **sem mudança**:
 
 Tabela prática:
 
-| Mudança | Bump | Exemplo |
-|---|---|---|
-| Adicionar campo opcional em DTO | `minor` | `LoginRequest` ganha `remember_me?` |
-| Adicionar novo evento ou DTO | `minor` | Novo `auth.session.expired` |
-| Adicionar novo contexto (`programs/`) | `minor` | Toda nova subdir |
-| Bug fix em validação | `patch` | Regex de slug corrigida |
-| Adicionar campo required | `major` | `EventHeaders` ganha `request_id` obrigatório |
-| Remover campo | `major` | `LoginResponse` perde `expires_in` |
-| Renomear campo | `major` em 2 versões | n: ambos; n+1: só novo |
+| Mudança                               | Bump                 | Exemplo                                       |
+| ------------------------------------- | -------------------- | --------------------------------------------- |
+| Adicionar campo opcional em DTO       | `minor`              | `LoginRequest` ganha `remember_me?`           |
+| Adicionar novo evento ou DTO          | `minor`              | Novo `auth.session.expired`                   |
+| Adicionar novo contexto (`programs/`) | `minor`              | Toda nova subdir                              |
+| Bug fix em validação                  | `patch`              | Regex de slug corrigida                       |
+| Adicionar campo required              | `major`              | `EventHeaders` ganha `request_id` obrigatório |
+| Remover campo                         | `major`              | `LoginResponse` perde `expires_in`            |
+| Renomear campo                        | `major` em 2 versões | n: ambos; n+1: só novo                        |
 
 ---
 
@@ -597,14 +613,14 @@ Critérios verificáveis para considerar a implementação concluída:
 
 ## Riscos e mitigações
 
-| Risco | Probabilidade | Impacto | Mitigação |
-|---|---|---|---|
-| `flat config` ESLint 9 com `projectService` lento em monorepo | Média | Médio | Limitar `allowDefaultProject` apenas a `eslint.config.js`. Bench inicial — meta < 30s. |
-| `tsup` esconde erros de tipo (esbuild não faz typecheck) | Média | Baixo | Rodar `tsc --noEmit` em paralelo via Turbo task `typecheck`. CI já cobre. |
-| Snapshot quebra em mudanças triviais | Baixa | Baixo | `zod-to-json-schema` produz output determinístico. Caso necessário, serializer com sort keys. |
-| Mudança em `eslint-config` quebra múltiplos workspaces | Média | Médio | Política: PRs em `eslint-config` exigem verificação local em ≥ 2 workspaces antes de merge; CI valida. |
-| Versão de plugins ESLint divergir entre `peerDependencies` e `dependencies` | Baixa | Médio | Usar `catalog:` do pnpm para versionamento centralizado. `syncpack` no CI detecta drift. |
-| Branded types Zod confundirem contribuidores novos | Média | Baixo | README com exemplos didáticos; mensagens de erro claras dos schemas; documentar padrão em CONTRIBUTING.md. |
+| Risco                                                                       | Probabilidade | Impacto | Mitigação                                                                                                  |
+| --------------------------------------------------------------------------- | ------------- | ------- | ---------------------------------------------------------------------------------------------------------- |
+| `flat config` ESLint 9 com `projectService` lento em monorepo               | Média         | Médio   | Limitar `allowDefaultProject` apenas a `eslint.config.js`. Bench inicial — meta < 30s.                     |
+| `tsup` esconde erros de tipo (esbuild não faz typecheck)                    | Média         | Baixo   | Rodar `tsc --noEmit` em paralelo via Turbo task `typecheck`. CI já cobre.                                  |
+| Snapshot quebra em mudanças triviais                                        | Baixa         | Baixo   | `zod-to-json-schema` produz output determinístico. Caso necessário, serializer com sort keys.              |
+| Mudança em `eslint-config` quebra múltiplos workspaces                      | Média         | Médio   | Política: PRs em `eslint-config` exigem verificação local em ≥ 2 workspaces antes de merge; CI valida.     |
+| Versão de plugins ESLint divergir entre `peerDependencies` e `dependencies` | Baixa         | Médio   | Usar `catalog:` do pnpm para versionamento centralizado. `syncpack` no CI detecta drift.                   |
+| Branded types Zod confundirem contribuidores novos                          | Média         | Baixo   | README com exemplos didáticos; mensagens de erro claras dos schemas; documentar padrão em CONTRIBUTING.md. |
 
 ---
 
@@ -631,11 +647,11 @@ Explicitamente fora desta spec, para evitar scope creep:
 
 ### A — Tabela de versionamento detalhada por package
 
-| Package | Versão inicial | Versionamento via |
-|---|---|---|
-| `@mais-inclusao/tsconfig` | 0.1.0 | Changesets, bump independente |
-| `@mais-inclusao/eslint-config` | 0.1.0 | Changesets, bump independente |
-| `@mais-inclusao/contracts` | 0.1.0 | Changesets, bump independente |
+| Package                        | Versão inicial | Versionamento via             |
+| ------------------------------ | -------------- | ----------------------------- |
+| `@mais-inclusao/tsconfig`      | 0.1.0          | Changesets, bump independente |
+| `@mais-inclusao/eslint-config` | 0.1.0          | Changesets, bump independente |
+| `@mais-inclusao/contracts`     | 0.1.0          | Changesets, bump independente |
 
 Versão `0.1.0` (não `1.0.0`) sinaliza pre-alpha. Major bump para `1.0.0` quando primeiro tenant pagante existir.
 
@@ -651,28 +667,28 @@ Versão `0.1.0` (não `1.0.0`) sinaliza pre-alpha. Major bump para `1.0.0` quand
 
 ### C — Stack de dependências (versão alvo, via `catalog:`)
 
-| Dep | Versão |
-|---|---|
-| `zod` | ^3.23.8 |
-| `eslint` | ^9.16.0 |
-| `typescript` | ^5.6.3 |
-| `typescript-eslint` | ^8.16.0 |
-| `vitest` | ^2.1.5 |
-| `tsup` | ^8.3.5 |
-| `zod-to-json-schema` | ^3.24.1 |
-| `globals` | ^15.13.0 |
+| Dep                  | Versão   |
+| -------------------- | -------- |
+| `zod`                | ^3.23.8  |
+| `eslint`             | ^9.16.0  |
+| `typescript`         | ^5.6.3   |
+| `typescript-eslint`  | ^8.16.0  |
+| `vitest`             | ^2.1.5   |
+| `tsup`               | ^8.3.5   |
+| `zod-to-json-schema` | ^3.24.1  |
+| `globals`            | ^15.13.0 |
 
 Versões exatas finais ficam no `pnpm-workspace.yaml` (catalog) já configurado.
 
 ### D — Próximos subprojetos planejados (após este)
 
-| Ordem | Subprojeto | Por quê depois deste |
-|---|---|---|
-| 2 | Infra dev local (`infra/docker/dev/docker-compose.yml` + dotenv pattern) | Precisa para próximos packages testarem com PG/NATS reais |
-| 3 | `packages/persistence` (TenantAwareRepository + Prisma base) | Consumido pelos 4 serviços |
-| 4 | `packages/messaging` (NATS wrapper + Outbox dispatcher) | Idem |
-| 5 | `packages/observability` (Pino + OTel preset) | Idem |
-| 6 | `apps/auth-service` (primeiro serviço, consome contracts/persistence/messaging) | Marco visível: login funcional |
+| Ordem | Subprojeto                                                                      | Por quê depois deste                                      |
+| ----- | ------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| 2     | Infra dev local (`infra/docker/dev/docker-compose.yml` + dotenv pattern)        | Precisa para próximos packages testarem com PG/NATS reais |
+| 3     | `packages/persistence` (TenantAwareRepository + Prisma base)                    | Consumido pelos 4 serviços                                |
+| 4     | `packages/messaging` (NATS wrapper + Outbox dispatcher)                         | Idem                                                      |
+| 5     | `packages/observability` (Pino + OTel preset)                                   | Idem                                                      |
+| 6     | `apps/auth-service` (primeiro serviço, consome contracts/persistence/messaging) | Marco visível: login funcional                            |
 
 ---
 

@@ -23,12 +23,12 @@ A pergunta concreta: **quantos microsserviços criar do dia zero, e como mapeá-
 
 Três caminhos foram avaliados (Seção "Decisão de abordagem" da spec):
 
-| | A — Big-bang | B — Evolutivos | C — Capability-based |
-|---|---|---|---|
-| Granularidade | 15-20 serviços do dia 0 | 4 serviços + 2 BFFs na Onda 1 | 1 monolito + serviços técnicos |
-| Velocidade MVP | Baixa | Média-alta | Alta |
-| Overhead operacional | Brutal | Sustentável | Baixo-médio |
-| Risco | Fronteiras erradas viram refactor distribuído | Disciplina exigida em contratos | Monolito de domínio cresce |
+|                      | A — Big-bang                                  | B — Evolutivos                  | C — Capability-based           |
+| -------------------- | --------------------------------------------- | ------------------------------- | ------------------------------ |
+| Granularidade        | 15-20 serviços do dia 0                       | 4 serviços + 2 BFFs na Onda 1   | 1 monolito + serviços técnicos |
+| Velocidade MVP       | Baixa                                         | Média-alta                      | Alta                           |
+| Overhead operacional | Brutal                                        | Sustentável                     | Baixo-médio                    |
+| Risco                | Fronteiras erradas viram refactor distribuído | Disciplina exigida em contratos | Monolito de domínio cresce     |
 
 ## Decisão
 
@@ -75,6 +75,7 @@ Concretamente:
 **Resumo**: 15-20 microsserviços do dia zero, um por bounded context identificado.
 
 **Por que rejeitada**:
+
 - Overhead operacional desproporcional ao estado pre-alpha (15+ pipelines, schemas, deploys, observabilidade).
 - Fronteiras adivinhadas erram com frequência. Refactor distribuído é várias vezes mais caro que refactor em monorepo.
 - Velocidade inicial baixa: meses só de plumbing antes de qualquer feature de produto.
@@ -85,6 +86,7 @@ Concretamente:
 **Resumo**: 1 monolito de domínio + serviços técnicos ao redor (Identity, Notify, Files, Search, Audit, ...).
 
 **Por que rejeitada**:
+
 - Atrito direto com a aposta de microsserviços do enunciado.
 - O monolito de domínio cresceria rapidamente — em SaaS multi-tenant com regras por tenant, vira hotspot e bottleneck.
 - Perde-se granularidade DDD: indicadores, triagem e concessão dividem deploy e operacionalmente acoplam-se.
@@ -94,6 +96,7 @@ Concretamente:
 **Resumo**: 1 único deploy NestJS bem modularizado, sem microsserviços, com migração futura quando necessário.
 
 **Por que rejeitada**:
+
 - Conflita com requisito explícito do projeto (microsserviços).
 - Tenants enterprise tipicamente exigem isolamento de superfície que monolito não entrega.
 - A história mostra que monolito modular "para depois extrair" raramente é extraído sem refactor doloroso.
@@ -102,6 +105,6 @@ Concretamente:
 
 - [Spec de decomposição — Seção "Decisão de abordagem"](../superpowers/specs/2026-05-16-programa-mais-inclusao-decomposicao.md#decisão-de-abordagem)
 - [Spec — Seção 6 (gatilhos de extração)](../superpowers/specs/2026-05-16-programa-mais-inclusao-decomposicao.md#seção-6--ondas-seguintes-e-gatilhos-de-extração)
-- Eric Evans, *Domain-Driven Design: Tackling Complexity in the Heart of Software*, 2003.
-- Sam Newman, *Building Microservices*, 2nd ed., 2021.
+- Eric Evans, _Domain-Driven Design: Tackling Complexity in the Heart of Software_, 2003.
+- Sam Newman, _Building Microservices_, 2nd ed., 2021.
 - Martin Fowler, ["Microservice Trade-Offs"](https://martinfowler.com/articles/microservice-trade-offs.html) (2015).

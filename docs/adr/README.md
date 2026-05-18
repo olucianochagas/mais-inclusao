@@ -4,7 +4,7 @@
 
 ## Por que ADRs?
 
-- **Memória institucional**: novos contribuidores conseguem entender *por que* o projeto está como está, sem precisar de oral history.
+- **Memória institucional**: novos contribuidores conseguem entender _por que_ o projeto está como está, sem precisar de oral history.
 - **Reduz revisitas circulares**: alternativas já consideradas e rejeitadas estão documentadas — você não precisa redebater.
 - **Auditável**: governança pública exige rastreabilidade de decisões. ADRs servem isso.
 - **Imutável por design**: ADR aceito não é editado para "atualizar" — cria-se um novo que substitui.
@@ -65,19 +65,19 @@ Sequencial sem buracos. `0000` é o template. Próximos: `0001`, `0002`, ...
 
 ## Índice
 
-| ADR | Status | Data | Título |
-|---|---|---|---|
-| [0000](./0000-template.md) | — | 2026-05-16 | Template |
-| [0001](./0001-microsservicos-evolutivos-por-bounded-context.md) | accepted | 2026-05-16 | Adotar microsserviços evolutivos por bounded context |
-| [0002](./0002-module-federation-rspack-frontend.md) | accepted | 2026-05-16 | Adotar Module Federation 2.0 + Rspack para frontends |
-| [0003](./0003-monorepo-turborepo-pnpm.md) | accepted | 2026-05-16 | Monorepo Turborepo + pnpm 11.1.2 |
-| [0004](./0004-nats-jetstream-outbox-pattern.md) | accepted | 2026-05-16 | Mensageria NATS JetStream + Outbox Pattern |
-| [0005](./0005-multi-tenancy-defesa-em-profundidade.md) | accepted | 2026-05-16 | Multi-tenancy com 6 camadas de defesa em profundidade |
-| [0006](./0006-criptografia-pii-em-coluna-kek-por-tenant.md) | accepted | 2026-05-16 | Criptografia de PII em coluna com KEK por tenant |
-| [0007](./0007-wcag-22-aa-como-definition-of-done.md) | accepted | 2026-05-16 | WCAG 2.2 AA como Definition of Done |
-| [0008](./0008-conventional-commits-dco-changesets.md) | accepted | 2026-05-16 | Conventional Commits + DCO + Changesets |
-| [0009](./0009-bdfl-transitorio-como-modelo-de-governanca.md) | accepted | 2026-05-16 | BDFL transitório como modelo de governança inicial |
-| [0010](./0010-dev-container-purista.md) | accepted | 2026-05-16 | Ambiente de desenvolvimento containerizado integralmente |
+| ADR                                                             | Status   | Data       | Título                                                   |
+| --------------------------------------------------------------- | -------- | ---------- | -------------------------------------------------------- |
+| [0000](./0000-template.md)                                      | —        | 2026-05-16 | Template                                                 |
+| [0001](./0001-microsservicos-evolutivos-por-bounded-context.md) | accepted | 2026-05-16 | Adotar microsserviços evolutivos por bounded context     |
+| [0002](./0002-module-federation-rspack-frontend.md)             | accepted | 2026-05-16 | Adotar Module Federation 2.0 + Rspack para frontends     |
+| [0003](./0003-monorepo-turborepo-pnpm.md)                       | accepted | 2026-05-16 | Monorepo Turborepo + pnpm 11.1.2                         |
+| [0004](./0004-nats-jetstream-outbox-pattern.md)                 | accepted | 2026-05-16 | Mensageria NATS JetStream + Outbox Pattern               |
+| [0005](./0005-multi-tenancy-defesa-em-profundidade.md)          | accepted | 2026-05-16 | Multi-tenancy com 6 camadas de defesa em profundidade    |
+| [0006](./0006-criptografia-pii-em-coluna-kek-por-tenant.md)     | accepted | 2026-05-16 | Criptografia de PII em coluna com KEK por tenant         |
+| [0007](./0007-wcag-22-aa-como-definition-of-done.md)            | accepted | 2026-05-16 | WCAG 2.2 AA como Definition of Done                      |
+| [0008](./0008-conventional-commits-dco-changesets.md)           | accepted | 2026-05-16 | Conventional Commits + DCO + Changesets                  |
+| [0009](./0009-bdfl-transitorio-como-modelo-de-governanca.md)    | accepted | 2026-05-16 | BDFL transitório como modelo de governança inicial       |
+| [0010](./0010-dev-container-purista.md)                         | accepted | 2026-05-16 | Ambiente de desenvolvimento containerizado integralmente |
 
 ## Leituras recomendadas
 

@@ -1,0 +1,199 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Auth HTTP JSON Schema snapshots > LoginRequestSchema 1`] = `
+{
+  "$ref": "#/definitions/LoginRequest",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "LoginRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "email": {
+          "format": "email",
+          "maxLength": 254,
+          "type": "string",
+        },
+        "password": {
+          "maxLength": 256,
+          "minLength": 12,
+          "type": "string",
+        },
+        "tenant_slug": {
+          "maxLength": 64,
+          "minLength": 1,
+          "type": "string",
+        },
+      },
+      "required": [
+        "email",
+        "password",
+        "tenant_slug",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;
+
+exports[`Auth HTTP JSON Schema snapshots > LoginResponseSchema 1`] = `
+{
+  "$ref": "#/definitions/LoginResponse",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "LoginResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "access_token": {
+          "type": "string",
+        },
+        "expires_in": {
+          "exclusiveMinimum": 0,
+          "type": "integer",
+        },
+        "refresh_token": {
+          "type": "string",
+        },
+        "token_type": {
+          "const": "Bearer",
+          "type": "string",
+        },
+      },
+      "required": [
+        "access_token",
+        "refresh_token",
+        "expires_in",
+        "token_type",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;
+
+exports[`Auth HTTP JSON Schema snapshots > MeResponseSchema 1`] = `
+{
+  "$ref": "#/definitions/MeResponse",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MeResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "roles": {
+          "items": {
+            "type": "string",
+          },
+          "type": "array",
+        },
+        "tenant": {
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "minLength": 1,
+              "type": "string",
+            },
+            "slug": {
+              "minLength": 1,
+              "type": "string",
+            },
+            "tenant_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+          },
+          "required": [
+            "tenant_id",
+            "slug",
+            "name",
+          ],
+          "type": "object",
+        },
+        "user": {
+          "additionalProperties": false,
+          "properties": {
+            "email": {
+              "format": "email",
+              "type": "string",
+            },
+            "name": {
+              "minLength": 1,
+              "type": "string",
+            },
+            "user_id": {
+              "format": "uuid",
+              "type": "string",
+            },
+          },
+          "required": [
+            "user_id",
+            "name",
+            "email",
+          ],
+          "type": "object",
+        },
+      },
+      "required": [
+        "user",
+        "tenant",
+        "roles",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;
+
+exports[`Auth HTTP JSON Schema snapshots > RefreshRequestSchema 1`] = `
+{
+  "$ref": "#/definitions/RefreshRequest",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "RefreshRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "refresh_token": {
+          "type": "string",
+        },
+      },
+      "required": [
+        "refresh_token",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;
+
+exports[`Auth HTTP JSON Schema snapshots > RefreshResponseSchema 1`] = `
+{
+  "$ref": "#/definitions/RefreshResponse",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "RefreshResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "access_token": {
+          "type": "string",
+        },
+        "expires_in": {
+          "exclusiveMinimum": 0,
+          "type": "integer",
+        },
+        "refresh_token": {
+          "type": "string",
+        },
+        "token_type": {
+          "const": "Bearer",
+          "type": "string",
+        },
+      },
+      "required": [
+        "access_token",
+        "refresh_token",
+        "expires_in",
+        "token_type",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;

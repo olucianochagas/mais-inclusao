@@ -1,0 +1,48 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Tenant schemas JSON Schema snapshots > TenantClaimSchema 1`] = `
+{
+  "$ref": "#/definitions/TenantClaim",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "TenantClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "roles": {
+          "items": {
+            "type": "string",
+          },
+          "type": "array",
+        },
+        "tenant_id": {
+          "format": "uuid",
+          "type": "string",
+        },
+        "user_id": {
+          "format": "uuid",
+          "type": "string",
+        },
+      },
+      "required": [
+        "tenant_id",
+        "user_id",
+        "roles",
+      ],
+      "type": "object",
+    },
+  },
+}
+`;
+
+exports[`Tenant schemas JSON Schema snapshots > TenantIdSchema 1`] = `
+{
+  "$ref": "#/definitions/TenantId",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "TenantId": {
+      "format": "uuid",
+      "type": "string",
+    },
+  },
+}
+`;

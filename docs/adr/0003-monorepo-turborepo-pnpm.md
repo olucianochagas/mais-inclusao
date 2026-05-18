@@ -65,6 +65,7 @@ Concretamente:
 **Resumo**: Padrão nativo do Node, sem ferramenta adicional.
 
 **Por que rejeitada**:
+
 - **Phantom dependencies** silenciosas no hoisting plano do npm são bug latente em `packages/contracts` (Seção 3 da spec detalha o cenário).
 - Install ~3x mais lento em CI (ver impacto em PRs).
 - Hoisting imprevisível com peer deps gera divergências sutis entre workspaces — em MF com singletons, isso é particularmente perigoso.
@@ -74,6 +75,7 @@ Concretamente:
 **Resumo**: Yarn 4 com Plug'n'Play.
 
 **Por que rejeitada**:
+
 - PnP altera o resolution mechanism do Node — quebra ferramentas terceiras (especialmente Prisma, ESLint plugins, alguns transpilers).
 - Comunidade Yarn 4 menor que pnpm em 2026.
 - Sem ganho funcional sobre pnpm.
@@ -83,6 +85,7 @@ Concretamente:
 **Resumo**: Alternativa mais "opinionated" com generators e scaffolders.
 
 **Por que rejeitada**:
+
 - Generators e scaffolders são úteis mas vinculam o projeto a um modelo de organização específico — fricção para flexibilidade.
 - Curva de aprendizado maior; Turborepo é "thin orchestrator" (apenas grafo + cache + execução paralela), mais fácil de adotar incrementalmente.
 - Cache local do Turborepo já entrega o ganho principal sem amarras adicionais.
@@ -92,6 +95,7 @@ Concretamente:
 **Resumo**: Cada serviço/package em repo próprio.
 
 **Por que rejeitada**:
+
 - Versionamento de `packages/contracts` em polyrepo exige publicação a registry interno e bump manual em cada consumer — fricção desproporcional.
 - Atomic commits que tocam múltiplos serviços (refactor cross-cutting, mudança coordenada) ficam impossíveis.
 - Discoverability para contribuidores novos é pior.

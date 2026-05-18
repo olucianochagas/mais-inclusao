@@ -48,14 +48,7 @@
         "!**/__tests__/**",
         "!**/test/**"
       ],
-      "outputs": [
-        "dist/**",
-        "build/**",
-        ".rspack/**",
-        ".next/**",
-        "out/**",
-        "!node_modules/**"
-      ]
+      "outputs": ["dist/**", "build/**", ".rspack/**", ".next/**", "out/**", "!node_modules/**"]
     },
 
     "dev": {
@@ -103,29 +96,16 @@
 
     "test:integration": {
       "dependsOn": ["^build"],
-      "inputs": [
-        "src/**",
-        "test/**",
-        "prisma/**",
-        "vitest.integration.config.*"
-      ],
+      "inputs": ["src/**", "test/**", "prisma/**", "vitest.integration.config.*"],
       "outputs": ["coverage-integration/**"],
-      "env": [
-        "TESTCONTAINERS_RYUK_DISABLED",
-        "TESTCONTAINERS_HOST_OVERRIDE",
-        "DOCKER_HOST"
-      ]
+      "env": ["TESTCONTAINERS_RYUK_DISABLED", "TESTCONTAINERS_HOST_OVERRIDE", "DOCKER_HOST"]
     },
 
     "e2e": {
       "cache": false,
       "dependsOn": ["^build", "build"],
       "inputs": ["src/**", "e2e/**", "playwright.config.*"],
-      "outputs": [
-        "playwright-report/**",
-        "test-results/**",
-        "e2e-results/**"
-      ],
+      "outputs": ["playwright-report/**", "test-results/**", "e2e-results/**"],
       "env": ["PLAYWRIGHT_BASE_URL", "PLAYWRIGHT_BROWSER", "PLAYWRIGHT_HEADED"]
     },
 
@@ -136,11 +116,7 @@
 
     "db:generate": {
       "inputs": ["prisma/schema.prisma"],
-      "outputs": [
-        "node_modules/.prisma/**",
-        "node_modules/@prisma/client/**",
-        "src/generated/**"
-      ]
+      "outputs": ["node_modules/.prisma/**", "node_modules/@prisma/client/**", "src/generated/**"]
     },
 
     "contracts:codegen": {

@@ -14,31 +14,31 @@
 
 ## Sumário de tasks
 
-| # | Task | Estimativa | Commits |
-|---|---|---|---|
-| 1 | Setup inicial e branch | 5 min | 0 (preparação) |
-| 2 | `packages/tsconfig` — criar package + 5 variantes | 30 min | 1 |
-| 3 | Migração do `tsconfig.base.json` raiz | 10 min | 1 |
-| 4 | `packages/tsconfig` — README | 15 min | 1 |
-| 5 | `packages/eslint-config` — scaffold + preset base | 30 min | 1 |
-| 6 | `packages/eslint-config` — presets `nest`, `react`, `lib` | 30 min | 1 |
-| 7 | `packages/eslint-config` — README | 15 min | 1 |
-| 8 | `packages/contracts` — scaffold (package.json, configs) | 20 min | 1 |
-| 9 | `packages/contracts` — `shared/tenant.ts` (TDD) | 25 min | 1 |
-| 10 | `packages/contracts` — `shared/ids.ts` (TDD) | 20 min | 1 |
-| 11 | `packages/contracts` — `shared/event-envelope.ts` (TDD) | 30 min | 1 |
-| 12 | `packages/contracts` — `shared/pagination.ts` (TDD) | 20 min | 1 |
-| 13 | `packages/contracts` — `shared/error.ts` (TDD) | 20 min | 1 |
-| 14 | `packages/contracts` — `shared/index.ts` + `src/index.ts` | 10 min | 1 |
-| 15 | `packages/contracts` — `auth/events.ts` (TDD) | 40 min | 1 |
-| 16 | `packages/contracts` — `auth/http.ts` (TDD) | 35 min | 1 |
-| 17 | `packages/contracts` — `auth/index.ts` + atualizar root | 10 min | 1 |
-| 18 | `packages/contracts` — setup tsup build | 15 min | 1 |
-| 19 | `packages/contracts` — snapshots JSON Schema | 25 min | 1 |
-| 20 | `packages/contracts` — README | 25 min | 1 |
-| 21 | Verificação final + cobertura ≥ 90% | 20 min | 0–1 |
-| 22 | Changeset + atualização CHANGELOG | 15 min | 1 |
-| 23 | Verificação CI local + cross-check Definition of Done | 15 min | 0–1 |
+| #   | Task                                                      | Estimativa | Commits        |
+| --- | --------------------------------------------------------- | ---------- | -------------- |
+| 1   | Setup inicial e branch                                    | 5 min      | 0 (preparação) |
+| 2   | `packages/tsconfig` — criar package + 5 variantes         | 30 min     | 1              |
+| 3   | Migração do `tsconfig.base.json` raiz                     | 10 min     | 1              |
+| 4   | `packages/tsconfig` — README                              | 15 min     | 1              |
+| 5   | `packages/eslint-config` — scaffold + preset base         | 30 min     | 1              |
+| 6   | `packages/eslint-config` — presets `nest`, `react`, `lib` | 30 min     | 1              |
+| 7   | `packages/eslint-config` — README                         | 15 min     | 1              |
+| 8   | `packages/contracts` — scaffold (package.json, configs)   | 20 min     | 1              |
+| 9   | `packages/contracts` — `shared/tenant.ts` (TDD)           | 25 min     | 1              |
+| 10  | `packages/contracts` — `shared/ids.ts` (TDD)              | 20 min     | 1              |
+| 11  | `packages/contracts` — `shared/event-envelope.ts` (TDD)   | 30 min     | 1              |
+| 12  | `packages/contracts` — `shared/pagination.ts` (TDD)       | 20 min     | 1              |
+| 13  | `packages/contracts` — `shared/error.ts` (TDD)            | 20 min     | 1              |
+| 14  | `packages/contracts` — `shared/index.ts` + `src/index.ts` | 10 min     | 1              |
+| 15  | `packages/contracts` — `auth/events.ts` (TDD)             | 40 min     | 1              |
+| 16  | `packages/contracts` — `auth/http.ts` (TDD)               | 35 min     | 1              |
+| 17  | `packages/contracts` — `auth/index.ts` + atualizar root   | 10 min     | 1              |
+| 18  | `packages/contracts` — setup tsup build                   | 15 min     | 1              |
+| 19  | `packages/contracts` — snapshots JSON Schema              | 25 min     | 1              |
+| 20  | `packages/contracts` — README                             | 25 min     | 1              |
+| 21  | Verificação final + cobertura ≥ 90%                       | 20 min     | 0–1            |
+| 22  | Changeset + atualização CHANGELOG                         | 15 min     | 1              |
+| 23  | Verificação CI local + cross-check Definition of Done     | 15 min     | 0–1            |
 
 **Estimativa total:** ~7-9h de trabalho efetivo. **~22 commits atômicos.**
 
@@ -91,9 +91,11 @@ pnpm install --frozen-lockfile
 Expected: `Done in <Xs>` sem erros.
 
 ---
+
 ## Task 2: `packages/tsconfig` — criar package + 5 variantes
 
 **Files:**
+
 - Create: `packages/tsconfig/package.json`
 - Create: `packages/tsconfig/base.json`
 - Create: `packages/tsconfig/nest.json`
@@ -281,6 +283,7 @@ Expected: commit criado.
 ## Task 3: Migração do `tsconfig.base.json` raiz
 
 **Files:**
+
 - Modify: `tsconfig.base.json` (raiz, reduzir a `extends`)
 
 - [ ] **Step 1: Substituir conteúdo do `tsconfig.base.json` raiz**
@@ -331,6 +334,7 @@ Expected: commit criado.
 ## Task 4: `packages/tsconfig` — README
 
 **Files:**
+
 - Create: `packages/tsconfig/README.md`
 
 - [ ] **Step 1: Criar README com tabela, exemplos e justificativas**
@@ -344,13 +348,13 @@ Configurações TypeScript compartilhadas do monorepo **+Inclusão**. Cada works
 
 ## Variantes
 
-| Variante | Quando usar |
-|---|---|
-| `@mais-inclusao/tsconfig/base.json` | Núcleo strict — outros extendem dele. Raramente usado direto. |
-| `@mais-inclusao/tsconfig/nest.json` | Apps backend NestJS (`auth-service`, `programs-service`, `bff-*`, etc.) |
-| `@mais-inclusao/tsconfig/react.json` | Apps frontend Module Federation (`shell`, `gestor-mf`, `cidadao-mf`) |
-| `@mais-inclusao/tsconfig/lib.json` | Packages publicáveis (`@mais-inclusao/contracts`, `@mais-inclusao/ui`, etc.) |
-| `@mais-inclusao/tsconfig/test.json` | Arquivos `*.test.ts` e `test/` — relaxa unused, adiciona globals do Vitest |
+| Variante                             | Quando usar                                                                  |
+| ------------------------------------ | ---------------------------------------------------------------------------- |
+| `@mais-inclusao/tsconfig/base.json`  | Núcleo strict — outros extendem dele. Raramente usado direto.                |
+| `@mais-inclusao/tsconfig/nest.json`  | Apps backend NestJS (`auth-service`, `programs-service`, `bff-*`, etc.)      |
+| `@mais-inclusao/tsconfig/react.json` | Apps frontend Module Federation (`shell`, `gestor-mf`, `cidadao-mf`)         |
+| `@mais-inclusao/tsconfig/lib.json`   | Packages publicáveis (`@mais-inclusao/contracts`, `@mais-inclusao/ui`, etc.) |
+| `@mais-inclusao/tsconfig/test.json`  | Arquivos `*.test.ts` e `test/` — relaxa unused, adiciona globals do Vitest   |
 
 ## Exemplos
 
@@ -363,10 +367,10 @@ Configurações TypeScript compartilhadas do monorepo **+Inclusão**. Cada works
   "extends": "@mais-inclusao/tsconfig/nest.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
   },
   "include": ["src/**/*"],
-  "exclude": ["**/*.test.ts", "test/**", "dist/**"]
+  "exclude": ["**/*.test.ts", "test/**", "dist/**"],
 }
 ```
 
@@ -378,7 +382,7 @@ Configurações TypeScript compartilhadas do monorepo **+Inclusão**. Cada works
 {
   "extends": "@mais-inclusao/tsconfig/react.json",
   "compilerOptions": { "outDir": "./dist" },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
 }
 ```
 
@@ -391,7 +395,7 @@ Configurações TypeScript compartilhadas do monorepo **+Inclusão**. Cada works
   "extends": "@mais-inclusao/tsconfig/lib.json",
   "compilerOptions": { "outDir": "./dist", "rootDir": "./src" },
   "include": ["src/**/*"],
-  "exclude": ["dist/**", "test/**"]
+  "exclude": ["dist/**", "test/**"],
 }
 ```
 
@@ -402,7 +406,7 @@ Configurações TypeScript compartilhadas do monorepo **+Inclusão**. Cada works
 ```jsonc
 {
   "extends": "@mais-inclusao/tsconfig/test.json",
-  "include": ["test/**/*", "src/**/*"]
+  "include": ["test/**/*", "src/**/*"],
 }
 ```
 
@@ -445,9 +449,11 @@ git commit -s -m "docs(tsconfig): documentar uso das 5 variantes com exemplos"
 Expected: commit criado.
 
 ---
+
 ## Task 5: `packages/eslint-config` — scaffold + preset base
 
 **Files:**
+
 - Create: `packages/eslint-config/package.json`
 - Create: `packages/eslint-config/tsconfig.json`
 - Create: `packages/eslint-config/src/index.js`
@@ -635,10 +641,7 @@ export default base;
 // Self-lint deste próprio package
 import baseConfig from './src/index.js';
 
-export default [
-  ...baseConfig,
-  { ignores: ['node_modules/**', 'dist/**'] },
-];
+export default [...baseConfig, { ignores: ['node_modules/**', 'dist/**'] }];
 ```
 
 - [ ] **Step 6: Instalar deps**
@@ -709,6 +712,7 @@ Expected: commit criado.
 ## Task 6: `packages/eslint-config` — presets `nest`, `react`, `lib`
 
 **Files:**
+
 - Create: `packages/eslint-config/src/nest.js`
 - Create: `packages/eslint-config/src/react.js`
 - Create: `packages/eslint-config/src/lib.js`
@@ -906,6 +910,7 @@ Expected: commit criado.
 ## Task 7: `packages/eslint-config` — README
 
 **Files:**
+
 - Create: `packages/eslint-config/README.md`
 
 - [ ] **Step 1: Criar README**
@@ -925,12 +930,12 @@ ESLint 9 flat config presets compartilhados do monorepo **+Inclusão**. Cada wor
 
 ## Presets
 
-| Preset | Quando usar |
-|---|---|
-| `@mais-inclusao/eslint-config` (base) | Workspaces que não se encaixam nas 3 categorias abaixo. |
-| `@mais-inclusao/eslint-config/nest` | Apps backend NestJS (`auth-service`, `bff-*`, etc.) |
-| `@mais-inclusao/eslint-config/react` | Apps frontend Module Federation (`shell`, `gestor-mf`, `cidadao-mf`) |
-| `@mais-inclusao/eslint-config/lib` | Packages publicáveis (`@mais-inclusao/contracts`, `@mais-inclusao/ui`, etc.) |
+| Preset                                | Quando usar                                                                  |
+| ------------------------------------- | ---------------------------------------------------------------------------- |
+| `@mais-inclusao/eslint-config` (base) | Workspaces que não se encaixam nas 3 categorias abaixo.                      |
+| `@mais-inclusao/eslint-config/nest`   | Apps backend NestJS (`auth-service`, `bff-*`, etc.)                          |
+| `@mais-inclusao/eslint-config/react`  | Apps frontend Module Federation (`shell`, `gestor-mf`, `cidadao-mf`)         |
+| `@mais-inclusao/eslint-config/lib`    | Packages publicáveis (`@mais-inclusao/contracts`, `@mais-inclusao/ui`, etc.) |
 
 ## Exemplos
 
@@ -941,10 +946,7 @@ ESLint 9 flat config presets compartilhados do monorepo **+Inclusão**. Cada wor
 ```javascript
 import nestConfig from '@mais-inclusao/eslint-config/nest';
 
-export default [
-  ...nestConfig,
-  { ignores: ['dist/**', '**/*.generated.ts'] },
-];
+export default [...nestConfig, { ignores: ['dist/**', '**/*.generated.ts'] }];
 ```
 
 ### App React (Module Federation)
@@ -954,10 +956,7 @@ export default [
 ```javascript
 import reactConfig from '@mais-inclusao/eslint-config/react';
 
-export default [
-  ...reactConfig,
-  { ignores: ['dist/**', '.rspack/**'] },
-];
+export default [...reactConfig, { ignores: ['dist/**', '.rspack/**'] }];
 ```
 
 ### Package publicável
@@ -999,6 +998,7 @@ Do `eslint-plugin-security` (em ordem de severidade):
 O preset `react` usa **`jsx-a11y` strict** (não `recommended`). Justificativa em [ADR-0007 — WCAG 2.2 AA como Definition of Done](../../docs/adr/0007-wcag-22-aa-como-definition-of-done.md).
 
 Rules adicionais reforçadas:
+
 - `click-events-have-key-events` — todo `onClick` precisa de `onKeyDown` equivalente.
 - `label-has-associated-control` — labels obrigatórias em inputs.
 - `no-autofocus` — focus management deve ser explícito.
@@ -1045,9 +1045,11 @@ git commit -s -m "docs(eslint-config): documentar 4 presets, segurança, a11y e 
 Expected: commit criado.
 
 ---
+
 ## Task 8: `packages/contracts` — scaffold
 
 **Files:**
+
 - Create: `packages/contracts/package.json`
 - Create: `packages/contracts/tsconfig.json`
 - Create: `packages/contracts/tsconfig.test.json`
@@ -1158,10 +1160,7 @@ Expected: diretórios `src/` e `test/` com subdirs.
 ```javascript
 import libConfig from '@mais-inclusao/eslint-config/lib';
 
-export default [
-  ...libConfig,
-  { ignores: ['dist/**', '__snapshots__/**'] },
-];
+export default [...libConfig, { ignores: ['dist/**', '__snapshots__/**'] }];
 ```
 
 - [ ] **Step 6: Criar `packages/contracts/vitest.config.ts`**
@@ -1275,6 +1274,7 @@ Expected: commit criado.
 ## Task 9: `packages/contracts/src/shared/tenant.ts` (TDD)
 
 **Files:**
+
 - Create: `packages/contracts/test/shared/tenant.test.ts`
 - Create: `packages/contracts/src/shared/tenant.ts`
 
@@ -1444,6 +1444,7 @@ Expected: commit criado.
 ## Task 10: `packages/contracts/src/shared/ids.ts` (TDD)
 
 **Files:**
+
 - Create: `packages/contracts/test/shared/ids.test.ts`
 - Create: `packages/contracts/src/shared/ids.ts`
 
@@ -1572,6 +1573,7 @@ Expected: commit criado.
 ## Task 11: `packages/contracts/src/shared/event-envelope.ts` (TDD)
 
 **Files:**
+
 - Create: `packages/contracts/test/shared/event-envelope.test.ts`
 - Create: `packages/contracts/src/shared/event-envelope.ts`
 
@@ -1924,9 +1926,11 @@ COMMIT
 Expected: commit criado.
 
 ---
+
 ## Task 12: `packages/contracts/src/shared/pagination.ts` (TDD)
 
 **Files:**
+
 - Create: `packages/contracts/test/shared/pagination.test.ts`
 - Create: `packages/contracts/src/shared/pagination.ts`
 
@@ -1988,7 +1992,10 @@ describe('PaginatedResultSchema', () => {
 
   it('aceita result válido com next_cursor', () => {
     const data = {
-      items: [{ id: '1', name: 'A' }, { id: '2', name: 'B' }],
+      items: [
+        { id: '1', name: 'A' },
+        { id: '2', name: 'B' },
+      ],
       next_cursor: 'abc',
     };
     expect(() => ResultSchema.parse(data)).not.toThrow();
@@ -2103,6 +2110,7 @@ git commit -s -m "feat(contracts): adicionar shared/pagination — cursor-based,
 ## Task 13: `packages/contracts/src/shared/error.ts` (TDD)
 
 **Files:**
+
 - Create: `packages/contracts/test/shared/error.test.ts`
 - Create: `packages/contracts/src/shared/error.ts`
 
@@ -2294,6 +2302,7 @@ git commit -s -m "feat(contracts): adicionar shared/error — ProblemDetails RFC
 ## Task 14: `packages/contracts/src/shared/index.ts` + `src/index.ts`
 
 **Files:**
+
 - Create: `packages/contracts/src/shared/index.ts`
 - Create: `packages/contracts/src/index.ts` (placeholder)
 
@@ -2335,9 +2344,11 @@ git commit -s -m "feat(contracts): adicionar src/shared/index.ts e src/index.ts 
 ```
 
 ---
+
 ## Task 15: `packages/contracts/src/auth/events.ts` (TDD)
 
 **Files:**
+
 - Create: `packages/contracts/test/auth/events.test.ts`
 - Create: `packages/contracts/src/auth/events.ts`
 
@@ -2369,7 +2380,8 @@ const headers = {
 
 describe('TenantCreatedEventSchema', () => {
   const validPayload: TenantCreatedPayload = {
-    tenant_id: '6ba7b810-9dad-11d1-80b4-00c04fd430c8' as TenantCreatedPayload['tenant_id'],
+    tenant_id:
+      '6ba7b810-9dad-11d1-80b4-00c04fd430c8' as TenantCreatedPayload['tenant_id'],
     slug: 'sec-assistencia-sp',
     name: 'Secretaria de Assistência Social de São Paulo',
     plan: 'starter',
@@ -2455,7 +2467,12 @@ describe('TenantDeactivatedEventSchema', () => {
   });
 
   it('aceita todos os reasons válidos', () => {
-    const reasons = ['contract_ended', 'data_breach', 'unpaid', 'manual'] as const;
+    const reasons = [
+      'contract_ended',
+      'data_breach',
+      'unpaid',
+      'manual',
+    ] as const;
     for (const reason of reasons) {
       expect(() =>
         TenantDeactivatedEventSchema.parse({
@@ -2605,7 +2622,9 @@ export const TenantDeactivatedEventSchema = EventEnvelopeSchema(
 export type TenantDeactivatedPayload = z.infer<
   typeof TenantDeactivatedPayloadSchema
 >;
-export type TenantDeactivatedEvent = z.infer<typeof TenantDeactivatedEventSchema>;
+export type TenantDeactivatedEvent = z.infer<
+  typeof TenantDeactivatedEventSchema
+>;
 
 // ─── auth.user.created ───────────────────────────────────────
 
@@ -2623,7 +2642,9 @@ export const UserCreatedPayloadSchema = z.object({
   created_at: z.string().datetime({ offset: true }),
 });
 
-export const UserCreatedEventSchema = EventEnvelopeSchema(UserCreatedPayloadSchema);
+export const UserCreatedEventSchema = EventEnvelopeSchema(
+  UserCreatedPayloadSchema,
+);
 export type UserCreatedPayload = z.infer<typeof UserCreatedPayloadSchema>;
 export type UserCreatedEvent = z.infer<typeof UserCreatedEventSchema>;
 
@@ -2649,7 +2670,9 @@ export const UserDeactivatedPayloadSchema = z.object({
 export const UserDeactivatedEventSchema = EventEnvelopeSchema(
   UserDeactivatedPayloadSchema,
 );
-export type UserDeactivatedPayload = z.infer<typeof UserDeactivatedPayloadSchema>;
+export type UserDeactivatedPayload = z.infer<
+  typeof UserDeactivatedPayloadSchema
+>;
 export type UserDeactivatedEvent = z.infer<typeof UserDeactivatedEventSchema>;
 ```
 
@@ -2692,6 +2715,7 @@ COMMIT
 ## Task 16: `packages/contracts/src/auth/http.ts` (TDD)
 
 **Files:**
+
 - Create: `packages/contracts/test/auth/http.test.ts`
 - Create: `packages/contracts/src/auth/http.ts`
 
@@ -2847,9 +2871,7 @@ describe('MeResponseSchema', () => {
   });
 
   it('aceita roles vazio (usuário sem permissão ainda)', () => {
-    expect(() =>
-      MeResponseSchema.parse({ ...valid, roles: [] }),
-    ).not.toThrow();
+    expect(() => MeResponseSchema.parse({ ...valid, roles: [] })).not.toThrow();
   });
 
   it('rejeita email malformado', () => {
@@ -2995,6 +3017,7 @@ COMMIT
 ## Task 17: `packages/contracts/src/auth/index.ts` + atualizar `src/index.ts`
 
 **Files:**
+
 - Create: `packages/contracts/src/auth/index.ts`
 - Modify: `packages/contracts/src/index.ts`
 
@@ -3033,9 +3056,11 @@ git commit -s -m "feat(contracts): adicionar src/auth/index.ts e atualizar src/i
 ```
 
 ---
+
 ## Task 18: `packages/contracts` — build via tsup
 
 **Files:**
+
 - Usar `packages/contracts/tsup.config.ts` (já criado na Task 8)
 - Gerar `dist/`
 
@@ -3088,6 +3113,7 @@ import('./packages/contracts/dist/shared/index.js').then(m => {
 ```
 
 Expected:
+
 ```
 TenantIdSchema exists: object
 EventEnvelopeSchema exists: function
@@ -3116,6 +3142,7 @@ Expected: `✅ dist/ ignored` (.gitignore já tem `dist/`).
 ## Task 19: `packages/contracts` — snapshots JSON Schema
 
 **Files:**
+
 - Create: `packages/contracts/test/snapshots/schemas.test.ts`
 - Create: `packages/contracts/test/snapshots/__snapshots__/schemas.test.ts.snap` (auto-gerado)
 
@@ -3306,13 +3333,14 @@ COMMIT
 ## Task 20: `packages/contracts` — README
 
 **Files:**
+
 - Create: `packages/contracts/README.md`
 
 - [ ] **Step 1: Criar README (via Write tool, conteúdo abaixo)**
 
 Conteúdo de `packages/contracts/README.md`:
 
-`````markdown
+````markdown
 # @mais-inclusao/contracts
 
 Fronteira pública entre serviços e frontends do **+Inclusão**. Schemas Zod + tipos derivados, com runtime validation + type inference.
@@ -3352,8 +3380,14 @@ packages/contracts/
 ### Tree-shake friendly (recomendado)
 
 ```typescript
-import { EventEnvelopeSchema, TenantIdSchema } from '@mais-inclusao/contracts/shared';
-import { LoginRequestSchema, TenantCreatedEventSchema } from '@mais-inclusao/contracts/auth';
+import {
+  EventEnvelopeSchema,
+  TenantIdSchema,
+} from '@mais-inclusao/contracts/shared';
+import {
+  LoginRequestSchema,
+  TenantCreatedEventSchema,
+} from '@mais-inclusao/contracts/auth';
 ```
 
 ### Flat (importar tudo de um lugar)
@@ -3422,15 +3456,15 @@ type MeuEvento = z.infer<typeof MeuEventoSchema>;
 
 ## Tabela de bump por mudança
 
-| Mudança | Bump | Exemplo |
-|---|---|---|
-| Adicionar campo opcional em DTO | `minor` | `LoginRequest` ganha `remember_me?: boolean` |
-| Adicionar novo evento ou DTO | `minor` | Novo `auth.session.expired` |
-| Adicionar novo contexto (`programs/`) | `minor` | Toda nova subdir |
-| Bug fix em validação (sem mudar shape) | `patch` | Regex de slug corrigida |
-| Adicionar campo required | `major` | `EventHeaders` ganha `request_id` obrigatório |
-| Remover campo | `major` | `LoginResponse` perde `expires_in` |
-| Renomear campo | `major` em 2 versões | n: ambos; n+1: só novo |
+| Mudança                                | Bump                 | Exemplo                                       |
+| -------------------------------------- | -------------------- | --------------------------------------------- |
+| Adicionar campo opcional em DTO        | `minor`              | `LoginRequest` ganha `remember_me?: boolean`  |
+| Adicionar novo evento ou DTO           | `minor`              | Novo `auth.session.expired`                   |
+| Adicionar novo contexto (`programs/`)  | `minor`              | Toda nova subdir                              |
+| Bug fix em validação (sem mudar shape) | `patch`              | Regex de slug corrigida                       |
+| Adicionar campo required               | `major`              | `EventHeaders` ganha `request_id` obrigatório |
+| Remover campo                          | `major`              | `LoginResponse` perde `expires_in`            |
+| Renomear campo                         | `major` em 2 versões | n: ambos; n+1: só novo                        |
 
 ## Snapshots JSON Schema
 
@@ -3444,6 +3478,7 @@ type MeuEvento = z.infer<typeof MeuEventoSchema>;
 **Importante.** Email, CPF, telefone, endereço — nada disso vai em payload de evento. Apenas IDs.
 
 Justificativa:
+
 - Eventos vivem em NATS JetStream com retenção de dias.
 - Replay tardio expõe PII em backlog.
 - Consumer que precisa fazer lookup faz via API autenticada do producer.
@@ -3492,7 +3527,7 @@ pnpm build                        # gerar dist/ via tsup
 - [ADR-0008 — Conventional Commits + DCO + Changesets](../../docs/adr/0008-conventional-commits-dco-changesets.md)
 - [ROPA](../../docs/legal/ropa.md)
 - [CONTRIBUTING — checklist LGPD para PRs que tocam PII](../../CONTRIBUTING.md#cuidados-especiais-lgpd-e-pii)
-`````
+````
 
 - [ ] **Step 2: Verificar links**
 
@@ -3528,6 +3563,7 @@ COMMIT
 ```
 
 ---
+
 ## Task 21: Verificação final + cobertura ≥ 90%
 
 - [ ] **Step 1: Rodar suite completa com cobertura**
@@ -3537,6 +3573,7 @@ cd packages/contracts && pnpm test:coverage 2>&1 | tail -20
 ```
 
 Expected:
+
 - Todos os testes passam (~100 acumulados).
 - Cobertura: statements ≥ 90%, branches ≥ 85%, functions ≥ 90%, lines ≥ 90%.
 
@@ -3597,6 +3634,7 @@ Caso contrário, pular esta etapa.
 ## Task 22: Changeset + atualização CHANGELOG
 
 **Files:**
+
 - Create: `.changeset/<name>.md`
 - (CHANGELOG raiz será atualizado pelo workflow Release quando PR for mergeado)
 
@@ -3870,17 +3908,17 @@ Adicionar arquivo ao `allowDefaultProject` em `parserOptions.projectService` do 
 
 **1. Spec coverage:** Cada seção da spec mapeada para tasks?
 
-| Spec | Task(s) |
-|---|---|
-| § 2 — `packages/tsconfig` | Tasks 2, 3, 4 |
-| § 3 — `packages/eslint-config` | Tasks 5, 6, 7 |
-| § 4 — `packages/contracts` (shared) | Tasks 8, 9, 10, 11, 12, 13, 14 |
-| § 4 — `packages/contracts` (auth) | Tasks 15, 16, 17 |
-| § 5 — Build (tsup) | Task 18 |
-| § 5 — Testes (Vitest + snapshots) | Tasks 9-17 (testes inline TDD) + Task 19 (snapshots) |
-| § 5 — Integração CI/Changesets | Tasks 22, 23 |
-| Definition of Done — 15 itens | Cross-check em Task 23 |
-| Riscos (6) | Apêndice de troubleshooting cobre os principais |
+| Spec                                | Task(s)                                              |
+| ----------------------------------- | ---------------------------------------------------- |
+| § 2 — `packages/tsconfig`           | Tasks 2, 3, 4                                        |
+| § 3 — `packages/eslint-config`      | Tasks 5, 6, 7                                        |
+| § 4 — `packages/contracts` (shared) | Tasks 8, 9, 10, 11, 12, 13, 14                       |
+| § 4 — `packages/contracts` (auth)   | Tasks 15, 16, 17                                     |
+| § 5 — Build (tsup)                  | Task 18                                              |
+| § 5 — Testes (Vitest + snapshots)   | Tasks 9-17 (testes inline TDD) + Task 19 (snapshots) |
+| § 5 — Integração CI/Changesets      | Tasks 22, 23                                         |
+| Definition of Done — 15 itens       | Cross-check em Task 23                               |
+| Riscos (6)                          | Apêndice de troubleshooting cobre os principais      |
 
 Cobertura: 100% das seções da spec.
 

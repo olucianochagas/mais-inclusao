@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@mais-inclusao/tsconfig/test.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler"
+  },
+  "include": ["src/**/*", "test/**/*", "*.config.ts", "eslint.config.ts"],
+  "exclude": ["dist/**", "node_modules/**"]
+}

@@ -25,13 +25,13 @@ Considerando:
 
 Opções de criptografia:
 
-| | Banco inteiro (TDE) | Coluna com chave única | **Coluna com KEK por tenant** | Cliente-side (E2EE) |
-|---|---|---|---|---|
-| Protege contra DBA comprometido | Não | Parcial | **Sim (chave fora do banco)** | Sim |
-| Raio de explosão se chave vaza | Total | Total | **Por tenant** | Por usuário (mas perde funcionalidade) |
-| Performance de query | Boa | Médio | Médio | Ruim (sem queries no servidor) |
-| Busca por valor encriptado | Direto | Direto (mas inseguro) | Hash determinístico em coluna paralela | Impossível |
-| Complexidade operacional | Baixa | Média | Alta | Muito alta |
+|                                 | Banco inteiro (TDE) | Coluna com chave única | **Coluna com KEK por tenant**          | Cliente-side (E2EE)                    |
+| ------------------------------- | ------------------- | ---------------------- | -------------------------------------- | -------------------------------------- |
+| Protege contra DBA comprometido | Não                 | Parcial                | **Sim (chave fora do banco)**          | Sim                                    |
+| Raio de explosão se chave vaza  | Total               | Total                  | **Por tenant**                         | Por usuário (mas perde funcionalidade) |
+| Performance de query            | Boa                 | Médio                  | Médio                                  | Ruim (sem queries no servidor)         |
+| Busca por valor encriptado      | Direto              | Direto (mas inseguro)  | Hash determinístico em coluna paralela | Impossível                             |
+| Complexidade operacional        | Baixa               | Média                  | Alta                                   | Muito alta                             |
 
 ## Decisão
 
@@ -86,6 +86,7 @@ Opções de criptografia:
 **Resumo**: Criptografia transparente no nível de disco / tablespace.
 
 **Por que rejeitada**:
+
 - Não protege contra acesso ao banco vivo. DBA, dump SQL, ferramentas de debug — todos veem PII em claro.
 - Insuficiente para LGPD em projeto sob auditoria.
 
@@ -94,6 +95,7 @@ Opções de criptografia:
 **Resumo**: Postgres `pgcrypto` com chave em config.
 
 **Por que rejeitada**:
+
 - Chave única para todos os tenants = raio de explosão total.
 - Chave em env var ainda é gerenciada pela aplicação — sem KMS, sem rotação automática, sem audit.
 - Para MVP sem tenant real, pode ser substituto temporário, mas o caminho para produção precisa ser KMS.
@@ -103,6 +105,7 @@ Opções de criptografia:
 **Resumo**: Cidadão / gestor cifra antes de enviar, servidor armazena cifrado, decifra só no cliente.
 
 **Por que rejeitada**:
+
 - Servidor não consegue indexar, buscar, validar elegibilidade — quebra o produto.
 - Recuperação de senha fica impossível sem comprometer o modelo.
 - Operacionalmente inviável para o caso de uso (gestor precisa ver dados do cidadão para tomar decisões).
@@ -112,6 +115,7 @@ Opções de criptografia:
 **Resumo**: Cifragem dentro do próprio banco via extensões.
 
 **Por que rejeitada**:
+
 - Chave vive próxima do banco (em config Postgres) — DBA comprometido continua tendo acesso.
 - Extensions terceiras nem sempre disponíveis em managed Postgres (RDS, Cloud SQL).
 - Sem ganho sobre KMS externo.

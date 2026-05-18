@@ -17,7 +17,7 @@
 
 ### 💬 Dúvidas, perguntas abertas, ideias
 
-→ **[GitHub Discussions](https://github.com/olucianochagas/mais-inclusao/discussions)** *(a habilitar)*
+→ **[GitHub Discussions](https://github.com/olucianochagas/mais-inclusao/discussions)** _(a habilitar)_
 
 Use Discussions para:
 
@@ -74,7 +74,7 @@ Estas têm prioridade alta: P0 (24h), P1 (1 semana).
 
 Se você não consegue identificar quem é o controlador, ou suspeita de descumprimento sistemático, você pode:
 
-1. Escrever para **lgpd@mais-inclusao.org** *(a configurar)* — provisoriamente, **olucianochagas@gmail.com** com assunto `[LGPD-Titular]`.
+1. Escrever para **lgpd@mais-inclusao.org** _(a configurar)_ — provisoriamente, **olucianochagas@gmail.com** com assunto `[LGPD-Titular]`.
 2. Registrar denúncia diretamente na **[ANPD](https://www.gov.br/anpd/)**.
 
 Não retemos dados de cidadãos diretamente — todos vivem dentro do escopo de um tenant.
@@ -85,14 +85,14 @@ Não retemos dados de cidadãos diretamente — todos vivem dentro do escopo de 
 
 > Lembre-se: estamos em **pre-alpha**. Suporte é best-effort, conduzido por mantenedor único (em transição para comunitário).
 
-| Tipo de pedido | Primeira resposta (alvo) |
-|---|---|
-| Vulnerabilidade de segurança | 48 horas úteis |
-| Bug crítico em produção (futuro) | 24 horas |
-| Bug não-crítico | 7 dias |
-| Feature request | 14 dias |
-| Pergunta em discussion | 7 dias |
-| Violação de CoC | 48 horas |
+| Tipo de pedido                   | Primeira resposta (alvo) |
+| -------------------------------- | ------------------------ |
+| Vulnerabilidade de segurança     | 48 horas úteis           |
+| Bug crítico em produção (futuro) | 24 horas                 |
+| Bug não-crítico                  | 7 dias                   |
+| Feature request                  | 14 dias                  |
+| Pergunta em discussion           | 7 dias                   |
+| Violação de CoC                  | 48 horas                 |
 
 Estamos abertos a aumentar capacidade de suporte conforme novos mantenedores se firmem (ver [GOVERNANCE.md](./GOVERNANCE.md)).
 

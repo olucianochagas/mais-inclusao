@@ -85,6 +85,7 @@ Um PR de UI não é "pronto" sem:
 **Resumo**: WCAG 2.1 (2018) em vez de 2.2.
 
 **Por que rejeitada**:
+
 - 2.2 (2023) adiciona critérios importantes para mobile e cognição (target size, focus appearance, dragging movements).
 - Sem custo adicional adotar a versão mais recente desde o início.
 
@@ -93,6 +94,7 @@ Um PR de UI não é "pronto" sem:
 **Resumo**: Nível máximo de conformidade.
 
 **Por que rejeitada**:
+
 - Muitos critérios AAA são impraticáveis (contraste 7:1 limita muito design).
 - Custo desproporcional ao ganho marginal sobre AA.
 - Caminho mais útil: AA + práticas além-WCAG (Libras, linguagem cidadã, design cognitivo).
@@ -102,6 +104,7 @@ Um PR de UI não é "pronto" sem:
 **Resumo**: Diretriz de boa prática sem ferramenta de bloqueio.
 
 **Por que rejeitada**:
+
 - Sem CI gate, regressões silenciosas são certas — especialmente em equipe nova ou ritmo de feature pressionado.
 - Compromisso público (esta ADR) exige enforcement real.
 
@@ -110,6 +113,7 @@ Um PR de UI não é "pronto" sem:
 **Resumo**: Aderir apenas ao padrão brasileiro de governo eletrônico.
 
 **Por que rejeitada**:
+
 - eMAG é baseado em WCAG e há dialeto inglês para internacionalização.
 - WCAG é referência globalmente reconhecida, importante para auditoria externa e tenants internacionais (futuro).
 - eMAG fica como complemento, não substituto.

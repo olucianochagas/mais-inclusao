@@ -38,35 +38,35 @@ Exemplos de campos a serem preenchidos:
 
 Quando a Onda 1 entrar em operação, prováveis sub-operadores:
 
-| Categoria | Função | Candidatos prováveis | Notas |
-|---|---|---|---|
-| Cloud / Compute | Hospedagem de containers | A definir por tenant (cada cliente escolhe sua cloud) | Pode ser AWS, GCP, Azure ou cloud nacional (Locaweb, Magalu Cloud, etc.) |
-| Banco gerenciado | PostgreSQL 16 | A definir | Hospedagem na mesma cloud para minimizar latência |
-| Cache | Redis 7 | A definir | Idem |
-| Mensageria | NATS JetStream | Self-hosted dentro da cloud do tenant | Não há SaaS NATS estabelecido |
-| Observabilidade | Tempo / Jaeger + Grafana / Prometheus | Self-hosted ou Grafana Cloud | Decisão por tenant |
-| KMS / chave de criptografia | KMS gerenciado | AWS KMS / GCP KMS / Azure Key Vault / HashiCorp Vault | Crítico: KEK por tenant |
+| Categoria                   | Função                                | Candidatos prováveis                                  | Notas                                                                    |
+| --------------------------- | ------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------ |
+| Cloud / Compute             | Hospedagem de containers              | A definir por tenant (cada cliente escolhe sua cloud) | Pode ser AWS, GCP, Azure ou cloud nacional (Locaweb, Magalu Cloud, etc.) |
+| Banco gerenciado            | PostgreSQL 16                         | A definir                                             | Hospedagem na mesma cloud para minimizar latência                        |
+| Cache                       | Redis 7                               | A definir                                             | Idem                                                                     |
+| Mensageria                  | NATS JetStream                        | Self-hosted dentro da cloud do tenant                 | Não há SaaS NATS estabelecido                                            |
+| Observabilidade             | Tempo / Jaeger + Grafana / Prometheus | Self-hosted ou Grafana Cloud                          | Decisão por tenant                                                       |
+| KMS / chave de criptografia | KMS gerenciado                        | AWS KMS / GCP KMS / Azure Key Vault / HashiCorp Vault | Crítico: KEK por tenant                                                  |
 
 ### Onda 2
 
-| Categoria | Função | Candidatos prováveis |
-|---|---|---|
-| Identidade cidadã | Gov.br como IdP federado | [Gov.br Login (SerPro)](https://www.gov.br/governodigital/pt-br/conta-gov-br) — pertence ao Estado, não é sub-operador no sentido estrito |
-| E-mail transacional | Notificações | SendGrid / Mailgun / AWS SES / Brevo |
-| SMS | Notificações | Twilio / Zenvia / Infobip |
-| WhatsApp | Notificações | WhatsApp Business Cloud API (Meta) — alta consideração de privacidade |
-| Storage de anexos | Documents service | AWS S3 / GCP Storage / MinIO self-hosted |
-| AV scan | Anexos | ClamAV self-hosted ou VirusTotal API |
+| Categoria           | Função                   | Candidatos prováveis                                                                                                                      |
+| ------------------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Identidade cidadã   | Gov.br como IdP federado | [Gov.br Login (SerPro)](https://www.gov.br/governodigital/pt-br/conta-gov-br) — pertence ao Estado, não é sub-operador no sentido estrito |
+| E-mail transacional | Notificações             | SendGrid / Mailgun / AWS SES / Brevo                                                                                                      |
+| SMS                 | Notificações             | Twilio / Zenvia / Infobip                                                                                                                 |
+| WhatsApp            | Notificações             | WhatsApp Business Cloud API (Meta) — alta consideração de privacidade                                                                     |
+| Storage de anexos   | Documents service        | AWS S3 / GCP Storage / MinIO self-hosted                                                                                                  |
+| AV scan             | Anexos                   | ClamAV self-hosted ou VirusTotal API                                                                                                      |
 
 ### Onda 3+
 
-| Categoria | Função | Candidatos prováveis |
-|---|---|---|
-| Search | Indexação cross-context | Meilisearch self-hosted / OpenSearch / Elastic Cloud |
-| Pagamento | Billing | Stripe / Iugu / Pagar.me — apenas dados do tenant pagante, não de cidadão |
-| Bug bounty platform | Recompensas de segurança | HackerOne / Bugcrowd |
-| CDN | Estáticos do shell + remotes MF | CloudFront / Cloudflare / Fastly |
-| WAF | Proteção do BFF Cidadão | Cloudflare / CloudFront WAF |
+| Categoria           | Função                          | Candidatos prováveis                                                      |
+| ------------------- | ------------------------------- | ------------------------------------------------------------------------- |
+| Search              | Indexação cross-context         | Meilisearch self-hosted / OpenSearch / Elastic Cloud                      |
+| Pagamento           | Billing                         | Stripe / Iugu / Pagar.me — apenas dados do tenant pagante, não de cidadão |
+| Bug bounty platform | Recompensas de segurança        | HackerOne / Bugcrowd                                                      |
+| CDN                 | Estáticos do shell + remotes MF | CloudFront / Cloudflare / Fastly                                          |
+| WAF                 | Proteção do BFF Cidadão         | Cloudflare / CloudFront WAF                                               |
 
 ---
 

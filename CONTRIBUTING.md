@@ -31,15 +31,15 @@ Antes de tudo, leia também o **[Código de Conduta](./CODE-OF-CONDUCT.md)** —
 
 **Pre-alpha** — Maio de 2026. O que isso significa para você:
 
-| Você quer contribuir com... | Status no projeto |
-|---|---|
-| **Documentação, glossário, traduções** | ✅ Pode contribuir agora |
-| **Discussão de design, UX, fluxos do cidadão** | ✅ Pode contribuir agora (issues/discussions) |
-| **Testes de acessibilidade do conceito atual** | ✅ Pode contribuir agora |
-| **Brainstorming de subprojetos da Onda 1** | ✅ Pode contribuir agora |
+| Você quer contribuir com...                                      | Status no projeto                                                |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------- |
+| **Documentação, glossário, traduções**                           | ✅ Pode contribuir agora                                         |
+| **Discussão de design, UX, fluxos do cidadão**                   | ✅ Pode contribuir agora (issues/discussions)                    |
+| **Testes de acessibilidade do conceito atual**                   | ✅ Pode contribuir agora                                         |
+| **Brainstorming de subprojetos da Onda 1**                       | ✅ Pode contribuir agora                                         |
 | **Código dos serviços (auth, programs, citizens, applications)** | 🚧 Requer subprojeto correspondente já em ciclo de implementação |
-| **Frontend dos remotes (gestor-mf, cidadao-mf)** | 🚧 Requer scaffolding inicial |
-| **Infraestrutura, Docker, IaC** | 🚧 Requer scaffolding inicial |
+| **Frontend dos remotes (gestor-mf, cidadao-mf)**                 | 🚧 Requer scaffolding inicial                                    |
+| **Infraestrutura, Docker, IaC**                                  | 🚧 Requer scaffolding inicial                                    |
 
 Acompanhe os subprojetos em andamento pelas **[issues marcadas com `wave-1`](https://github.com/olucianochagas/mais-inclusao/labels/wave-1)** e a spec mestra de decomposição em [`docs/superpowers/specs/`](./docs/superpowers/specs/).
 
@@ -116,13 +116,13 @@ Ao contribuir, você concorda em seguir nosso [Código de Conduta](./CODE-OF-CON
 
 ### Pré-requisitos
 
-| Ferramenta | Versão mínima | Como instalar |
-|---|---|---|
-| **Git** | 2.40+ | `apt install git` / `brew install git` |
-| **Node.js** | ^24.15.0 | [nvm](https://github.com/nvm-sh/nvm) → `nvm install 24` (ou via `.nvmrc` na raiz) |
-| **corepack** | (vem com Node 24) | `corepack enable` (uma vez) — baixa pnpm@11.1.2 automaticamente |
-| **Docker** | 26+ | [docs.docker.com](https://docs.docker.com/get-docker/) |
-| **Docker Compose** | v2 plugin | Vem com Docker Desktop ou via `apt install docker-compose-plugin` |
+| Ferramenta         | Versão mínima     | Como instalar                                                                     |
+| ------------------ | ----------------- | --------------------------------------------------------------------------------- |
+| **Git**            | 2.40+             | `apt install git` / `brew install git`                                            |
+| **Node.js**        | ^24.15.0          | [nvm](https://github.com/nvm-sh/nvm) → `nvm install 24` (ou via `.nvmrc` na raiz) |
+| **corepack**       | (vem com Node 24) | `corepack enable` (uma vez) — baixa pnpm@11.1.2 automaticamente                   |
+| **Docker**         | 26+               | [docs.docker.com](https://docs.docker.com/get-docker/)                            |
+| **Docker Compose** | v2 plugin         | Vem com Docker Desktop ou via `apt install docker-compose-plugin`                 |
 
 > ℹ️ **Não instale `pnpm` manualmente.** O `corepack` baixa a versão exata declarada em `package.json` (`pnpm@11.1.2`) na primeira vez que você rodar `pnpm`. Isso garante que toda a equipe use a mesma versão.
 
@@ -227,20 +227,20 @@ Usamos [Conventional Commits 1.0.0](https://www.conventionalcommits.org/). Estru
 
 **Tipos aceitos:**
 
-| Tipo | Quando usar |
-|---|---|
-| `feat` | Nova funcionalidade visível ao usuário |
-| `fix` | Correção de bug |
-| `docs` | Apenas documentação |
-| `style` | Formatação, sem mudança lógica |
-| `refactor` | Refactor sem mudança de comportamento externo |
-| `perf` | Melhoria de performance |
-| `test` | Adicionar ou ajustar testes |
-| `build` | Mudanças no build, deps, scripts |
-| `ci` | Mudanças em GitHub Actions, workflows |
-| `chore` | Manutenção que não cai em outras |
-| `revert` | Reversão de commit anterior |
-| `a11y` | Mudanças de acessibilidade (extensão do +Inclusão) |
+| Tipo       | Quando usar                                               |
+| ---------- | --------------------------------------------------------- |
+| `feat`     | Nova funcionalidade visível ao usuário                    |
+| `fix`      | Correção de bug                                           |
+| `docs`     | Apenas documentação                                       |
+| `style`    | Formatação, sem mudança lógica                            |
+| `refactor` | Refactor sem mudança de comportamento externo             |
+| `perf`     | Melhoria de performance                                   |
+| `test`     | Adicionar ou ajustar testes                               |
+| `build`    | Mudanças no build, deps, scripts                          |
+| `ci`       | Mudanças em GitHub Actions, workflows                     |
+| `chore`    | Manutenção que não cai em outras                          |
+| `revert`   | Reversão de commit anterior                               |
+| `a11y`     | Mudanças de acessibilidade (extensão do +Inclusão)        |
 | `security` | Mudanças relacionadas a segurança (extensão do +Inclusão) |
 
 **Escopos sugeridos** (acompanham apps/packages): `auth`, `programs`, `citizens`, `applications`, `bff-gestor`, `bff-cidadao`, `shell`, `gestor-mf`, `cidadao-mf`, `ui`, `contracts`, `persistence`, `messaging`, `audit`, `infra`, `ci`, `docs`.
@@ -298,7 +298,7 @@ PRs sem DCO em todos os commits serão bloqueados por verificação automática.
   - Arquivos: `kebab-case.ts`. Componentes React: `PascalCase.tsx`.
   - Variáveis e funções: `camelCase`. Tipos e classes: `PascalCase`. Constantes globais: `SCREAMING_SNAKE_CASE`.
 - **Logs:** usar `Pino` (no backend) e **nunca logar PII**. Se for tentado, há filtro no logger central, mas a responsabilidade é do desenvolvedor.
-- **Comentários:** só quando o *porquê* não é óbvio do código. Não comentar *o quê* já é evidente.
+- **Comentários:** só quando o _porquê_ não é óbvio do código. Não comentar _o quê_ já é evidente.
 - **Conventional Commits** (já coberto acima) também para mensagens em PR (título do PR vira merge commit).
 
 Configs detalhadas ficam em `packages/eslint-config`, `packages/tsconfig`, `.prettierrc`, `.editorconfig`.
@@ -309,13 +309,13 @@ Configs detalhadas ficam em `packages/eslint-config`, `packages/tsconfig`, `.pre
 
 Esperamos cobertura para:
 
-| Tipo de mudança | Teste exigido |
-|---|---|
-| Nova função pura, regra de negócio | Vitest unit |
-| Endpoint REST | Vitest integration via Testcontainers (PG real) |
-| Evento publicado/consumido | Pact ou integration com NATS Testcontainer |
-| Componente React | Vitest + RTL |
-| Fluxo crítico do cidadão | Playwright E2E + `@axe-core` |
+| Tipo de mudança                               | Teste exigido                                     |
+| --------------------------------------------- | ------------------------------------------------- |
+| Nova função pura, regra de negócio            | Vitest unit                                       |
+| Endpoint REST                                 | Vitest integration via Testcontainers (PG real)   |
+| Evento publicado/consumido                    | Pact ou integration com NATS Testcontainer        |
+| Componente React                              | Vitest + RTL                                      |
+| Fluxo crítico do cidadão                      | Playwright E2E + `@axe-core`                      |
 | Acessibilidade de componente em `packages/ui` | `@testing-library/jest-axe` (fixture obrigatório) |
 
 ```bash
@@ -410,12 +410,12 @@ O [template](./.github/PULL_REQUEST_TEMPLATE.md) carrega automaticamente. Preenc
 
 Prefira **PRs pequenos**. Como referência:
 
-| Tamanho | Linhas | Tempo de revisão típico |
-|---|---|---|
-| 🟢 Ideal | < 200 LOC | < 1 hora |
-| 🟡 OK | 200-500 LOC | 1-3 horas |
-| 🔴 Pesado | 500-1000 LOC | requer split ou pair review |
-| ⛔ Recusado | > 1000 LOC | será fechado pedindo split |
+| Tamanho     | Linhas       | Tempo de revisão típico     |
+| ----------- | ------------ | --------------------------- |
+| 🟢 Ideal    | < 200 LOC    | < 1 hora                    |
+| 🟡 OK       | 200-500 LOC  | 1-3 horas                   |
+| 🔴 Pesado   | 500-1000 LOC | requer split ou pair review |
+| ⛔ Recusado | > 1000 LOC   | será fechado pedindo split  |
 
 Refactors mecânicos em massa (rename, formatação) são exceção e devem estar **isolados** em PR próprio.
 
@@ -439,14 +439,14 @@ Refactors mecânicos em massa (rename, formatação) são exceção e devem esta
 
 Atribuição automática via [`.github/CODEOWNERS`](./.github/CODEOWNERS). Resumo conceitual:
 
-| Área | Revisor primário (atual) |
-|---|---|
-| Tudo | @olucianochagas (BDFL transitório — ver [GOVERNANCE.md](./GOVERNANCE.md)) |
-| `packages/contracts` | @olucianochagas + chamado especial para revisão de quem consome |
-| Docs (README, CONTRIBUTING, etc) | @olucianochagas |
-| `docs/legal/*` (ROPA, DPA) | @olucianochagas (no futuro, DPO designado) |
-| `docs/security/*` | @olucianochagas |
-| `packages/ui` (a11y) | @olucianochagas (no futuro, especialista a11y) |
+| Área                             | Revisor primário (atual)                                                  |
+| -------------------------------- | ------------------------------------------------------------------------- |
+| Tudo                             | @olucianochagas (BDFL transitório — ver [GOVERNANCE.md](./GOVERNANCE.md)) |
+| `packages/contracts`             | @olucianochagas + chamado especial para revisão de quem consome           |
+| Docs (README, CONTRIBUTING, etc) | @olucianochagas                                                           |
+| `docs/legal/*` (ROPA, DPA)       | @olucianochagas (no futuro, DPO designado)                                |
+| `docs/security/*`                | @olucianochagas                                                           |
+| `packages/ui` (a11y)             | @olucianochagas (no futuro, especialista a11y)                            |
 
 Conforme novos mantenedores se juntarem, CODEOWNERS evolui.
 

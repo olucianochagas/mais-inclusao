@@ -20,25 +20,25 @@ A arquitetura de microsserviços evolutivos (ver [ADR-0001](./0001-microsservico
 
 Brokers avaliados:
 
-| | Kafka | RabbitMQ | Redis Streams | **NATS JetStream** |
-|---|---|---|---|---|
-| Durabilidade | Excelente | Excelente | Boa (com config) | Excelente |
-| Throughput | Muito alto | Alto | Muito alto | Alto |
-| Operação | Pesada (ZK/KRaft, brokers, schema registry) | Média (cluster, queues, exchanges) | Leve | Leve |
-| Curva de aprendizado | Alta | Média | Baixa | Baixa |
-| Footprint dev (Docker) | Pesado (~1GB) | Médio (~300MB) | Pequeno (~100MB) | Pequeno (~50MB) |
-| Pattern matching | Topics + partições | Exchanges + routing keys | Streams + consumer groups | Subjects + wildcards |
-| Dedup nativo | Não (idempotent producer só pra retry) | Não | Não | **Sim** (Msg-ID + janela) |
-| Maturidade 2026 | Maturíssimo | Maturíssimo | Maturo | Maturo (JetStream estável desde 2021) |
+|                        | Kafka                                       | RabbitMQ                           | Redis Streams             | **NATS JetStream**                    |
+| ---------------------- | ------------------------------------------- | ---------------------------------- | ------------------------- | ------------------------------------- |
+| Durabilidade           | Excelente                                   | Excelente                          | Boa (com config)          | Excelente                             |
+| Throughput             | Muito alto                                  | Alto                               | Muito alto                | Alto                                  |
+| Operação               | Pesada (ZK/KRaft, brokers, schema registry) | Média (cluster, queues, exchanges) | Leve                      | Leve                                  |
+| Curva de aprendizado   | Alta                                        | Média                              | Baixa                     | Baixa                                 |
+| Footprint dev (Docker) | Pesado (~1GB)                               | Médio (~300MB)                     | Pequeno (~100MB)          | Pequeno (~50MB)                       |
+| Pattern matching       | Topics + partições                          | Exchanges + routing keys           | Streams + consumer groups | Subjects + wildcards                  |
+| Dedup nativo           | Não (idempotent producer só pra retry)      | Não                                | Não                       | **Sim** (Msg-ID + janela)             |
+| Maturidade 2026        | Maturíssimo                                 | Maturíssimo                        | Maturo                    | Maturo (JetStream estável desde 2021) |
 
 A consistência entre commit no banco e publicação no broker é o **problema clássico do dual-write**. Soluções clássicas:
 
-| | Vantagens | Desvantagens |
-|---|---|---|
-| **Outbox Pattern** | Consistência transacional sem 2PC, simples conceito | Worker extra por serviço; latência de poll |
-| **CDC (Change Data Capture)** | Sem código adicional na app | Infra adicional (Debezium etc.), schema do banco vira contrato |
-| **2PC (XA)** | Strong consistency | Não disponível em todos brokers; performance ruim; complexidade |
-| **Dual-write sem coordenação** | Sem complexidade | Inconsistência silenciosa (anti-padrão) |
+|                                | Vantagens                                           | Desvantagens                                                    |
+| ------------------------------ | --------------------------------------------------- | --------------------------------------------------------------- |
+| **Outbox Pattern**             | Consistência transacional sem 2PC, simples conceito | Worker extra por serviço; latência de poll                      |
+| **CDC (Change Data Capture)**  | Sem código adicional na app                         | Infra adicional (Debezium etc.), schema do banco vira contrato  |
+| **2PC (XA)**                   | Strong consistency                                  | Não disponível em todos brokers; performance ruim; complexidade |
+| **Dual-write sem coordenação** | Sem complexidade                                    | Inconsistência silenciosa (anti-padrão)                         |
 
 ## Decisão
 
@@ -93,6 +93,7 @@ Concretamente:
 **Resumo**: Apache Kafka como broker, Schema Registry para evolução de schemas.
 
 **Por que rejeitada**:
+
 - Overhead operacional desproporcional ao estado pre-alpha. Cluster Kafka + ZooKeeper (ou KRaft) + Schema Registry em dev local é pesado.
 - Para o volume estimado da Onda 1, é overkill.
 - Quando volume justificar (Ondas 2 ou 3), migração de NATS → Kafka é viável (eventos têm envelope estável; só muda o transporte).
@@ -102,6 +103,7 @@ Concretamente:
 **Resumo**: Broker AMQP maduro com exchanges + queues.
 
 **Por que rejeitada**:
+
 - Footprint maior em dev local.
 - Sem dedup nativo (exige idempotência apenas na aplicação).
 - Modelo de exchanges + routing keys é mais complexo que subjects do NATS para o caso simples de pub/sub deste projeto.
@@ -111,6 +113,7 @@ Concretamente:
 **Resumo**: Recurso recente do Redis para event streaming.
 
 **Por que rejeitada**:
+
 - Durabilidade real depende de AOF/RDB config — não é safe-by-default como JetStream.
 - Sem dedup nativo.
 - Mistura cache + mensageria no mesmo serviço — uma queda do Redis derruba os dois.
@@ -120,6 +123,7 @@ Concretamente:
 **Resumo**: Em vez de outbox manual, capturar mudanças do banco direto.
 
 **Por que rejeitada**:
+
 - Schema do banco vira contrato implícito — qualquer mudança de tabela pode quebrar consumers de forma sutil.
 - Infra Debezium adicional (Kafka Connect ou similar) anula a leveza do NATS.
 - Para a Onda 1, outbox manual é mais previsível e ensina o time o pattern.
@@ -129,6 +133,7 @@ Concretamente:
 **Resumo**: Comunicação síncrona com gRPC streams.
 
 **Por que rejeitada**:
+
 - Quebra a regra de "serviço de domínio não chama outro serviço de domínio" (ADR-0001).
 - Cadeia síncrona vira fragilidade composta — uma queda derruba o caminho inteiro.
 - Para o caso de uso (mudança de estado relevante para outros contextos), eventos async são naturalmente mais adequados.
@@ -138,4 +143,4 @@ Concretamente:
 - [Spec de decomposição — Seção 4 (contratos, eventos, sagas, outbox)](../superpowers/specs/2026-05-16-programa-mais-inclusao-decomposicao.md#seção-4--contratos-eventos-sagas-e-outbox)
 - [NATS JetStream docs](https://docs.nats.io/nats-concepts/jetstream)
 - Chris Richardson, ["Pattern: Transactional Outbox"](https://microservices.io/patterns/data/transactional-outbox.html)
-- Vaughn Vernon, *Implementing Domain-Driven Design*, 2013 (Saga e eventos).
+- Vaughn Vernon, _Implementing Domain-Driven Design_, 2013 (Saga e eventos).

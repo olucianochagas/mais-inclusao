@@ -9,19 +9,21 @@
 ## Identificação das partes
 
 **CONTROLADOR**:
-- Razão social / nome do órgão: _______________
-- CNPJ: _______________
-- Endereço: _______________
-- Representante legal: _______________
-- Encarregado de proteção de dados (DPO): _______________
-- Contato para questões de privacidade: _______________
+
+- Razão social / nome do órgão: **\*\***\_\_\_**\*\***
+- CNPJ: **\*\***\_\_\_**\*\***
+- Endereço: **\*\***\_\_\_**\*\***
+- Representante legal: **\*\***\_\_\_**\*\***
+- Encarregado de proteção de dados (DPO): **\*\***\_\_\_**\*\***
+- Contato para questões de privacidade: **\*\***\_\_\_**\*\***
 
 **OPERADOR**:
-- Razão social: _________________ (atualmente: Luciano Douglas Machado Chagas, pessoa física, enquanto não constituída entidade jurídica para o +Inclusão)
-- CNPJ / CPF: _______________
-- Endereço: _______________
-- DPO: _______________
-- Contato: lgpd@mais-inclusao.org *(a configurar)* — provisório: olucianochagas@gmail.com
+
+- Razão social: **\*\*\*\***\_**\*\*\*\*** (atualmente: Luciano Douglas Machado Chagas, pessoa física, enquanto não constituída entidade jurídica para o +Inclusão)
+- CNPJ / CPF: **\*\***\_\_\_**\*\***
+- Endereço: **\*\***\_\_\_**\*\***
+- DPO: **\*\***\_\_\_**\*\***
+- Contato: lgpd@mais-inclusao.org _(a configurar)_ — provisório: olucianochagas@gmail.com
 
 ---
 
@@ -86,23 +88,25 @@ Detalhamento completo em [SECURITY.md](../../SECURITY.md) e na [spec § 5](../su
 8.1. O OPERADOR notifica o CONTROLADOR **em até 24 horas** após tomar conhecimento de incidente de segurança que envolva dados pessoais.
 
 8.2. A notificação contém:
-   - Natureza e categoria do incidente.
-   - Categorias e número aproximado de titulares e registros afetados.
-   - Consequências prováveis.
-   - Medidas adotadas para mitigar e proteger.
 
-8.3. O CONTROLADOR é o responsável pela **comunicação à ANPD em 72h** (LGPD Art. 48), com apoio técnico do OPERADOR.
+- Natureza e categoria do incidente.
+- Categorias e número aproximado de titulares e registros afetados.
+- Consequências prováveis.
+- Medidas adotadas para mitigar e proteger.
+
+  8.3. O CONTROLADOR é o responsável pela **comunicação à ANPD em 72h** (LGPD Art. 48), com apoio técnico do OPERADOR.
 
 ## 9. Direitos dos titulares
 
 9.1. O OPERADOR auxilia o CONTROLADOR a responder a pedidos de titulares (Art. 18 LGPD) por meio de:
-   - **Acesso aos dados**: exportação em formato estruturado (Onda 2).
-   - **Correção**: edição via portal (Onda 2).
-   - **Anonimização / exclusão**: jobs automatizados (Onda 2).
-   - **Portabilidade**: exportação JSON em formato aberto (Onda 2).
-   - **Revogação de consentimento**: revogação granular por finalidade (Onda 2).
 
-9.2. O OPERADOR responde a pedidos do CONTROLADOR sobre titulares **em até 5 dias úteis**.
+- **Acesso aos dados**: exportação em formato estruturado (Onda 2).
+- **Correção**: edição via portal (Onda 2).
+- **Anonimização / exclusão**: jobs automatizados (Onda 2).
+- **Portabilidade**: exportação JSON em formato aberto (Onda 2).
+- **Revogação de consentimento**: revogação granular por finalidade (Onda 2).
+
+  9.2. O OPERADOR responde a pedidos do CONTROLADOR sobre titulares **em até 5 dias úteis**.
 
 ## 10. Transferência internacional
 
@@ -115,9 +119,10 @@ Detalhamento completo em [SECURITY.md](../../SECURITY.md) e na [spec § 5](../su
 11.1. Os dados pessoais são retidos pelos prazos definidos em [`ropa.md`](./ropa.md), aplicáveis a cada operação.
 
 11.2. Ao término do contrato principal:
-   - Em até **30 dias**, o OPERADOR oferece ao CONTROLADOR opção de **devolução** ou **destruição** dos dados.
-   - Cópias de backup são purgadas em até **90 dias**.
-   - Logs de auditoria são retidos por **7 anos** para conformidade fiscal/regulatória, segregados e cifrados.
+
+- Em até **30 dias**, o OPERADOR oferece ao CONTROLADOR opção de **devolução** ou **destruição** dos dados.
+- Cópias de backup são purgadas em até **90 dias**.
+- Logs de auditoria são retidos por **7 anos** para conformidade fiscal/regulatória, segregados e cifrados.
 
 ## 12. Auditoria
 
@@ -126,13 +131,15 @@ Detalhamento completo em [SECURITY.md](../../SECURITY.md) e na [spec § 5](../su
 12.2. Frequência: até 1 auditoria a cada 12 meses (exceto em caso de incidente).
 
 12.3. O OPERADOR fornece:
-   - Documentação técnica e operacional.
-   - Relatório de auditoria externa (quando disponível, a partir da Onda 3).
-   - Acesso a logs de auditoria filtrados pelo tenant.
+
+- Documentação técnica e operacional.
+- Relatório de auditoria externa (quando disponível, a partir da Onda 3).
+- Acesso a logs de auditoria filtrados pelo tenant.
 
 ## 13. Vigência
 
 Este Acordo vigora durante o contrato principal e **sobrevive** quanto às obrigações de:
+
 - Confidencialidade.
 - Notificação de incidente sobre dados ainda retidos.
 - Direito do titular sobre dados ainda em posse do OPERADOR.
@@ -149,16 +156,18 @@ Disputas serão resolvidas conforme cláusulas do contrato principal, com preval
 
 ---
 
-**Local e data:** _______________
+**Local e data:** **\*\***\_\_\_**\*\***
 
 **Pelo CONTROLADOR:**
 
-_______________
+---
+
 Nome, cargo, assinatura digital
 
 **Pelo OPERADOR:**
 
-_______________
+---
+
 Nome, cargo, assinatura digital
 
 ---

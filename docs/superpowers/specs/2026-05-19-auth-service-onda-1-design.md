@@ -1,7 +1,9 @@
-# Design: `auth-service` (Onda 1) — Identity + Tenancy
+# Design: `auth-service` (Onda 1) — Identity + Tenancy [SUPERSEDED]
+
+> **⚠️ SUPERSEDED em 2026-05-20** pelo [ADR-0011](../../adr/0011-divisao-iam-em-tres-services.md). O IAM foi dividido em **3 services** desde a Onda 1: [tenancy-service](./2026-05-20-tenancy-service-onda-1-design.md), [authz-service](./2026-05-20-authz-service-onda-1-design.md), [authn-service](./2026-05-20-authn-service-onda-1-design.md). Este documento permanece como referência histórica das decisões consolidadas (Fastify + class-validator + RS256 + refresh com famílias + KMS local + outbox + cross-tenant defense em profundidade) que foram preservadas nos 3 novos specs.
 
 - **Data**: 2026-05-19
-- **Status**: aprovado em brainstorming, pronto para implementação
+- **Status**: **SUPERSEDED** (substituído por 3 specs separados conforme ADR-0011)
 - **Owner**: @olucianochagas
 - **Tags**: auth, multi-tenancy, lgpd, jwt, rbac, onda-1
 - **Nota histórica**: spec original de 2026-05-18 (859 linhas, commits `bcdb0e1` … `290f861`) foi perdido em reset de workspace antes de ser pushado. Esta versão reconstrói as decisões já validadas, incluindo escolha de **Fastify + class-validator** (decisões alinhadas ao padrão oficial NestJS 11).

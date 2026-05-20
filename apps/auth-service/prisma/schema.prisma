@@ -1,0 +1,215 @@
+// Schema Prisma do auth-service Onda 1.
+// Ver docs/superpowers/specs/2026-05-19-auth-service-onda-1-design.md §3.
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["auth"]
+}
+
+// ─── Tenancy ───────────────────────────────────────────────────────────
+
+model Tenant {
+  id                  String              @id @default(uuid()) @db.Uuid
+  slug                String              @unique @db.VarChar(64)
+  name                String              @db.VarChar(200)
+  plan                Plan                @default(starter)
+  status              TenantStatus        @default(active)
+  created_at          DateTime            @default(now())
+  updated_at          DateTime            @updatedAt
+  deactivated_at      DateTime?
+  deactivation_reason DeactivationReason?
+
+  users          User[]
+  refresh_tokens RefreshToken[]
+
+  @@index([status])
+  @@schema("auth")
+}
+
+enum Plan {
+  free
+  starter
+  pro
+  enterprise
+
+  @@schema("auth")
+}
+
+enum TenantStatus {
+  active
+  deactivated
+
+  @@schema("auth")
+}
+
+enum DeactivationReason {
+  contract_ended
+  data_breach
+  unpaid
+  manual
+
+  @@schema("auth")
+}
+
+// ─── Users ────────────────────────────────────────────────────────────
+
+model User {
+  id        String @id @default(uuid()) @db.Uuid
+  tenant_id String @db.Uuid
+
+  /// email cifrado AES-256-GCM via KmsProvider (formato: nonce(12) || ciphertext || authTag(16))
+  email_encrypted Bytes
+  /// HMAC-SHA256(email_normalized, EMAIL_HASH_PEPPER) usado em login
+  email_hash String @db.Char(64)
+  /// kid do KMS para decifrar (multi-version, suporta rotação)
+  email_kms_kid String @db.VarChar(128)
+
+  name          String     @db.VarChar(120)
+  password_hash String     @db.VarChar(255) // argon2id encoded
+  status        UserStatus @default(active)
+
+  created_at          DateTime                @default(now())
+  updated_at          DateTime                @updatedAt
+  deactivated_at      DateTime?
+  deactivation_reason UserDeactivationReason?
+  last_login_at       DateTime?
+
+  tenant         Tenant         @relation(fields: [tenant_id], references: [id])
+  user_roles     UserRole[]
+  refresh_tokens RefreshToken[]
+
+  @@unique([tenant_id, email_hash])
+  @@index([tenant_id, status])
+  @@schema("auth")
+}
+
+enum UserStatus {
+  active
+  deactivated
+
+  @@schema("auth")
+}
+
+enum UserDeactivationReason {
+  voluntary
+  role_revoked
+  security_incident
+  data_breach
+
+  @@schema("auth")
+}
+
+// ─── RBAC ─────────────────────────────────────────────────────────────
+
+model Role {
+  id          String   @id @default(uuid()) @db.Uuid
+  slug        String   @unique @db.VarChar(32)
+  name        String   @db.VarChar(64)
+  description String?  @db.VarChar(256)
+  is_system   Boolean  @default(true)
+  created_at  DateTime @default(now())
+
+  permissions RolePermission[]
+  user_roles  UserRole[]
+
+  @@schema("auth")
+}
+
+model Permission {
+  id          String   @id @default(uuid()) @db.Uuid
+  slug        String   @unique @db.VarChar(64)
+  description String?  @db.VarChar(256)
+  created_at  DateTime @default(now())
+
+  roles RolePermission[]
+
+  @@schema("auth")
+}
+
+model RolePermission {
+  role_id       String @db.Uuid
+  permission_id String @db.Uuid
+
+  role       Role       @relation(fields: [role_id], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permission_id], references: [id], onDelete: Cascade)
+
+  @@id([role_id, permission_id])
+  @@schema("auth")
+}
+
+model UserRole {
+  user_id    String   @db.Uuid
+  role_id    String   @db.Uuid
+  granted_at DateTime @default(now())
+  granted_by String   @db.Uuid
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [role_id], references: [id])
+
+  @@id([user_id, role_id])
+  @@schema("auth")
+}
+
+// ─── Refresh tokens (stateful + rotação + famílias) ───────────────────
+
+model RefreshToken {
+  id        String @id @default(uuid()) @db.Uuid
+  family_id String @db.Uuid
+  user_id   String @db.Uuid
+  tenant_id String @db.Uuid
+
+  /// SHA-256 do token raw (token raw nunca persistido)
+  token_hash String    @unique @db.Char(64)
+  expires_at DateTime
+  created_at DateTime  @default(now())
+  used_at    DateTime?
+  rotated_to String?   @db.Uuid
+
+  revoked_at     DateTime?
+  revoked_reason RevokeReason?
+
+  user   User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  tenant Tenant @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
+
+  @@index([family_id])
+  @@index([user_id, expires_at])
+  @@schema("auth")
+}
+
+enum RevokeReason {
+  logout
+  user_deactivated
+  reused
+  token_theft_replay
+
+  @@schema("auth")
+}
+
+// ─── Outbox ──────────────────────────────────────────────────────────
+
+model OutboxEvent {
+  id             String   @id @default(uuid()) @db.Uuid
+  event_id       String   @unique @db.Uuid
+  event_type     String   @db.VarChar(80)
+  event_version  String   @db.VarChar(10)
+  tenant_id      String   @db.Uuid
+  correlation_id String   @db.Uuid
+  causation_id   String?  @db.Uuid
+  occurred_at    DateTime
+  payload        Json
+
+  created_at    DateTime  @default(now())
+  dispatched_at DateTime?
+  retry_count   Int       @default(0)
+  last_error    String?   @db.Text
+
+  @@index([dispatched_at, created_at])
+  @@index([tenant_id])
+  @@schema("auth")
+}

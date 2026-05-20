@@ -168,7 +168,219 @@ importers:
         specifier: ^5.6.3
         version: 5.9.3
 
-  apps/auth-service:
+  apps/authn-service:
+    dependencies:
+      '@mais-inclusao/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+      '@mais-inclusao/messaging':
+        specifier: workspace:*
+        version: link:../../packages/messaging
+      '@mais-inclusao/observability':
+        specifier: workspace:*
+        version: link:../../packages/observability
+      '@mais-inclusao/persistence':
+        specifier: workspace:*
+        version: link:../../packages/persistence
+      '@nestjs/common':
+        specifier: 'catalog:'
+        version: 11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@nestjs/core':
+        specifier: 'catalog:'
+        version: 11.1.21(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@nestjs/platform-fastify':
+        specifier: 'catalog:'
+        version: 11.1.21(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.21(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))
+      '@nestjs/schedule':
+        specifier: 'catalog:'
+        version: 4.1.2(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.21(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))
+      '@nestjs/throttler':
+        specifier: 'catalog:'
+        version: 6.5.0(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.21(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)
+      '@prisma/client':
+        specifier: 'catalog:'
+        version: 6.19.3(prisma@6.19.3(typescript@5.9.3))(typescript@5.9.3)
+      argon2:
+        specifier: 'catalog:'
+        version: 0.41.1
+      class-transformer:
+        specifier: 'catalog:'
+        version: 0.5.1
+      class-validator:
+        specifier: 'catalog:'
+        version: 0.14.4
+      jose:
+        specifier: 'catalog:'
+        version: 5.10.0
+      nest-commander:
+        specifier: 'catalog:'
+        version: 3.20.1(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.21(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@types/inquirer@8.2.12)(@types/node@24.12.4)(typescript@5.9.3)
+      nestjs-pino:
+        specifier: 'catalog:'
+        version: 4.6.1(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(pino-http@11.0.0)(pino@9.14.0)(rxjs@7.8.2)
+      pino:
+        specifier: 'catalog:'
+        version: 9.14.0
+      reflect-metadata:
+        specifier: 'catalog:'
+        version: 0.2.2
+      rxjs:
+        specifier: 'catalog:'
+        version: 7.8.2
+      zod:
+        specifier: 'catalog:'
+        version: 3.25.76
+    devDependencies:
+      '@mais-inclusao/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@mais-inclusao/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+      '@testcontainers/postgresql':
+        specifier: 'catalog:'
+        version: 10.28.0
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.12.4
+      '@types/supertest':
+        specifier: 'catalog:'
+        version: 6.0.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.6(vitest@4.1.6)
+      eslint:
+        specifier: 'catalog:'
+        version: 9.39.4(jiti@2.6.1)
+      execa:
+        specifier: 'catalog:'
+        version: 9.6.1
+      prisma:
+        specifier: 'catalog:'
+        version: 6.19.3(typescript@5.9.3)
+      supertest:
+        specifier: 'catalog:'
+        version: 7.2.2
+      tsx:
+        specifier: 'catalog:'
+        version: 4.22.2
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 8.0.13(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.6.1)(tsx@4.22.2)(yaml@2.9.0)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.6(@opentelemetry/api@1.9.1)(@types/node@24.12.4)(@vitest/coverage-v8@4.1.6)(vite@8.0.13(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.6.1)(tsx@4.22.2)(yaml@2.9.0))
+
+  apps/authz-service:
+    dependencies:
+      '@mais-inclusao/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+      '@mais-inclusao/messaging':
+        specifier: workspace:*
+        version: link:../../packages/messaging
+      '@mais-inclusao/observability':
+        specifier: workspace:*
+        version: link:../../packages/observability
+      '@mais-inclusao/persistence':
+        specifier: workspace:*
+        version: link:../../packages/persistence
+      '@nestjs/common':
+        specifier: 'catalog:'
+        version: 11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@nestjs/core':
+        specifier: 'catalog:'
+        version: 11.1.21(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@nestjs/platform-fastify':
+        specifier: 'catalog:'
+        version: 11.1.21(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.21(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))
+      '@nestjs/schedule':
+        specifier: 'catalog:'
+        version: 4.1.2(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.21(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))
+      '@nestjs/throttler':
+        specifier: 'catalog:'
+        version: 6.5.0(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.21(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)
+      '@prisma/client':
+        specifier: 'catalog:'
+        version: 6.19.3(prisma@6.19.3(typescript@5.9.3))(typescript@5.9.3)
+      argon2:
+        specifier: 'catalog:'
+        version: 0.41.1
+      class-transformer:
+        specifier: 'catalog:'
+        version: 0.5.1
+      class-validator:
+        specifier: 'catalog:'
+        version: 0.14.4
+      jose:
+        specifier: 'catalog:'
+        version: 5.10.0
+      nest-commander:
+        specifier: 'catalog:'
+        version: 3.20.1(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.21(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@types/inquirer@8.2.12)(@types/node@24.12.4)(typescript@5.9.3)
+      nestjs-pino:
+        specifier: 'catalog:'
+        version: 4.6.1(@nestjs/common@11.1.21(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(pino-http@11.0.0)(pino@9.14.0)(rxjs@7.8.2)
+      pino:
+        specifier: 'catalog:'
+        version: 9.14.0
+      reflect-metadata:
+        specifier: 'catalog:'
+        version: 0.2.2
+      rxjs:
+        specifier: 'catalog:'
+        version: 7.8.2
+      zod:
+        specifier: 'catalog:'
+        version: 3.25.76
+    devDependencies:
+      '@mais-inclusao/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@mais-inclusao/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+      '@testcontainers/postgresql':
+        specifier: 'catalog:'
+        version: 10.28.0
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.12.4
+      '@types/supertest':
+        specifier: 'catalog:'
+        version: 6.0.3
+      '@vitest/coverage-v8':
+        specifier: 'catalog:'
+        version: 4.1.6(vitest@4.1.6)
+      eslint:
+        specifier: 'catalog:'
+        version: 9.39.4(jiti@2.6.1)
+      execa:
+        specifier: 'catalog:'
+        version: 9.6.1
+      prisma:
+        specifier: 'catalog:'
+        version: 6.19.3(typescript@5.9.3)
+      supertest:
+        specifier: 'catalog:'
+        version: 7.2.2
+      tsx:
+        specifier: 'catalog:'
+        version: 4.22.2
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 8.0.13(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.6.1)(tsx@4.22.2)(yaml@2.9.0)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.6(@opentelemetry/api@1.9.1)(@types/node@24.12.4)(@vitest/coverage-v8@4.1.6)(vite@8.0.13(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.6.1)(tsx@4.22.2)(yaml@2.9.0))
+
+  apps/tenancy-service:
     dependencies:
       '@mais-inclusao/contracts':
         specifier: workspace:*
@@ -8314,7 +8526,7 @@ snapshots:
       fast-json-stringify: 6.4.0
       find-my-way: 9.6.0
       light-my-request: 6.6.0
-      pino: 9.14.0
+      pino: 10.3.1
       process-warning: 5.0.0
       rfdc: 1.4.1
       secure-json-parse: 4.1.0

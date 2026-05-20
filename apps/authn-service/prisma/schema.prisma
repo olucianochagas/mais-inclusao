@@ -1,0 +1,75 @@
+// Schema Prisma do authn-service Onda 1.
+// Ver docs/superpowers/specs/2026-05-20-authn-service-onda-1-design.md §3.
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["authn"]
+}
+
+// ─── Refresh tokens (stateful + rotação + famílias) ───────────────────
+//
+// FKs lógicas (sem @relation Prisma) para tenancy.user.id / tenancy.tenant.id —
+// consistência via NATS consumers (tenancy.user.deactivated revoga;
+// tenancy.tenant.deactivated revoga todos).
+
+model RefreshToken {
+  id        String @id @default(uuid()) @db.Uuid
+  family_id String @db.Uuid
+
+  user_id   String @db.Uuid
+  tenant_id String @db.Uuid
+
+  /// SHA-256 hex do token raw (token raw NUNCA persistido)
+  token_hash String   @unique @db.Char(64)
+  expires_at DateTime
+  created_at DateTime  @default(now())
+  used_at    DateTime?
+  rotated_to String?   @db.Uuid
+
+  revoked_at     DateTime?
+  revoked_reason RevokeReason?
+
+  @@index([family_id])
+  @@index([user_id, expires_at])
+  @@index([tenant_id])
+  @@schema("authn")
+}
+
+enum RevokeReason {
+  logout
+  user_deactivated
+  tenant_deactivated
+  reused
+  token_theft_replay
+
+  @@schema("authn")
+}
+
+// ─── Outbox ──────────────────────────────────────────────────────────
+
+model OutboxEvent {
+  id             String   @id @default(uuid()) @db.Uuid
+  event_id       String   @unique @db.Uuid
+  event_type     String   @db.VarChar(80) // authn.session.opened | authn.session.revoked
+  event_version  String   @db.VarChar(10)
+  tenant_id      String   @db.Uuid
+  correlation_id String   @db.Uuid
+  causation_id   String?  @db.Uuid
+  occurred_at    DateTime
+  payload        Json
+
+  created_at    DateTime  @default(now())
+  dispatched_at DateTime?
+  retry_count   Int       @default(0)
+  last_error    String?   @db.Text
+
+  @@index([dispatched_at, created_at])
+  @@index([tenant_id])
+  @@schema("authn")
+}

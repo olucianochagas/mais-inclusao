@@ -1,0 +1,127 @@
+// Schema Prisma do tenancy-service Onda 1.
+// Ver docs/superpowers/specs/2026-05-20-tenancy-service-onda-1-design.md §3.
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["tenancy"]
+}
+
+// ─── Tenancy ───────────────────────────────────────────────────────────
+
+model Tenant {
+  id                  String              @id @default(uuid()) @db.Uuid
+  slug                String              @unique @db.VarChar(64)
+  name                String              @db.VarChar(200)
+  plan                Plan                @default(starter)
+  status              TenantStatus        @default(active)
+  created_at          DateTime            @default(now())
+  updated_at          DateTime            @updatedAt
+  deactivated_at      DateTime?
+  deactivation_reason DeactivationReason?
+
+  users User[]
+
+  @@index([status])
+  @@schema("tenancy")
+}
+
+enum Plan {
+  free
+  starter
+  pro
+  enterprise
+
+  @@schema("tenancy")
+}
+
+enum TenantStatus {
+  active
+  deactivated
+
+  @@schema("tenancy")
+}
+
+enum DeactivationReason {
+  contract_ended
+  data_breach
+  unpaid
+  manual
+
+  @@schema("tenancy")
+}
+
+// ─── Users ────────────────────────────────────────────────────────────
+
+model User {
+  id        String @id @default(uuid()) @db.Uuid
+  tenant_id String @db.Uuid
+
+  /// email cifrado AES-256-GCM via KmsProvider (nonce(12) || ciphertext || authTag(16))
+  email_encrypted Bytes
+  /// HMAC-SHA256(email_normalized, EMAIL_HASH_PEPPER) usado em login (authn-service consulta via /internal)
+  email_hash String @db.Char(64)
+  /// kid do KMS para decifrar (suporta rotação)
+  email_kms_kid String @db.VarChar(128)
+
+  name          String     @db.VarChar(120)
+  password_hash String     @db.VarChar(255) // argon2id encoded
+  status        UserStatus @default(active)
+
+  created_at          DateTime                @default(now())
+  updated_at          DateTime                @updatedAt
+  deactivated_at      DateTime?
+  deactivation_reason UserDeactivationReason?
+  /// Atualizado pelo authn-service via PATCH /internal/users/:id/last-login após login.
+  last_login_at DateTime?
+
+  tenant Tenant @relation(fields: [tenant_id], references: [id])
+
+  @@unique([tenant_id, email_hash])
+  @@index([tenant_id, status])
+  @@schema("tenancy")
+}
+
+enum UserStatus {
+  active
+  deactivated
+
+  @@schema("tenancy")
+}
+
+enum UserDeactivationReason {
+  voluntary
+  role_revoked
+  security_incident
+  data_breach
+
+  @@schema("tenancy")
+}
+
+// ─── Outbox ──────────────────────────────────────────────────────────
+
+model OutboxEvent {
+  id             String   @id @default(uuid()) @db.Uuid
+  event_id       String   @unique @db.Uuid
+  event_type     String   @db.VarChar(80) // tenancy.tenant.* | tenancy.user.*
+  event_version  String   @db.VarChar(10)
+  tenant_id      String   @db.Uuid
+  correlation_id String   @db.Uuid
+  causation_id   String?  @db.Uuid
+  occurred_at    DateTime
+  payload        Json
+
+  created_at    DateTime  @default(now())
+  dispatched_at DateTime?
+  retry_count   Int       @default(0)
+  last_error    String?   @db.Text
+
+  @@index([dispatched_at, created_at])
+  @@index([tenant_id])
+  @@schema("tenancy")
+}

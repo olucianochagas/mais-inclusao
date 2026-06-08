@@ -63,7 +63,7 @@
   "devDependencies": {
     "@mais-inclusao/eslint-config": "workspace:*",
     "@mais-inclusao/tsconfig": "workspace:*",
-    "@types/node": "^24.0.0",
+    "@types/node": "^24.13.1",
     "@vitest/coverage-v8": "catalog:",
     "eslint": "catalog:",
     "tsup": "catalog:",

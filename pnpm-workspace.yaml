@@ -73,9 +73,9 @@ catalog:
   "zod-to-json-schema": ^3.24.1
 
   # Testing
-  vitest: ^4.1.6
+  vitest: ^5.0.3
   "@vitest/coverage-v8": ^4.1.6
-  vite: ^8.0.13
+  vite: ^8.0.16
   "@testing-library/react": ^16.1.0
   "@testing-library/jest-dom": ^6.9.1
   "@testing-library/user-event": ^14.5.2
